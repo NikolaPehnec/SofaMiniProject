@@ -7,7 +7,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.adapters.ScreenSlidePagerAdapter
 import com.sofaacademy.sofaminiproject.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -17,7 +19,6 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val pagerAdapter = ScreenSlidePagerAdapter(this)
         binding.viewPager.adapter = pagerAdapter
 

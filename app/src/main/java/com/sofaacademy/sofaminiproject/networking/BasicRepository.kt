@@ -1,28 +1,25 @@
 package com.sofaacademy.sofaminiproject.networking
 
 
-import retrofit2.Response
 import com.sofaacademy.sofaminiproject.model.Result
+import com.sofaacademy.sofaminiproject.model.SofaResponse
 
 abstract class BasicRepository {
 
-    protected suspend fun <T : Any> apiCall(call: suspend () -> Response<T>): Result<T> {
-        val response: Response<T>
+    protected suspend fun <T : Any> apiCall(call: suspend () -> SofaResponse<T>): Result<T> {
+        val response: SofaResponse<T>
         try {
             response = call.invoke()
         } catch (t: Throwable) {
-            return Result.Error(Exception(t))
+            return Result.Error(Exception(t.message))
         }
 
-        return if (!response.isSuccessful) {
-            @Suppress("BlockingMethodInNonBlockingContext")
-            Result.Error(Exception(response.message()))
-        } else {
-            return if (response.body() == null) {
-                Result.Error(Exception("response.body() can't be null"))
-            } else {
-                Result.Success(response.body()!!)
-            }
+        response.body?.let {
+            return Result.Success(response.body!!)
         }
+        response.status?.let {
+            return Result.Error(Exception("STATUS $it"))
+        }
+        return Result.Error(Exception("no data"))
     }
 }
