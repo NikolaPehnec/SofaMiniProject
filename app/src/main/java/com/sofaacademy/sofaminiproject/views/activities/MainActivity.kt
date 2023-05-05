@@ -1,4 +1,4 @@
-package com.sofaacademy.sofaminiproject.activities
+package com.sofaacademy.sofaminiproject.views.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
