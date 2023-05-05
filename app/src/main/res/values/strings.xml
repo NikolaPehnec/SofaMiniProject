@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">SofaMiniProject</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="title_football">Football</string>
+    <string name="title_basketball">Basketball</string>
+    <string name="title_american_football">Am. Football</string>
+
+    <string-array name="tabs">
+        <item>Football</item>
+        <item>Basketball</item>
+        <item>Am.Football</item>
+    </string-array>
+
 </resources>

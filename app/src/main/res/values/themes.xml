@@ -2,5 +2,16 @@
 <resources>
 
     <style name="Theme.SofaMiniProject" parent="Theme.MaterialComponents.DayNight.NoActionBar"/>
+    <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:textSize">14sp</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textColor">@color/on_color</item>
+    </style>
+
+    <style name="Tab" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/tab_text</item>
+        <item name="tabIndicatorHeight">4dp</item>
+        <item name="tabIndicatorColor">@color/on_color</item>
+    </style>
 
 </resources>
