@@ -6,17 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.sofaacademy.sofaminiproject.adapters.SportEventsArrayAdapter
 import com.sofaacademy.sofaminiproject.databinding.FragmentSlugBinding
 import com.sofaacademy.sofaminiproject.utils.Constants.SLUG_ARG
 import com.sofaacademy.sofaminiproject.viewmodel.SportEventViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SlugFragment : Fragment() {
+class SlugFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
     private var _binding: FragmentSlugBinding? = null
     private val binding get() = _binding!!
     private var slug: String? = null
     private val sportEventViewModel: SportEventViewModel by viewModels()
+    private lateinit var sportEventsArrayAdapter: SportEventsArrayAdapter
 
     companion object {
         @JvmStatic
@@ -41,20 +43,26 @@ class SlugFragment : Fragment() {
     ): View {
         _binding = FragmentSlugBinding.inflate(inflater, container, false)
 
+        sportEventsArrayAdapter = SportEventsArrayAdapter(requireContext(), mutableListOf(), this)
+        binding.eventsRv.adapter = sportEventsArrayAdapter
         setListeners()
-        sportEventViewModel.getSportEvents("football","2023-04-29")
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.test.text = slug
+        sportEventViewModel.getSportEvents("football", "2023-04-29")
+        return binding.root
     }
 
     private fun setListeners() {
         sportEventViewModel.sportEventsList.observe(viewLifecycleOwner) {
-            println(it)
+            it?.let {
+                val res = it.groupBy { it.tournament }.flatMap {
+                    listOf(it.key) + it.value
+                }
+                sportEventsArrayAdapter.setItems(res)
+            }
         }
+    }
+
+    override fun onItemClick(item: Any) {
     }
 
 

@@ -8,7 +8,7 @@ data class SportEvent(
     val awayTeam:Team2,
     val status:String,
     val startDate:String?,
-    val homeScore:Score,
-    val awayScore:Score,
+    val homeScore:List<Score>,
+    val awayScore:List<Score>,
 ) {
 }

@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_primary">#3089ff</color>
-    <color name="color_secondary">#7055e9</color>
-    <color name="on_color">#ffffff</color>
-    <color name="neutrals_n_lv_1">#1c1f22</color>
-    <color name="neutrals_n_lv_2">#801c1f22</color>
-    <color name="neutrals_n_lv_3">#401c1f22</color>
-    <color name="surface_surface_0">#edf1f6</color>
+    <color name="color_primary_variant">#1327ba</color>
+    <color name="color_secondary_variant">#dddbc9</color>
+    <color name="color_primary_default">#374df5</color>
+    <color name="color_secondary_default">#f0eedf</color>
+    <color name="color_primary_highlight">#e1edfe</color>
+    <color name="color_secondary_highlight">#f7f6ef</color>
+    <color name="on_color_on_color_primary">#ffffff</color>
     <color name="surface_surface_1">#ffffff</color>
-    <color name="surface_surface_2">#66e5e9ef</color>
-    <color name="status_success">#12ca5d</color>
-    <color name="status_error">#ff4848</color>
-    <color name="status_error_snackbar">#c7361f</color>
-    <color name="elevation_elevation_1">#19000000</color>
-    <color name="elevation_elevation_2">#33000000</color>
-    <color name="overlay">#331c1f22</color>
-    <color name="surface_none">#001e1d25</color>
+    <color name="surface_surface_0">#eff3f8</color>
+    <color name="surface_surface_2">#33c0cfe4</color>
+    <color name="on_surface_on_surface_lv_1">#121212</color>
+    <color name="on_color_on_color_secondary">#99ffffff</color>
+    <color name="on_surface_on_surface_lv_2">#66121212</color>
+    <color name="on_surface_on_surface_lv_3">#33121212</color>
+    <color name="on_surface_on_surface_lv_4">#19121212</color>
+    <color name="status_error">#ea4545</color>
+    <color name="status_alert">#d8b127</color>
+    <color name="status_success">#1da86d</color>
+    <color name="specific_live">#e93030</color>
 </resources>
