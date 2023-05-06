@@ -1,6 +1,7 @@
 package com.sofaacademy.sofaminiproject.di
 
 import android.content.Context
+import com.google.gson.GsonBuilder
 import com.sofaacademy.sofaminiproject.networking.SofaMiniApi
 import com.sofaacademy.sofaminiproject.utils.Constants
 import dagger.Module
@@ -29,10 +30,11 @@ class AppModule {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BASIC
         val httpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
+        val gsonBuilder=GsonBuilder().setLenient().create()
 
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gsonBuilder))
             .client(httpClient).build()
             .create(SofaMiniApi::class.java)
     }

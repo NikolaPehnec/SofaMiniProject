@@ -6,17 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.sofaacademy.sofaminiproject.adapters.SportEventsArrayAdapter
-import com.sofaacademy.sofaminiproject.databinding.FragmentSlugBinding
+import androidx.lifecycle.distinctUntilChanged
+import com.sofaacademy.sofaminiproject.databinding.FragmentSportBinding
 import com.sofaacademy.sofaminiproject.utils.Constants.SLUG_ARG
 import com.sofaacademy.sofaminiproject.viewmodel.SportEventViewModel
+import com.sofaacademy.sofaminiproject.views.adapters.SportEventsArrayAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
-class SlugFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
-    private var _binding: FragmentSlugBinding? = null
+class SportFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
+    private var _binding: FragmentSportBinding? = null
     private val binding get() = _binding!!
     private var slug: String? = null
     private val sportEventViewModel: SportEventViewModel by viewModels()
@@ -25,7 +26,7 @@ class SlugFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
     companion object {
         @JvmStatic
         fun newInstance(slug: String) =
-            SlugFragment().apply {
+            SportFragment().apply {
                 arguments = Bundle().apply {
                     putString(SLUG_ARG, slug)
                 }
@@ -43,18 +44,22 @@ class SlugFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSlugBinding.inflate(inflater, container, false)
+        _binding = FragmentSportBinding.inflate(inflater, container, false)
 
         sportEventsArrayAdapter = SportEventsArrayAdapter(requireContext(), mutableListOf(), this)
         binding.eventsRv.adapter = sportEventsArrayAdapter
         setListeners()
 
-        sportEventViewModel.getSportEvents("football", "2023-04-19")
+        sportEventViewModel.getSportEvents(slug!!, "2023-04-19")
         return binding.root
     }
 
+    fun reloadSportData(date: String) {
+        sportEventViewModel.getSportEvents(slug!!, date)
+    }
+
     private fun setListeners() {
-        sportEventViewModel.sportEventsList.observe(viewLifecycleOwner) {
+        sportEventViewModel.sportEventsList.distinctUntilChanged().observe(viewLifecycleOwner) {
             it?.let {
                 val res = it.groupBy { it.tournament }.flatMap {
                     listOf(it.key) + it.value.sortedBy { e ->
@@ -62,6 +67,17 @@ class SlugFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
                     }
                 }
                 sportEventsArrayAdapter.setItems(res)
+
+                if (res.isEmpty()) {
+                    binding.noDataAnimation.visibility = View.VISIBLE
+                    binding.noDataMess.visibility = View.VISIBLE
+                    binding.noDataAnimation.playAnimation()
+                } else {
+                    binding.noDataAnimation.visibility = View.GONE
+                    binding.noDataMess.visibility = View.GONE
+                    binding.noDataAnimation.progress = 0f
+                    binding.noDataAnimation.pauseAnimation()
+                }
             }
         }
     }

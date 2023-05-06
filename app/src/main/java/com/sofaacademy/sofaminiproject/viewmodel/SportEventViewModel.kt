@@ -32,18 +32,5 @@ class SportEventViewModel @Inject constructor(private val sofaMiniRepository: So
         }
     }
 
-    /*fun getSportEvents(slug: String, date: String) {
-        viewModelScope.launch {
-            when (val result = sofaMiniRepository.getSportEvents(slug, date)) {
-                is Result.Success ->
-                    _sportEventsList.value = result.data
-
-                is Result.Error -> _sportEventsResponseError.value =
-                    result.exception.toString()
-            }
-        }
-    }*/
-
-
 
 }

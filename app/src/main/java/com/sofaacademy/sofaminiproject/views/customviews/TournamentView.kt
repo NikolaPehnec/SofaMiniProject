@@ -4,9 +4,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import androidx.appcompat.content.res.AppCompatResources
+import coil.load
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.TournamentViewBinding
+import com.sofaacademy.sofaminiproject.utils.Constants
 
 class TournamentView @JvmOverloads constructor(
     context: Context,
@@ -31,8 +32,8 @@ class TournamentView @JvmOverloads constructor(
         }
     }
 
-    fun setTournamentLogo(drawableRes: Int) {
-        binding.imageView.setImageDrawable(AppCompatResources.getDrawable(context, drawableRes))
+    fun loadTournamentLogo(tournamentId: Int) {
+        binding.tournamentLogo.load(Constants.BASE_URL + "tournament/" + tournamentId + "/image")
     }
 
     fun setTournamentInfo(leagueName: String, countryName: String) {

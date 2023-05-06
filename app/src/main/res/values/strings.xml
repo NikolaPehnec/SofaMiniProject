@@ -6,6 +6,7 @@
     <string name="title_football">Football</string>
     <string name="title_basketball">Basketball</string>
     <string name="title_american_football">Am. Football</string>
+    <string name="no_data">No available matches on this day</string>
 
     <string-array name="tabs">
         <item>Football</item>

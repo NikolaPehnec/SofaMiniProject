@@ -12,4 +12,9 @@ interface SofaMiniApi {
         @Path(value = "slug") slug: String,
         @Path(value = "date") date: String
     ): Response<List<SportEvent>>
+
+    @GET("team/{id}/image")
+    suspend fun getTeamLogo(
+        @Path(value = "id") teamId: String
+    ): Response<String>
 }

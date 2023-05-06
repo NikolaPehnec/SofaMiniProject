@@ -11,9 +11,9 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="16dp"
-        android:src="@drawable/ic_pointer_right"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_pointer_right" />
 
     <TextView
         android:id="@+id/country"

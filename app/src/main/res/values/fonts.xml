@@ -54,6 +54,7 @@
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/on_color_on_color_primary</item>
         <item name="android:lineSpacingExtra">2sp</item>
     </style>
 

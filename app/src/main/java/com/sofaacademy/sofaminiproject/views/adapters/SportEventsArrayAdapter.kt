@@ -1,8 +1,9 @@
-package com.sofaacademy.sofaminiproject.adapters
+package com.sofaacademy.sofaminiproject.views.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.MatchRowBinding
@@ -10,6 +11,7 @@ import com.sofaacademy.sofaminiproject.databinding.TournamentRowBinding
 import com.sofaacademy.sofaminiproject.model.MatchStatus
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Tournament
+import com.sofaacademy.sofaminiproject.utils.EventDiffUtilCallback
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions
 
 class SportEventsArrayAdapter(
@@ -46,12 +48,10 @@ class SportEventsArrayAdapter(
     fun getNumberOfItems(): Int = items.size
 
     fun setItems(newItems: List<Any>) {
-        for (item in newItems) {
-            if (!items.contains(item)) {
-                items.add(item)
-            }
-        }
-        notifyDataSetChanged()
+        val diffResult = DiffUtil.calculateDiff(EventDiffUtilCallback(items, newItems))
+        items.clear()
+        items.addAll(newItems)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -77,6 +77,7 @@ class SportEventsArrayAdapter(
             val homeResult = getResultValue(item.homeScore)
             val awayResult = getResultValue(item.awayScore)
 
+            binding.matchItem.loadTeamLogos(item.homeTeam.id, item.awayTeam.id)
             binding.matchItem.setHomeTeamColor(
                 getTeamColorBasedOnTimeAndResult(
                     item.status, homeResult, awayResult
@@ -100,7 +101,6 @@ class SportEventsArrayAdapter(
                 )
             )
             binding.matchItem.setCurrentTimeColor(getCurrentStatusColor(item.status))
-
             binding.matchItem.setMatchInfo(
                 startTime,
                 matchCurrentStatus,
@@ -117,7 +117,7 @@ class SportEventsArrayAdapter(
 
         fun bind(item: Tournament) {
             binding.tournamentItem.setTournamentInfo(item.name, item.country.name)
-            //postavljanje slike
+            binding.tournamentItem.loadTournamentLogo(item.id)
         }
     }
 
