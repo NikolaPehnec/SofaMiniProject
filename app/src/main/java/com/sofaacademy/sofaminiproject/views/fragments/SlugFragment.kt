@@ -11,6 +11,8 @@ import com.sofaacademy.sofaminiproject.databinding.FragmentSlugBinding
 import com.sofaacademy.sofaminiproject.utils.Constants.SLUG_ARG
 import com.sofaacademy.sofaminiproject.viewmodel.SportEventViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class SlugFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
@@ -47,7 +49,7 @@ class SlugFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
         binding.eventsRv.adapter = sportEventsArrayAdapter
         setListeners()
 
-        sportEventViewModel.getSportEvents("football", "2023-04-29")
+        sportEventViewModel.getSportEvents("football", "2023-04-19")
         return binding.root
     }
 
@@ -55,7 +57,9 @@ class SlugFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
         sportEventViewModel.sportEventsList.observe(viewLifecycleOwner) {
             it?.let {
                 val res = it.groupBy { it.tournament }.flatMap {
-                    listOf(it.key) + it.value
+                    listOf(it.key) + it.value.sortedBy { e ->
+                        ZonedDateTime.parse(e.startDate!!, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+                    }
                 }
                 sportEventsArrayAdapter.setItems(res)
             }

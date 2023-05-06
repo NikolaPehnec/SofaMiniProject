@@ -5,4 +5,22 @@
         <attr name="imgRes" format="reference|color" />
     </declare-styleable>
 
+    <declare-styleable name="Tournament">
+        <attr name="countryName" format="string" />
+        <attr name="tournamentName" format="string" />
+        <attr name="tournamentImgRes" format="reference|color" />
+    </declare-styleable>
+
+    <declare-styleable name="Match">
+        <attr name="matchTime" format="string" />
+        <attr name="currentTime" format="string" />
+        <attr name="teamHome" format="string" />
+        <attr name="teamAway" format="string" />
+        <attr name="resultHome" format="string" />
+        <attr name="resultAway" format="string" />
+
+        <attr name="teamHomeImgRes" format="reference|color" />
+        <attr name="teamAwayImgRes" format="reference|color" />
+    </declare-styleable>
+
 </resources>
