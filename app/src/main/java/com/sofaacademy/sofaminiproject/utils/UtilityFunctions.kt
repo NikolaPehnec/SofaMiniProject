@@ -10,7 +10,8 @@ object UtilityFunctions {
     private val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
     private val hourFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
     val tabDateFormat = DateTimeFormatter.ofPattern("EEE dd.MM.", Locale.US)
-    val yearFormat=DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    val yearFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    val dateLongFormat = DateTimeFormatter.ofPattern("EEE, dd.MM.yyyy.", Locale.US)
 
     fun getHourFromDate(date: String): String {
         return try {

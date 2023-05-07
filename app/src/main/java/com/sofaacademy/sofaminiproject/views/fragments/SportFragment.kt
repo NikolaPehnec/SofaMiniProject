@@ -7,11 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.distinctUntilChanged
+import androidx.recyclerview.widget.ConcatAdapter
 import com.sofaacademy.sofaminiproject.databinding.FragmentSportBinding
 import com.sofaacademy.sofaminiproject.utils.Constants.SLUG_ARG
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.yearFormat
 import com.sofaacademy.sofaminiproject.viewmodel.SportEventViewModel
+import com.sofaacademy.sofaminiproject.views.activities.MainActivity
 import com.sofaacademy.sofaminiproject.views.adapters.SportEventsArrayAdapter
+import com.sofaacademy.sofaminiproject.views.adapters.SportEventsHeaderAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -20,8 +25,10 @@ class SportFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
     private var _binding: FragmentSportBinding? = null
     private val binding get() = _binding!!
     private var slug: String? = null
+    private var currentDate: LocalDate? = null
     private val sportEventViewModel: SportEventViewModel by viewModels()
     private lateinit var sportEventsArrayAdapter: SportEventsArrayAdapter
+    private lateinit var sportEventsHeaderAdapter: SportEventsHeaderAdapter
 
     companion object {
         @JvmStatic
@@ -45,17 +52,22 @@ class SportFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSportBinding.inflate(inflater, container, false)
+        currentDate = (requireActivity() as MainActivity).getCurrentDate()
 
         sportEventsArrayAdapter = SportEventsArrayAdapter(requireContext(), mutableListOf(), this)
-        binding.eventsRv.adapter = sportEventsArrayAdapter
+        sportEventsHeaderAdapter = SportEventsHeaderAdapter(requireContext(), currentDate, null)
+        binding.eventsRv.adapter = ConcatAdapter(sportEventsHeaderAdapter, sportEventsArrayAdapter)
         setListeners()
 
-        sportEventViewModel.getSportEvents(slug!!, "2023-04-19")
+        sportEventViewModel.getSportEvents(slug!!, yearFormat.format(currentDate))
+
         return binding.root
     }
 
-    fun reloadSportData(date: String) {
-        sportEventViewModel.getSportEvents(slug!!, date)
+    fun reloadSportData(date: LocalDate) {
+        currentDate = date
+        sportEventsHeaderAdapter.setHeaderInfo(currentDate, null)
+        sportEventViewModel.getSportEvents(slug!!, yearFormat.format(date))
     }
 
     private fun setListeners() {
@@ -67,6 +79,7 @@ class SportFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
                     }
                 }
                 sportEventsArrayAdapter.setItems(res)
+                sportEventsHeaderAdapter.setHeaderInfo(currentDate, res.size.toString())
 
                 if (res.isEmpty()) {
                     binding.noDataAnimation.visibility = View.VISIBLE
