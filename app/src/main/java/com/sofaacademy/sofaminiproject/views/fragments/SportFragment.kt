@@ -60,7 +60,6 @@ class SportFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
         setListeners()
 
         sportEventViewModel.getSportEvents(slug!!, yearFormat.format(currentDate))
-
         return binding.root
     }
 
@@ -82,10 +81,12 @@ class SportFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
                 sportEventsHeaderAdapter.setHeaderInfo(currentDate, res.size.toString())
 
                 if (res.isEmpty()) {
+                    binding.eventsRv.visibility = View.GONE
                     binding.noDataAnimation.visibility = View.VISIBLE
                     binding.noDataMess.visibility = View.VISIBLE
                     binding.noDataAnimation.playAnimation()
                 } else {
+                    binding.eventsRv.visibility = View.VISIBLE
                     binding.noDataAnimation.visibility = View.GONE
                     binding.noDataMess.visibility = View.GONE
                     binding.noDataAnimation.progress = 0f

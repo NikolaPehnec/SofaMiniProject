@@ -1,6 +1,8 @@
 package com.sofaacademy.sofaminiproject.views.activities
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import com.google.android.material.tabs.TabLayout
@@ -16,6 +18,7 @@ import com.sofaacademy.sofaminiproject.views.fragments.SportFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -26,20 +29,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setSupportActionBar(binding.activityToolbar)
         setContentView(binding.root)
         val pagerAdapter = ScreenSlidePagerAdapter(this)
         binding.viewPager.adapter = pagerAdapter
 
         for (i in MIN_DAYS..MAX_DAYS) {
             val date = LocalDate.now().plusDays(i.toLong())
-            val dateStr =
-                tabDateFormat.format(date).uppercase().split(" ")[0] + "\n" + tabDateFormat.format(
+            var day =
+                if (date == LocalDate.now()) resources.getString(R.string.today) else tabDateFormat.format(
                     date
-                ).split(" ")[1]
+                ).uppercase().split(" ")[0]
+
+            val dateStr = day + "\n" + tabDateFormat.format(date).split(" ")[1]
             dateTabs[date] = binding.datesTabLayout.newTab().setText(dateStr)
         }
 
-        TabLayoutMediator(binding.tabLayout, binding.viewPager,
+        TabLayoutMediator(binding.tabLayout,
+            binding.viewPager,
             TabLayoutMediator.TabConfigurationStrategy { tab, position ->
                 var icons = arrayOf(
                     R.drawable.icon_football,
@@ -47,7 +54,9 @@ class MainActivity : AppCompatActivity() {
                     R.drawable.icon_american_football
                 )
                 tab.icon = AppCompatResources.getDrawable(baseContext, icons[position])
-                tab.text = resources.getStringArray(R.array.tabs)[position]
+                tab.setText(
+                    resources.getStringArray(R.array.tabs)[position]
+                )
             }).attach()
 
         binding.datesTabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
@@ -66,15 +75,12 @@ class MainActivity : AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
-        for (tab in dateTabs.toSortedMap().values)
-            binding.datesTabLayout.addTab(tab)
+        for (tab in dateTabs.toSortedMap().values) binding.datesTabLayout.addTab(tab)
 
         binding.datesTabLayout.post {
             dateTabs[LocalDate.now()]!!.select()
             binding.datesTabLayout.setScrollPosition(
-                binding.datesTabLayout.selectedTabPosition,
-                0f,
-                true
+                binding.datesTabLayout.selectedTabPosition, 0f, true
             )
         }
     }
@@ -83,6 +89,25 @@ class MainActivity : AppCompatActivity() {
         binding.datesTabLayout.let {
             val selectedTab = it.getTabAt(it.selectedTabPosition)
             return dateTabs.filterValues { tab -> tab.text == selectedTab?.text }.keys.first()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.leagues -> {
+                // Handle menu item 1 click
+                true
+            }
+            R.id.settings -> {
+                // Handle menu item 2 click
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

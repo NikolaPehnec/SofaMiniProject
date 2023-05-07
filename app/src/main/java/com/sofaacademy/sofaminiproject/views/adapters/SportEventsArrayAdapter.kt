@@ -2,6 +2,8 @@ package com.sofaacademy.sofaminiproject.views.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -40,7 +42,14 @@ class SportEventsArrayAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is ViewHolderEvent -> holder.bind(items[position] as SportEvent)
+            is ViewHolderEvent -> {
+                val nextItem = try {
+                    items[position + 1]
+                } catch (e: java.lang.IndexOutOfBoundsException) {
+                    null
+                }
+                holder.bind(items[position] as SportEvent, nextItem)
+            }
             is ViewHolderTournament -> holder.bind(items[position] as Tournament)
         }
     }
@@ -71,7 +80,7 @@ class SportEventsArrayAdapter(
     inner class ViewHolderEvent(private val binding: MatchRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: SportEvent) {
+        fun bind(item: SportEvent, nextItem: Any?) {
             val startTime = UtilityFunctions.getHourFromDate(item.startDate!!)
             val matchCurrentStatus = getCurrentMatchStatus(item.status, item.startDate)
             val homeResult = getResultValue(item.homeScore)
@@ -109,6 +118,12 @@ class SportEventsArrayAdapter(
                 homeResult,
                 awayResult
             )
+            binding.separatorImg.visibility = GONE
+            nextItem?.let {
+                if (it is Tournament) {
+                    binding.separatorImg.visibility = VISIBLE
+                }
+            }
         }
     }
 
@@ -141,7 +156,7 @@ class SportEventsArrayAdapter(
     private fun getResultValue(score: Any?): String {
         return when (score) {
             is Map<*, *> -> {
-                (score["total"] as? Double)?.toInt().toString() ?: ""
+                (score["total"] as? Double)?.toInt().toString()
             }
             else -> ""
         }
