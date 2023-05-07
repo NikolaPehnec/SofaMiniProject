@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
@@ -12,6 +11,7 @@ import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.ActivityMainBinding
 import com.sofaacademy.sofaminiproject.utils.Constants.MAX_DAYS
 import com.sofaacademy.sofaminiproject.utils.Constants.MIN_DAYS
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getTabLayoutConfigStrategy
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.tabDateFormat
 import com.sofaacademy.sofaminiproject.views.adapters.ScreenSlidePagerAdapter
 import com.sofaacademy.sofaminiproject.views.fragments.SportFragment
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         for (i in MIN_DAYS..MAX_DAYS) {
             val date = LocalDate.now().plusDays(i.toLong())
-            var day =
+            val day =
                 if (date == LocalDate.now()) resources.getString(R.string.today) else tabDateFormat.format(
                     date
                 ).uppercase().split(" ")[0]
@@ -45,19 +45,11 @@ class MainActivity : AppCompatActivity() {
             dateTabs[date] = binding.datesTabLayout.newTab().setText(dateStr)
         }
 
-        TabLayoutMediator(binding.tabLayout,
+        TabLayoutMediator(
+            binding.tabLayout,
             binding.viewPager,
-            TabLayoutMediator.TabConfigurationStrategy { tab, position ->
-                var icons = arrayOf(
-                    R.drawable.icon_football,
-                    R.drawable.icon_basketball,
-                    R.drawable.icon_american_football
-                )
-                tab.icon = AppCompatResources.getDrawable(baseContext, icons[position])
-                tab.setText(
-                    resources.getStringArray(R.array.tabs)[position]
-                )
-            }).attach()
+            getTabLayoutConfigStrategy(this)
+        ).attach()
 
         binding.datesTabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -100,7 +92,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.leagues -> {
-                // Handle menu item 1 click
+                LeaguesActivity.start(binding.tabLayout.selectedTabPosition, this)
                 true
             }
             R.id.settings -> {

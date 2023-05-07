@@ -3,6 +3,7 @@ package com.sofaacademy.sofaminiproject.networking
 import android.content.Context
 import com.sofaacademy.sofaminiproject.model.Result
 import com.sofaacademy.sofaminiproject.model.SportEvent
+import com.sofaacademy.sofaminiproject.model.Tournament
 import javax.inject.Inject
 
 open class SofaMiniRepository @Inject constructor(
@@ -13,8 +14,6 @@ open class SofaMiniRepository @Inject constructor(
     suspend fun getSportEvents(slug: String, date: String): Result<List<SportEvent>> =
         apiCall(call = { sofaMiniApi.getSportEvents(slug, date) })
 
-    suspend fun getTeamLogo(idTeam:String): Result<String> =
-        apiCall(call = { sofaMiniApi.getTeamLogo(idTeam) })
-
-
+    suspend fun getTournaments(slug: String): Result<List<Tournament>> =
+        apiCall(call = { sofaMiniApi.getTournaments(slug) })
 }
