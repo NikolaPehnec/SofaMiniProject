@@ -1,6 +1,7 @@
 package com.sofaacademy.sofaminiproject.views.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setSupportActionBar(binding.activityToolbar)
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
         setContentView(binding.root)
         val pagerAdapter = ScreenSlidePagerAdapter(this)
         binding.viewPager.adapter = pagerAdapter
@@ -96,5 +98,10 @@ class MainActivity : AppCompatActivity() {
 
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onDestroy() {
+        Log.e("DESTROZ", "DESTROY")
+        super.onDestroy()
     }
 }

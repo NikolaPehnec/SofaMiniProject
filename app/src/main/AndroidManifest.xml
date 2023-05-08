@@ -16,7 +16,7 @@
         <activity
             android:name=".views.activities.MainActivity"
             android:exported="true"
-            android:label="">
+            android:label="SofaMiniProject">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
