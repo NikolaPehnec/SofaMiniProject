@@ -39,7 +39,8 @@ class LeagueFragment : Fragment(), TournamentsArrayAdapter.OnItemClickListener {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLeagueBinding.inflate(inflater, container, false)
@@ -52,12 +53,11 @@ class LeagueFragment : Fragment(), TournamentsArrayAdapter.OnItemClickListener {
         return binding.root
     }
 
-
     private fun setListeners() {
         sportEventViewModel.tournamentsList.distinctUntilChanged().observe(viewLifecycleOwner) {
             it?.let {
-
                 tournamentsArrayAdapter.setItems(it)
+                // Never empty state?
                 /* if (res.isEmpty()) {
                      binding.eventsRv.visibility = View.GONE
                      binding.noDataAnimation.visibility = View.VISIBLE
@@ -76,6 +76,4 @@ class LeagueFragment : Fragment(), TournamentsArrayAdapter.OnItemClickListener {
 
     override fun onItemClick(item: Any) {
     }
-
-
 }

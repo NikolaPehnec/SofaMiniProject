@@ -48,7 +48,8 @@ class SportFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSportBinding.inflate(inflater, container, false)
@@ -98,6 +99,4 @@ class SportFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
 
     override fun onItemClick(item: Any) {
     }
-
-
 }

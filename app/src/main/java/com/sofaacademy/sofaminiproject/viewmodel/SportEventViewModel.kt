@@ -33,8 +33,9 @@ class SportEventViewModel @Inject constructor(private val sofaMiniRepository: So
                 is Result.Success ->
                     _sportEventsList.value = result.data
 
-                is Result.Error -> _sportEventsResponseError.value =
-                    result.exception.toString()
+                is Result.Error ->
+                    _sportEventsResponseError.value =
+                        result.exception.toString()
             }
         }
     }
@@ -45,11 +46,10 @@ class SportEventViewModel @Inject constructor(private val sofaMiniRepository: So
                 is Result.Success ->
                     _tournamentsList.value = result.data
 
-                is Result.Error -> _tournamentsResponseError.value =
-                    result.exception.toString()
+                is Result.Error ->
+                    _tournamentsResponseError.value =
+                        result.exception.toString()
             }
         }
     }
-
-
 }

@@ -7,7 +7,8 @@ import android.widget.LinearLayout
 import coil.load
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.MatchViewBinding
-import com.sofaacademy.sofaminiproject.utils.Constants
+import com.sofaacademy.sofaminiproject.utils.Constants.BASE_TEAM_URL
+import com.sofaacademy.sofaminiproject.utils.Constants.IMG_ENDPOINT
 
 class MatchView @JvmOverloads constructor(
     context: Context,
@@ -51,8 +52,8 @@ class MatchView @JvmOverloads constructor(
     }
 
     fun loadTeamLogos(teamHomeId: Int, teamAwayId: Int) {
-        binding.teamHomeLogo.load(Constants.BASE_URL + "team/" + teamHomeId + "/image")
-        binding.teamAwayLogo.load(Constants.BASE_URL + "team/" + teamAwayId + "/image")
+        binding.teamHomeLogo.load("$BASE_TEAM_URL$teamHomeId$IMG_ENDPOINT")
+        binding.teamAwayLogo.load("$BASE_TEAM_URL$teamAwayId$IMG_ENDPOINT")
     }
 
     fun setHomeTeamColor(color: Int) {
@@ -74,5 +75,4 @@ class MatchView @JvmOverloads constructor(
     fun setCurrentTimeColor(color: Int) {
         binding.currentTime.setTextColor(color)
     }
-
 }

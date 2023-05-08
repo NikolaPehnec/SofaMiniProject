@@ -16,5 +16,4 @@ data class SportEvent(
     val startDate: String?,
     val homeScore: Any?,
     val awayScore: Any?
-) {
-}
+)

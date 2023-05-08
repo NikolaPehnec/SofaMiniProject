@@ -1,6 +1,5 @@
 package com.sofaacademy.sofaminiproject.networking
 
-
 import com.sofaacademy.sofaminiproject.model.Result
 import retrofit2.Response
 

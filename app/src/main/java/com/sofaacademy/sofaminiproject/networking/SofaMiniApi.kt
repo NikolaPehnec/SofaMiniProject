@@ -16,7 +16,6 @@ interface SofaMiniApi {
 
     @GET("sport/{slug}/tournaments")
     suspend fun getTournaments(
-        @Path(value = "slug") slug: String,
+        @Path(value = "slug") slug: String
     ): Response<List<Tournament>>
-
 }

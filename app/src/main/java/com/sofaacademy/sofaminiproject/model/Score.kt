@@ -9,5 +9,4 @@ data class Score(
     val overtime: Int?,
     val winnerCode: String?,
     val round: Int
-) {
-}
+)

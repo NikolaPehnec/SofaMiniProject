@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.sofaacademy.sofaminiproject.databinding.TournamentDetailRowBinding
 import com.sofaacademy.sofaminiproject.model.Tournament
-import com.sofaacademy.sofaminiproject.utils.Constants
+import com.sofaacademy.sofaminiproject.utils.Constants.BASE_TOURNAMENT_URL
+import com.sofaacademy.sofaminiproject.utils.Constants.IMG_ENDPOINT
 import com.sofaacademy.sofaminiproject.utils.EventDiffUtilCallback
 
 class TournamentsArrayAdapter(
@@ -20,11 +21,12 @@ class TournamentsArrayAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderTournament {
         return ViewHolderTournament(
             TournamentDetailRowBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
+                LayoutInflater.from(parent.context),
+                parent,
+                false
             )
         )
     }
-
 
     override fun onBindViewHolder(holder: ViewHolderTournament, position: Int) {
         holder.bind(items[position])
@@ -45,15 +47,12 @@ class TournamentsArrayAdapter(
         fun onItemClick(item: Any)
     }
 
-
     inner class ViewHolderTournament(private val binding: TournamentDetailRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Tournament) {
             binding.tournamentName.text = item.name
-            binding.tournamentLogo.load(Constants.BASE_URL + "tournament/" + item.id + "/image")
+            binding.tournamentLogo.load("$BASE_TOURNAMENT_URL${item.id}$IMG_ENDPOINT")
         }
     }
-
-
 }

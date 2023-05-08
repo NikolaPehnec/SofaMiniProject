@@ -5,7 +5,8 @@ import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Tournament
 
 class EventDiffUtilCallback(
-    private val oldList: List<Any>, private val newList: List<Any>
+    private val oldList: List<Any>,
+    private val newList: List<Any>
 ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldList.size
 
@@ -36,7 +37,6 @@ class EventDiffUtilCallback(
 
         return false
     }
-
 
     override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
         return super.getChangePayload(oldItemPosition, newItemPosition)

@@ -9,21 +9,19 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.ActivityMainBinding
-import com.sofaacademy.sofaminiproject.utils.Constants.MAX_DAYS
-import com.sofaacademy.sofaminiproject.utils.Constants.MIN_DAYS
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getTabLayoutConfigStrategy
-import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.tabDateFormat
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getTabTitlesByDate
 import com.sofaacademy.sofaminiproject.views.adapters.ScreenSlidePagerAdapter
 import com.sofaacademy.sofaminiproject.views.fragments.SportFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
-
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val dateTabs = mutableMapOf<LocalDate, TabLayout.Tab>()
+    private var dateTabTitles = mutableMapOf<LocalDate, String>()
+    private var dateTabs = mutableMapOf<LocalDate, TabLayout.Tab>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,17 +32,7 @@ class MainActivity : AppCompatActivity() {
         val pagerAdapter = ScreenSlidePagerAdapter(this)
         binding.viewPager.adapter = pagerAdapter
 
-        for (i in MIN_DAYS..MAX_DAYS) {
-            val date = LocalDate.now().plusDays(i.toLong())
-            val day =
-                if (date == LocalDate.now()) resources.getString(R.string.today) else tabDateFormat.format(
-                    date
-                ).uppercase().split(" ")[0]
-
-            val dateStr = day + "\n" + tabDateFormat.format(date).split(" ")[1]
-            dateTabs[date] = binding.datesTabLayout.newTab().setText(dateStr)
-        }
-
+        dateTabTitles.putAll(getTabTitlesByDate(this))
         TabLayoutMediator(
             binding.tabLayout,
             binding.viewPager,
@@ -67,12 +55,17 @@ class MainActivity : AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
-        for (tab in dateTabs.toSortedMap().values) binding.datesTabLayout.addTab(tab)
+        for (date in dateTabTitles.toSortedMap().keys) {
+            dateTabs[date] = binding.datesTabLayout.newTab().setText(dateTabTitles[date])
+            binding.datesTabLayout.addTab(dateTabs[date]!!)
+        }
 
         binding.datesTabLayout.post {
             dateTabs[LocalDate.now()]!!.select()
             binding.datesTabLayout.setScrollPosition(
-                binding.datesTabLayout.selectedTabPosition, 0f, true
+                binding.datesTabLayout.selectedTabPosition,
+                0f,
+                true
             )
         }
     }
@@ -95,13 +88,13 @@ class MainActivity : AppCompatActivity() {
                 LeaguesActivity.start(binding.tabLayout.selectedTabPosition, this)
                 true
             }
+
             R.id.settings -> {
                 // Handle menu item 2 click
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-
 }

@@ -14,7 +14,6 @@ import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getTabLayoutConfig
 import com.sofaacademy.sofaminiproject.views.adapters.LeaguesPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class LeaguesActivity : AppCompatActivity() {
 
@@ -62,5 +61,4 @@ class LeaguesActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
 }

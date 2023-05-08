@@ -15,7 +15,9 @@ class SportEventsHeaderAdapter(val context: Context, var date: LocalDate?, var e
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeaderViewHolder {
         return HeaderViewHolder(
             EventHeaderBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
+                LayoutInflater.from(parent.context),
+                parent,
+                false
             )
         )
     }
