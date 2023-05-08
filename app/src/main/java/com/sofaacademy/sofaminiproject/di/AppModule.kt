@@ -30,7 +30,7 @@ class AppModule {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BASIC
         val httpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
-        val gsonBuilder=GsonBuilder().setLenient().create()
+        val gsonBuilder = GsonBuilder().setLenient().create()
 
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)

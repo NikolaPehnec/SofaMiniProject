@@ -37,7 +37,7 @@ class LeaguesActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        //  val selectedTab = intent.getIntExtra(getString(R.string.slug_index_key), 0)
+        val selectedTabIndex = intent.getIntExtra(getString(R.string.slug_index_key), 0)
         val pagerAdapter = LeaguesPagerAdapter(this)
         binding.viewPager.adapter = pagerAdapter
 
@@ -46,7 +46,11 @@ class LeaguesActivity : AppCompatActivity() {
             binding.viewPager,
             getTabLayoutConfigStrategy(this)
         ).attach()
-        // binding.tabLayout.getTabAt(selectedTab)?.select()
+
+        binding.tabLayout.post {
+            binding.tabLayout.getTabAt(selectedTabIndex)?.select()
+            binding.tabLayout.setScrollPosition(selectedTabIndex, 0f, true)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
