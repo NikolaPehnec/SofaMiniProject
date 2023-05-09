@@ -26,6 +26,7 @@ class AppModule {
     }
 
     @Provides
+    @Singleton
     fun provideApiService(): SofaMiniApi {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BASIC

@@ -20,7 +20,7 @@ import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getCurrentStat
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeamColorBasedOnTimeAndResult
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeamScoreColorBasedOnTimeAndResult
 
-class SportEventsArrayAdapter(
+class IncidentsArrayAdapter(
     private val context: Context,
     private var items: MutableList<Any>,
     private val listener: OnItemClickListener
@@ -76,7 +76,7 @@ class SportEventsArrayAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when (items[position]) {
-            is SportEvent -> TYPE_SPORT_EVENT
+            // is IncidentEnum.TYPE_GOAL.incident -> TYPE_SPORT_EVENT
             is Tournament -> TYPE_TOURNAMENT
             else -> -1
         }

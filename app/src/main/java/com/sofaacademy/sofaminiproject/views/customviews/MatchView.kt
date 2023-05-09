@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import coil.load
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.MatchViewBinding
+import com.sofaacademy.sofaminiproject.model.Score
 import com.sofaacademy.sofaminiproject.utils.Constants.BASE_TEAM_URL
 import com.sofaacademy.sofaminiproject.utils.Constants.IMG_ENDPOINT
 
@@ -40,15 +41,15 @@ class MatchView @JvmOverloads constructor(
         currentTime: String,
         teamHome: String,
         teamAway: String,
-        teamHomeRes: String,
-        teamAwayRes: String
+        homeScore: Score?,
+        awayScore: Score?
     ) {
         binding.timeStart.text = matchTime
         binding.currentTime.text = currentTime
         binding.teamHome.text = teamHome
         binding.teamAway.text = teamAway
-        binding.teamHomeResult.text = teamHomeRes
-        binding.teamAwayResult.text = teamAwayRes
+        binding.teamHomeResult.text = homeScore?.total?.toString()
+        binding.teamAwayResult.text = awayScore?.total?.toString()
     }
 
     fun loadTeamLogos(teamHomeId: Int, teamAwayId: Int) {

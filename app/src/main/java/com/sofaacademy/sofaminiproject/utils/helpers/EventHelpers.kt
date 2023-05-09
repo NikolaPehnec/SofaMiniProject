@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.model.MatchStatus
+import com.sofaacademy.sofaminiproject.model.Score
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions
@@ -13,13 +14,13 @@ object EventHelpers {
 
     fun getTeamColorBasedOnTimeAndResult(
         matchStatus: String,
-        teamResult: String,
-        otherTeamResult: String,
+        teamResult: Score?,
+        otherTeamResult: Score?,
         context: Context
     ): Int {
         return when (matchStatus) {
             MatchStatus.FINISHED.status -> {
-                if (teamResult.toInt() > otherTeamResult.toInt()) {
+                if ((teamResult?.total ?: 1) > (otherTeamResult?.total ?: 0)) {
                     context.getColor(R.color.on_surface_on_surface_lv_1)
                 } else {
                     context.getColor(R.color.on_surface_on_surface_lv_2)
@@ -41,8 +42,8 @@ object EventHelpers {
 
     fun getTeamScoreColorBasedOnTimeAndResult(
         matchStatus: String,
-        teamResult: String,
-        otherTeamResult: String,
+        teamResult: Score?,
+        otherTeamResult: Score?,
         context: Context
     ): Int {
         return when (matchStatus) {

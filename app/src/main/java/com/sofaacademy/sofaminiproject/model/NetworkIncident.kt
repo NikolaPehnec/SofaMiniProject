@@ -2,10 +2,6 @@ package com.sofaacademy.sofaminiproject.model
 
 import java.io.Serializable
 
-private const val TYPE_GOAL = "goal"
-private const val TYPE_CARD = "card"
-private const val TYPE_PERIOD = "period"
-
 class NetworkIncident(
     private val player: Player?,
     private val teamSide: String?,
@@ -21,7 +17,7 @@ class NetworkIncident(
 ) : Serializable {
 
     fun mapIncident() = when (type) {
-        TYPE_GOAL -> Incident.GoalIncident(
+        IncidentEnum.TYPE_GOAL.incident -> Incident.GoalIncident(
             player,
             scoringTeam,
             homeScore,
@@ -32,7 +28,7 @@ class NetworkIncident(
             type
         )
 
-        TYPE_CARD -> Incident.CardIncident(
+        IncidentEnum.TYPE_CARD.incident -> Incident.CardIncident(
             player,
             teamSide,
             color,
@@ -41,7 +37,7 @@ class NetworkIncident(
             type
         )
 
-        TYPE_PERIOD -> Incident.PeriodIncident(
+        IncidentEnum.TYPE_GOAL.incident -> Incident.PeriodIncident(
             text,
             id,
             time,

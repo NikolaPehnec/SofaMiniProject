@@ -12,7 +12,6 @@
     <string name="leagues_title">Leagues</string>
     <string name="leagues" translatable="false">leagues</string>
     <string name="settings" translatable="false">settings</string>
-    <string name="slug_index_key">slug</string>
 
     <string-array name="tabs">
         <item>Football</item>

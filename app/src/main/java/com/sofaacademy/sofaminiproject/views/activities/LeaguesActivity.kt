@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import com.google.android.material.tabs.TabLayoutMediator
-import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.ActivityLeaguesBinding
+import com.sofaacademy.sofaminiproject.utils.Constants.SLUG_ARG
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getTabLayoutConfigStrategy
 import com.sofaacademy.sofaminiproject.views.adapters.LeaguesPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +22,7 @@ class LeaguesActivity : AppCompatActivity() {
     companion object {
         fun start(slugIndex: Int, context: Context) {
             val intent = Intent(context, LeaguesActivity::class.java).apply {
-                putExtra(context.getString(R.string.slug_index_key), slugIndex)
+                putExtra(SLUG_ARG, slugIndex)
             }
             ContextCompat.startActivity(context, intent, bundleOf())
         }
@@ -36,7 +36,7 @@ class LeaguesActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val selectedTabIndex = intent.getIntExtra(getString(R.string.slug_index_key), 0)
+        val selectedTabIndex = intent.getIntExtra(SLUG_ARG, 0)
         val pagerAdapter = LeaguesPagerAdapter(this)
         binding.viewPager.adapter = pagerAdapter
 

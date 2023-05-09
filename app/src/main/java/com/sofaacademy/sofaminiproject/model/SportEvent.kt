@@ -16,8 +16,8 @@ data class SportEvent(
     val awayTeam: Team2,
     val status: String,
     val startDate: String?,
-    val homeScore: Any?,
-    val awayScore: Any?,
+    val homeScore: Score?,
+    val awayScore: Score?,
     val winnerCode: String?,
     val round: Int
 ) : Serializable

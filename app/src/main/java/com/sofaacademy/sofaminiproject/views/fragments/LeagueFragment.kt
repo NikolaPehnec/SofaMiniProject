@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.distinctUntilChanged
 import com.sofaacademy.sofaminiproject.databinding.FragmentLeagueBinding
 import com.sofaacademy.sofaminiproject.utils.Constants.SLUG_ARG
-import com.sofaacademy.sofaminiproject.viewmodel.SportEventViewModel
+import com.sofaacademy.sofaminiproject.viewmodel.TournamentsViewModel
 import com.sofaacademy.sofaminiproject.views.adapters.TournamentsArrayAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +18,7 @@ class LeagueFragment : Fragment(), TournamentsArrayAdapter.OnItemClickListener {
     private var _binding: FragmentLeagueBinding? = null
     private val binding get() = _binding!!
     private var slug: String? = null
-    private val sportEventViewModel: SportEventViewModel by viewModels()
+    private val tournamentsViewModel: TournamentsViewModel by viewModels()
     private lateinit var tournamentsArrayAdapter: TournamentsArrayAdapter
 
     companion object {
@@ -49,12 +49,12 @@ class LeagueFragment : Fragment(), TournamentsArrayAdapter.OnItemClickListener {
         binding.leaguesRv.adapter = tournamentsArrayAdapter
         setListeners()
 
-        sportEventViewModel.getTournaments(slug!!)
+        tournamentsViewModel.getTournaments(slug!!)
         return binding.root
     }
 
     private fun setListeners() {
-        sportEventViewModel.tournamentsList.distinctUntilChanged().observe(viewLifecycleOwner) {
+        tournamentsViewModel.tournamentsList.distinctUntilChanged().observe(viewLifecycleOwner) {
             it?.let {
                 tournamentsArrayAdapter.setItems(it)
                 // Never empty state?

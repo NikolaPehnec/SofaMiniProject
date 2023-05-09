@@ -1,5 +1,6 @@
 package com.sofaacademy.sofaminiproject.networking
 
+import com.sofaacademy.sofaminiproject.model.NetworkIncident
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Tournament
 import retrofit2.Response
@@ -27,5 +28,5 @@ interface SofaMiniApi {
     @GET("event/{id}/incidents")
     suspend fun getEventIncidents(
         @Path(value = "id") id: String
-    ): Response<SportEvent>
+    ): Response<List<NetworkIncident>>
 }
