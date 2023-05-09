@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">SofaMiniProject</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="title_football">Football</string>
+    <string name="title_basketball">Basketball</string>
+    <string name="title_american_football">Am. Football</string>
+    <string name="no_data">No available matches on this day</string>
+    <string name="events_num">%1$s Events</string>
+    <string name="today">TODAY</string>
+
+    <string name="leagues_title">Leagues</string>
+    <string name="leagues" translatable="false">leagues</string>
+    <string name="settings" translatable="false">settings</string>
+    <string name="slug_index_key">slug</string>
+
+    <string-array name="tabs">
+        <item>Football</item>
+        <item>Basketball</item>
+        <item>Am.Football</item>
+    </string-array>
+
 </resources>
