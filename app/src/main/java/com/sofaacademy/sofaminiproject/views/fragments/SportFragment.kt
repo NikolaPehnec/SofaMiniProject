@@ -9,9 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.distinctUntilChanged
 import androidx.recyclerview.widget.ConcatAdapter
 import com.sofaacademy.sofaminiproject.databinding.FragmentSportBinding
+import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.utils.Constants.SLUG_ARG
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.yearFormat
 import com.sofaacademy.sofaminiproject.viewmodel.SportEventViewModel
+import com.sofaacademy.sofaminiproject.views.activities.EventDetailsActivity
 import com.sofaacademy.sofaminiproject.views.activities.MainActivity
 import com.sofaacademy.sofaminiproject.views.adapters.SportEventsArrayAdapter
 import com.sofaacademy.sofaminiproject.views.adapters.SportEventsHeaderAdapter
@@ -98,5 +100,8 @@ class SportFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(item: Any) {
+        when (item) {
+            is SportEvent -> EventDetailsActivity.start(item, requireContext())
+        }
     }
 }

@@ -15,4 +15,6 @@ object Constants {
 
     const val TYPE_SPORT_EVENT = 1
     const val TYPE_TOURNAMENT = 2
+
+    const val EVENT_ID_KEY = "event_id"
 }

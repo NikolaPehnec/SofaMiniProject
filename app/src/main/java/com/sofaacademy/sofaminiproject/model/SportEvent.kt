@@ -1,5 +1,7 @@
 package com.sofaacademy.sofaminiproject.model
 
+import java.io.Serializable
+
 /**
  * Za home i away score na docsima pise da su object tipa Score,
  * ali kad nema podataka onda je prazna lista, primjer:
@@ -15,5 +17,7 @@ data class SportEvent(
     val status: String,
     val startDate: String?,
     val homeScore: Any?,
-    val awayScore: Any?
-)
+    val awayScore: Any?,
+    val winnerCode: String?,
+    val round: Int
+) : Serializable

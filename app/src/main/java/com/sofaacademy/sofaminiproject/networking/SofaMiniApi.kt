@@ -18,4 +18,14 @@ interface SofaMiniApi {
     suspend fun getTournaments(
         @Path(value = "slug") slug: String
     ): Response<List<Tournament>>
+
+    @GET("event/{id}")
+    suspend fun getEventDetail(
+        @Path(value = "id") id: String
+    ): Response<SportEvent>
+
+    @GET("event/{id}/incidents")
+    suspend fun getEventIncidents(
+        @Path(value = "id") id: String
+    ): Response<SportEvent>
 }

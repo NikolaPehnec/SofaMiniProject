@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.appcompat.content.res.AppCompatResources
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sofaacademy.sofaminiproject.R
-import com.sofaacademy.sofaminiproject.model.MatchStatus
 import com.sofaacademy.sofaminiproject.utils.Constants.MAX_DAYS
 import com.sofaacademy.sofaminiproject.utils.Constants.MIN_DAYS
 import java.time.LocalDate
@@ -20,6 +19,16 @@ object UtilityFunctions {
     val tabDateFormat = DateTimeFormatter.ofPattern("EEE dd.MM.", Locale.US)
     val yearFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val dateLongFormat = DateTimeFormatter.ofPattern("EEE, dd.MM.yyyy.", Locale.US)
+    val detailDateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.US)
+
+    fun getFormattedDetailDate(date: String): String {
+        return try {
+            val localDateTime = LocalDateTime.parse(date, dateTimeFormatter)
+            detailDateFormat.format(localDateTime)
+        } catch (e: java.lang.Exception) {
+            ""
+        }
+    }
 
     fun getHourFromDate(date: String): String {
         return try {
@@ -70,24 +79,6 @@ object UtilityFunctions {
         return dateTabs
     }
 
-    /**
-     * Za home i away score na docsima pise da su object tipa Score,
-     * ali kad nema podataka onda je prazna lista, primjer:
-     * "homeScore": [], ili
-     * "homeScore": {"total": 4,"period1": 2,"period2": 2}, ne moze biti ni score ni lista scorea
-     */
-    fun getCurrentMatchStatus(status: String, matchStartTime: String): String {
-        return when (status) {
-            MatchStatus.NOT_STARTED.status -> "-"
-            MatchStatus.FINISHED.status -> "FT"
-            MatchStatus.IN_PROGRESS.status -> {
-                elapsedMinutesFromDate(matchStartTime) + "'"
-            }
-
-            else -> ""
-        }
-    }
-
     fun getResultValue(score: Any?): String {
         return when (score) {
             is Map<*, *> -> {
@@ -95,51 +86,6 @@ object UtilityFunctions {
             }
 
             else -> ""
-        }
-    }
-
-    fun getTeamColorBasedOnTimeAndResult(
-        matchStatus: String,
-        teamResult: String,
-        otherTeamResult: String,
-        context: Context
-    ): Int {
-        return when (matchStatus) {
-            MatchStatus.FINISHED.status -> {
-                if (teamResult.toInt() > otherTeamResult.toInt()) {
-                    context.getColor(R.color.on_surface_on_surface_lv_1)
-                } else {
-                    context.getColor(R.color.on_surface_on_surface_lv_2)
-                }
-            }
-
-            else -> context.getColor(R.color.on_surface_on_surface_lv_1)
-        }
-    }
-
-    fun getCurrentStatusColor(
-        matchStatus: String,
-        context: Context
-    ): Int {
-        return when (matchStatus) {
-            MatchStatus.IN_PROGRESS.status -> context.getColor(R.color.specific_live)
-            else -> context.getColor(R.color.on_surface_on_surface_lv_2)
-        }
-    }
-
-    fun getTeamScoreColorBasedOnTimeAndResult(
-        matchStatus: String,
-        teamResult: String,
-        otherTeamResult: String,
-        context: Context
-    ): Int {
-        return when (matchStatus) {
-            MatchStatus.FINISHED.status -> {
-                getTeamColorBasedOnTimeAndResult(matchStatus, teamResult, otherTeamResult, context)
-            }
-
-            MatchStatus.IN_PROGRESS.status -> context.getColor(R.color.specific_live)
-            else -> context.getColor(R.color.on_surface_on_surface_lv_1)
         }
     }
 }
