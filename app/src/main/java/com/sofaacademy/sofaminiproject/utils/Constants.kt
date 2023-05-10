@@ -10,7 +10,7 @@ object Constants {
     const val SLUG_FOOTBALL = "football"
     const val SLUG_BASKETBALL = "basketball"
     const val SLUG_AMERICAN_FOOTBALL = "american-football"
-    const val MIN_DAYS = -21
+    const val MIN_DAYS = -28
     const val MAX_DAYS = 7
 
     const val TYPE_SPORT_EVENT = 1

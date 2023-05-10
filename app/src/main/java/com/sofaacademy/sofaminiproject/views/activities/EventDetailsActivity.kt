@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -51,10 +52,11 @@ class EventDetailsActivity : AppCompatActivity(), IncidentsArrayAdapter.OnItemCl
         customToolbarBinding = EventDetailToolbarBinding.inflate(layoutInflater)
         binding.activityToolbar.addView(customToolbarBinding.root)
 
-        incidentsArrayAdapter = IncidentsArrayAdapter(this, mutableListOf(), this)
+        sportEvent = getEventFromIntent(intent)
+        incidentsArrayAdapter =
+            IncidentsArrayAdapter(sportEvent.tournament.sport.slug, this, mutableListOf(), this)
         binding.incidentsRv.adapter = incidentsArrayAdapter
 
-        sportEvent = getEventFromIntent(intent)
         fillEventDetails(sportEvent)
         sportEventViewModel.getEventDetails(sportEvent.id.toString())
         sportEventViewModel.getEventIncidents(sportEvent.id.toString())
@@ -67,6 +69,7 @@ class EventDetailsActivity : AppCompatActivity(), IncidentsArrayAdapter.OnItemCl
             fillEventDetails(it)
         }
         sportEventViewModel.incidentsList.observe(this) {
+            binding.noIncidentsView.root.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
             incidentsArrayAdapter.setItems(it.asReversed())
         }
     }

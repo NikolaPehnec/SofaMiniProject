@@ -3,9 +3,7 @@ package com.sofaacademy.sofaminiproject.views.adapters.viewHolders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.sofaacademy.sofaminiproject.databinding.CardIncidentRowBinding
-import com.sofaacademy.sofaminiproject.databinding.GoalIncidentRowBinding
 import com.sofaacademy.sofaminiproject.model.CardTeamSide
-import com.sofaacademy.sofaminiproject.model.GoalScoringTeam
 import com.sofaacademy.sofaminiproject.model.Incident
 
 class ViewHolderCardIncident(private val binding: CardIncidentRowBinding) :

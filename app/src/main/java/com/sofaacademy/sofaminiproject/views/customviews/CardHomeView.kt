@@ -7,9 +7,7 @@ import android.widget.LinearLayout
 import androidx.appcompat.content.res.AppCompatResources
 import coil.load
 import com.sofaacademy.sofaminiproject.R
-import com.sofaacademy.sofaminiproject.databinding.CardAwayRowBinding
 import com.sofaacademy.sofaminiproject.databinding.CardHomeRowBinding
-import com.sofaacademy.sofaminiproject.databinding.GoalAwayRowBinding
 import com.sofaacademy.sofaminiproject.model.CardColor
 import com.sofaacademy.sofaminiproject.model.Incident
 
@@ -25,7 +23,6 @@ class CardHomeView @JvmOverloads constructor(
         true
     )
 
-
     fun setCardIncidentInfo(
         cardIncident: Incident.CardIncident
     ) {
@@ -39,7 +36,7 @@ class CardHomeView @JvmOverloads constructor(
                 )
             )
 
-            //Nema crvenoZutog resursa na zeplinu?
+            // Nema crvenoZutog resursa na zeplinu?
             CardColor.YELLOW.color -> binding.icCard.load(
                 AppCompatResources.getDrawable(
                     context,
@@ -54,7 +51,7 @@ class CardHomeView @JvmOverloads constructor(
                 )
             )
         }
-        //Hardkodirano foul
-        //binding.argument.text=cardIncident.?
+        // Hardkodirano foul
+        // binding.argument.text=cardIncident.?
     }
 }

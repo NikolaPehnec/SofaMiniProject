@@ -16,6 +16,7 @@ import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderGoal
 import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderPeriodIncident
 
 class IncidentsArrayAdapter(
+    private val sportSlug: String,
     private val context: Context,
     private var items: MutableList<Any>,
     private val listener: OnItemClickListener
@@ -28,7 +29,8 @@ class IncidentsArrayAdapter(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                )
+                ),
+                sportSlug
             )
 
             IncidentEnum.TYPE_CARD.ordinal -> ViewHolderCardIncident(
@@ -87,5 +89,4 @@ class IncidentsArrayAdapter(
     interface OnItemClickListener {
         fun onItemClick(item: Any)
     }
-
 }

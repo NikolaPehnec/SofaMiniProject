@@ -4,40 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/surface_surface_1"
-    android:padding="8dp">
+    android:background="@color/surface_surface_1">
 
     <ImageView
-        android:id="@+id/time_start"
+        android:id="@+id/goal_img"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:src="@drawable/icon_goal"
         android:textAlignment="center"
         android:textColor="@color/on_surface_on_surface_lv_2"
+        app:layout_constraintBottom_toTopOf="@+id/minute"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/separator" />
 
     <View
         android:id="@+id/separator"
         android:layout_width="1dp"
         android:layout_height="40dp"
         android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@color/on_surface_on_surface_lv_4"
-        app:layout_constraintStart_toEndOf="@+id/time_start"
-        app:layout_constraintTop_toTopOf="@+id/time_start" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/goal_img"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/minute"
         style="@style/Micro"
         android:layout_width="32dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
         android:gravity="center"
         android:textColor="@color/on_surface_on_surface_lv_2"
-        app:layout_constraintEnd_toEndOf="@+id/time_start"
-        app:layout_constraintStart_toStartOf="@+id/time_start"
-        app:layout_constraintTop_toBottomOf="@+id/time_start"
+        app:layout_constraintBottom_toBottomOf="@+id/separator"
+        app:layout_constraintEnd_toEndOf="@+id/goal_img"
+        app:layout_constraintStart_toStartOf="@+id/goal_img"
+        app:layout_constraintTop_toBottomOf="@+id/goal_img"
+        tools:text="8'" />
+
+    <View
+        android:id="@+id/separatorH"
+        android:layout_width="40dp"
+        android:layout_height="1dp"
+        android:background="@color/on_surface_on_surface_lv_4"
+        app:layout_constraintEnd_toEndOf="@+id/minute_basketball"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/minute_basketball"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/minute_basketball"
+        style="@style/Micro"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/on_surface_on_surface_lv_2"
+        app:layout_constraintBottom_toBottomOf="@+id/score_away"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/score_away"
         tools:text="8'" />
 
     <TextView
@@ -87,6 +113,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
         android:textColor="@color/on_surface_on_surface_lv_1"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/argument"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"

@@ -5,13 +5,10 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
-import coil.load
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.EventDetailViewBinding
 import com.sofaacademy.sofaminiproject.model.MatchStatus
 import com.sofaacademy.sofaminiproject.model.SportEvent
-import com.sofaacademy.sofaminiproject.utils.Constants.BASE_TEAM_URL
-import com.sofaacademy.sofaminiproject.utils.Constants.IMG_ENDPOINT
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.elapsedMinutesFromDate
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getFormattedDetailDate
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getHourFromDate
@@ -28,19 +25,6 @@ class EventDetailView @JvmOverloads constructor(
         this,
         true
     )
-
-    init {
-        context.theme.obtainStyledAttributes(attrs, R.styleable.EventDetail, 0, 0).apply {
-            try {
-                binding.eventDate.text = getText(R.styleable.EventDetail_eventDate)
-                binding.eventTime.text = getText(R.styleable.EventDetail_eventTime)
-                binding.teamHomeName.text = getText(R.styleable.EventDetail_teamHomeName)
-                binding.teamAwayName.text = getText(R.styleable.EventDetail_teamAwayName)
-            } finally {
-                recycle()
-            }
-        }
-    }
 
     fun setEventInfo(
         sportEvent: SportEvent
@@ -129,13 +113,13 @@ class EventDetailView @JvmOverloads constructor(
             }
         }
 
-        binding.teamHomeName.text = sportEvent.homeTeam.name
-        binding.teamAwayName.text = sportEvent.awayTeam.name
+        binding.teamHome.setTeamName(sportEvent.homeTeam.name)
+        binding.teamAway.setTeamName(sportEvent.awayTeam.name)
         loadTeamLogos(sportEvent.homeTeam.id, sportEvent.awayTeam.id)
     }
 
     private fun loadTeamLogos(teamHomeId: Int, teamAwayId: Int) {
-        binding.teamHomeLogo.load("$BASE_TEAM_URL$teamHomeId$IMG_ENDPOINT")
-        binding.teamAwayLogo.load("$BASE_TEAM_URL$teamAwayId$IMG_ENDPOINT")
+        binding.teamHome.loadTeamLogo(teamHomeId)
+        binding.teamAway.loadTeamLogo(teamAwayId)
     }
 }
