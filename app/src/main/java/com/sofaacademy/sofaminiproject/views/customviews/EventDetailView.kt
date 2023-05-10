@@ -13,6 +13,7 @@ import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.elapsedMinutesFrom
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getFormattedDetailDate
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getHourFromDate
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeamScoreColorBasedOnTimeAndResult
+import com.sofaacademy.sofaminiproject.utils.listeners.OnTeamClicked
 
 class EventDetailView @JvmOverloads constructor(
     context: Context,
@@ -25,6 +26,7 @@ class EventDetailView @JvmOverloads constructor(
         this,
         true
     )
+
 
     fun setEventInfo(
         sportEvent: SportEvent
@@ -121,5 +123,14 @@ class EventDetailView @JvmOverloads constructor(
     private fun loadTeamLogos(teamHomeId: Int, teamAwayId: Int) {
         binding.teamHome.loadTeamLogo(teamHomeId)
         binding.teamAway.loadTeamLogo(teamAwayId)
+    }
+
+    fun setOnItemClickListener(onTeamClicked: OnTeamClicked) {
+        binding.teamHome.setOnClickListener {
+            onTeamClicked.onTeamHomeClicked()
+        }
+        binding.teamAway.setOnClickListener {
+            onTeamClicked.onTeamAwayClicked()
+        }
     }
 }

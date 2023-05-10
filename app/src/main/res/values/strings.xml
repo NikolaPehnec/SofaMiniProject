@@ -23,4 +23,11 @@
         <item>Am.Football</item>
     </string-array>
 
+    <string-array name="tabs_detail_page">
+        <item>Details</item>
+        <item>Matches</item>
+        <item>Standings</item>
+        <item>Squad</item>
+    </string-array>
+
 </resources>

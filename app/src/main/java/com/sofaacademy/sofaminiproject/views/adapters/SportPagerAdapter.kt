@@ -8,7 +8,7 @@ import com.sofaacademy.sofaminiproject.utils.Constants.SLUG_BASKETBALL
 import com.sofaacademy.sofaminiproject.utils.Constants.SLUG_FOOTBALL
 import com.sofaacademy.sofaminiproject.views.fragments.SportFragment
 
-class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+class SportPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
     override fun getItemCount(): Int = 3
 
     override fun createFragment(position: Int): Fragment {

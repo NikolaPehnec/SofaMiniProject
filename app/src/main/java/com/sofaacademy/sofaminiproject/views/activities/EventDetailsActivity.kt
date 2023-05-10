@@ -17,6 +17,7 @@ import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.Constants.EVENT_ID_KEY
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getEventFromIntent
+import com.sofaacademy.sofaminiproject.utils.listeners.OnTeamClicked
 import com.sofaacademy.sofaminiproject.viewmodel.SportEventViewModel
 import com.sofaacademy.sofaminiproject.views.adapters.IncidentsArrayAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,7 +26,8 @@ import dagger.hilt.android.AndroidEntryPoint
  * Prvi podaci preko intenta, onda dohvacanje svjezih s API-ja
  */
 @AndroidEntryPoint
-class EventDetailsActivity : AppCompatActivity(), IncidentsArrayAdapter.OnItemClickListener {
+class EventDetailsActivity : AppCompatActivity(), IncidentsArrayAdapter.OnItemClickListener,
+    OnTeamClicked {
 
     private lateinit var sportEvent: SportEvent
     private lateinit var binding: ActivityEventDetailsBinding
@@ -72,6 +74,8 @@ class EventDetailsActivity : AppCompatActivity(), IncidentsArrayAdapter.OnItemCl
             binding.noIncidentsView.root.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
             incidentsArrayAdapter.setItems(it.asReversed())
         }
+
+        binding.eventDetails.setOnItemClickListener(this)
     }
 
     private fun fillEventDetails(sportEvent: SportEvent) {
@@ -101,5 +105,13 @@ class EventDetailsActivity : AppCompatActivity(), IncidentsArrayAdapter.OnItemCl
 
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onTeamHomeClicked() {
+        TeamDetailsActivity.start(sportEvent.homeTeam.id, this)
+    }
+
+    override fun onTeamAwayClicked() {
+        TeamDetailsActivity.start(sportEvent.awayTeam.id, this)
     }
 }

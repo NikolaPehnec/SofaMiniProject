@@ -62,10 +62,10 @@ class SportFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
         binding.eventsRv.adapter = ConcatAdapter(sportEventsHeaderAdapter, sportEventsArrayAdapter)
         setListeners()
 
-        sportEventViewModel.getSportEvents(slug!!, yearFormat.format(currentDate))
         return binding.root
     }
 
+    //Load kod prvog selektiranja trenutnog datuma
     fun reloadSportData(date: LocalDate) {
         currentDate = date
         sportEventsHeaderAdapter.setHeaderInfo(currentDate, null)

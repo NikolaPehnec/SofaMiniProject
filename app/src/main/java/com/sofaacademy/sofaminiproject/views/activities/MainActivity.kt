@@ -10,9 +10,9 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.ActivityMainBinding
-import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getTabLayoutConfigStrategy
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getSportsTabLayoutConfigStrategy
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getTabTitlesByDate
-import com.sofaacademy.sofaminiproject.views.adapters.ScreenSlidePagerAdapter
+import com.sofaacademy.sofaminiproject.views.adapters.SportPagerAdapter
 import com.sofaacademy.sofaminiproject.views.fragments.SportFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
@@ -31,15 +31,29 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.activityToolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         setContentView(binding.root)
-        val pagerAdapter = ScreenSlidePagerAdapter(this)
+        val pagerAdapter = SportPagerAdapter(this)
         binding.viewPager.adapter = pagerAdapter
 
         dateTabTitles.putAll(getTabTitlesByDate(this))
         TabLayoutMediator(
             binding.tabLayout,
             binding.viewPager,
-            getTabLayoutConfigStrategy(this)
+            getSportsTabLayoutConfigStrategy(this)
         ).attach()
+
+        for (date in dateTabTitles.toSortedMap().keys) {
+            dateTabs[date] = binding.datesTabLayout.newTab().setText(dateTabTitles[date])
+            binding.datesTabLayout.addTab(dateTabs[date]!!)
+        }
+
+        binding.datesTabLayout.post {
+            dateTabs[LocalDate.now()]!!.select()
+            binding.datesTabLayout.setScrollPosition(
+                binding.datesTabLayout.selectedTabPosition,
+                0f,
+                true
+            )
+        }
 
         binding.datesTabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -56,20 +70,6 @@ class MainActivity : AppCompatActivity() {
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
-
-        for (date in dateTabTitles.toSortedMap().keys) {
-            dateTabs[date] = binding.datesTabLayout.newTab().setText(dateTabTitles[date])
-            binding.datesTabLayout.addTab(dateTabs[date]!!)
-        }
-
-        binding.datesTabLayout.post {
-            dateTabs[LocalDate.now()]!!.select()
-            binding.datesTabLayout.setScrollPosition(
-                binding.datesTabLayout.selectedTabPosition,
-                0f,
-                true
-            )
-        }
     }
 
     fun getCurrentDate(): LocalDate {

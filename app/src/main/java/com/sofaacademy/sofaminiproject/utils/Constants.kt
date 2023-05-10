@@ -6,6 +6,7 @@ object Constants {
     const val BASE_TOURNAMENT_URL = BASE_URL + "tournament/"
     const val IMG_ENDPOINT = "/image"
     const val SLUG_ARG = "slug_arg"
+    const val TEAM_ID_ARG = "team_id_arg"
 
     const val SLUG_FOOTBALL = "football"
     const val SLUG_BASKETBALL = "basketball"

@@ -10,7 +10,7 @@ import androidx.core.os.bundleOf
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sofaacademy.sofaminiproject.databinding.ActivityLeaguesBinding
 import com.sofaacademy.sofaminiproject.utils.Constants.SLUG_ARG
-import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getTabLayoutConfigStrategy
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getSportsTabLayoutConfigStrategy
 import com.sofaacademy.sofaminiproject.views.adapters.LeaguesPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -43,7 +43,7 @@ class LeaguesActivity : AppCompatActivity() {
         TabLayoutMediator(
             binding.tabLayout,
             binding.viewPager,
-            getTabLayoutConfigStrategy(this)
+            getSportsTabLayoutConfigStrategy(this)
         ).attach()
 
         binding.tabLayout.post {

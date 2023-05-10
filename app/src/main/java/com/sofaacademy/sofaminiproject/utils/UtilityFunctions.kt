@@ -48,7 +48,7 @@ object UtilityFunctions {
         }
     }
 
-    fun getTabLayoutConfigStrategy(context: Context): TabLayoutMediator.TabConfigurationStrategy =
+    fun getSportsTabLayoutConfigStrategy(context: Context): TabLayoutMediator.TabConfigurationStrategy =
         TabLayoutMediator.TabConfigurationStrategy { tab, position ->
             val icons = arrayOf(
                 R.drawable.icon_football,
@@ -57,6 +57,11 @@ object UtilityFunctions {
             )
             tab.icon = AppCompatResources.getDrawable(context, icons[position])
             tab.text = context.resources.getStringArray(R.array.tabs)[position]
+        }
+
+    fun getTeamDetailsTabLayoutConfigStrategy(context: Context): TabLayoutMediator.TabConfigurationStrategy =
+        TabLayoutMediator.TabConfigurationStrategy { tab, position ->
+            tab.text = context.resources.getStringArray(R.array.tabs_detail_page)[position]
         }
 
     fun getTabTitlesByDate(context: Context): MutableMap<LocalDate, String> {
