@@ -3,6 +3,7 @@ package com.sofaacademy.sofaminiproject.views.customviews
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import coil.load
 import com.sofaacademy.sofaminiproject.R
@@ -11,8 +12,10 @@ import com.sofaacademy.sofaminiproject.model.MatchStatus
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.utils.Constants.BASE_TEAM_URL
 import com.sofaacademy.sofaminiproject.utils.Constants.IMG_ENDPOINT
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.elapsedMinutesFromDate
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getFormattedDetailDate
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getHourFromDate
+import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeamScoreColorBasedOnTimeAndResult
 
 class EventDetailView @JvmOverloads constructor(
     context: Context,
@@ -42,17 +45,90 @@ class EventDetailView @JvmOverloads constructor(
     fun setEventInfo(
         sportEvent: SportEvent
     ) {
+        val colorHome =
+            getTeamScoreColorBasedOnTimeAndResult(
+                sportEvent.status,
+                sportEvent.homeScore,
+                sportEvent.awayScore,
+                context
+            )
+        val colorAway =
+            getTeamScoreColorBasedOnTimeAndResult(
+                sportEvent.status,
+                sportEvent.awayScore,
+                sportEvent.homeScore,
+                context
+            )
+
         when (sportEvent.status) {
             MatchStatus.NOT_STARTED.status -> {
+                binding.scoreHome.visibility = View.GONE
+                binding.scoreAway.visibility = View.GONE
+                binding.scoreHome.visibility = View.GONE
+                binding.scoreSlash.visibility = View.GONE
+                binding.matchStatus.visibility = View.GONE
+
                 sportEvent.startDate?.let {
-                    binding.eventDate.text = getFormattedDetailDate(it)
-                    binding.eventTime.text = getHourFromDate(it)
+                    binding.eventDate.apply {
+                        visibility = View.VISIBLE
+                        text = getFormattedDetailDate(it)
+                    }
+                    binding.eventTime.apply {
+                        visibility = View.VISIBLE
+                        text = getHourFromDate(it)
+                    }
                 }
             }
 
-            MatchStatus.IN_PROGRESS.status -> {}
-            MatchStatus.FINISHED.status -> {}
+            MatchStatus.IN_PROGRESS.status -> {
+                binding.eventDate.visibility = View.GONE
+                binding.eventTime.visibility = View.GONE
+                binding.scoreHome.apply {
+                    visibility = View.VISIBLE
+                    setTextColor(colorHome)
+                    text = sportEvent.homeScore?.total.toString()
+                }
+                binding.scoreAway.apply {
+                    visibility = View.VISIBLE
+                    setTextColor(colorAway)
+                    text = sportEvent.awayScore?.total.toString()
+                }
+                binding.scoreSlash.apply {
+                    visibility = View.VISIBLE
+                    setTextColor(colorHome)
+                }
+                binding.matchStatus.apply {
+                    visibility = View.VISIBLE
+                    setTextColor(colorHome)
+                    text = elapsedMinutesFromDate(sportEvent.startDate ?: "")
+                }
+            }
+
+            MatchStatus.FINISHED.status -> {
+                binding.eventDate.visibility = View.GONE
+                binding.eventTime.visibility = View.GONE
+                binding.scoreHome.apply {
+                    visibility = View.VISIBLE
+                    setTextColor(colorHome)
+                    text = sportEvent.homeScore?.total.toString()
+                }
+                binding.scoreAway.apply {
+                    visibility = View.VISIBLE
+                    setTextColor(colorAway)
+                    text = sportEvent.awayScore?.total.toString()
+                }
+                binding.scoreSlash.apply {
+                    visibility = View.VISIBLE
+                    setTextColor(colorHome)
+                }
+                binding.matchStatus.apply {
+                    visibility = View.VISIBLE
+                    setTextColor(colorHome)
+                    text = context.getString(R.string.match_status_finished)
+                }
+            }
         }
+
         binding.teamHomeName.text = sportEvent.homeTeam.name
         binding.teamAwayName.text = sportEvent.awayTeam.name
         loadTeamLogos(sportEvent.homeTeam.id, sportEvent.awayTeam.id)
@@ -61,25 +137,5 @@ class EventDetailView @JvmOverloads constructor(
     private fun loadTeamLogos(teamHomeId: Int, teamAwayId: Int) {
         binding.teamHomeLogo.load("$BASE_TEAM_URL$teamHomeId$IMG_ENDPOINT")
         binding.teamAwayLogo.load("$BASE_TEAM_URL$teamAwayId$IMG_ENDPOINT")
-    }
-
-    fun setHomeTeamColor(color: Int) {
-        // binding.teamHome.setTextColor(color)
-    }
-
-    fun setHomeTeamScoreColor(color: Int) {
-        //  binding.teamHomeResult.setTextColor(color)
-    }
-
-    fun setAwayTeamScoreColor(color: Int) {
-        //   binding.teamAwayResult.setTextColor(color)
-    }
-
-    fun setAwayTeamColor(color: Int) {
-        //   binding.teamAway.setTextColor(color)
-    }
-
-    fun setCurrentTimeColor(color: Int) {
-        //   binding.currentTime.setTextColor(color)
     }
 }
