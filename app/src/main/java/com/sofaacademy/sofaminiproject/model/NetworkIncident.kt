@@ -37,7 +37,7 @@ class NetworkIncident(
             type
         )
 
-        IncidentEnum.TYPE_GOAL.incident -> Incident.PeriodIncident(
+        IncidentEnum.TYPE_PERIOD.incident -> Incident.PeriodIncident(
             text,
             id,
             time,
@@ -108,10 +108,10 @@ sealed class Incident(
 
     class GoalIncident(
         val player: Player?,
-        scoringTeam: String?,
-        homeScore: Int?,
-        awayScore: Int?,
-        goalType: String?,
+        val scoringTeam: String?,
+        val homeScore: Int?,
+        val awayScore: Int?,
+        val goalType: String?,
         id: Int?,
         time: Int?,
         type: String

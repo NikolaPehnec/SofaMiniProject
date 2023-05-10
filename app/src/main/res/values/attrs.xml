@@ -31,4 +31,12 @@
         <attr name="teamAwayImg" format="reference|color" />
     </declare-styleable>
 
+    <declare-styleable name="GoalView">
+        <attr name="minute" format="string" />
+        <attr name="player_name" format="string" />
+        <attr name="score_home" format="string" />
+        <attr name="score_away" format="string" />
+        <attr name="argument" format="string" />
+    </declare-styleable>
+
 </resources>

@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * Prvi podaci preko intenta, onda dohvacanje svjezih s API-ja
  */
 @AndroidEntryPoint
-class EventDetailsActivity : AppCompatActivity() {
+class EventDetailsActivity : AppCompatActivity(), IncidentsArrayAdapter.OnItemClickListener {
 
     private lateinit var sportEvent: SportEvent
     private lateinit var binding: ActivityEventDetailsBinding
@@ -41,9 +41,11 @@ class EventDetailsActivity : AppCompatActivity() {
         setSupportActionBar(binding.activityToolbar)
         setContentView(binding.root)
 
+        incidentsArrayAdapter = IncidentsArrayAdapter(this, mutableListOf(), this)
+        binding.incidentsRv.adapter = incidentsArrayAdapter
+
         sportEvent = getEventFromIntent(intent)
         fillEventDetails(sportEvent)
-
         sportEventViewModel.getEventDetails(sportEvent.id.toString())
         sportEventViewModel.getEventIncidents(sportEvent.id.toString())
 
@@ -56,12 +58,14 @@ class EventDetailsActivity : AppCompatActivity() {
         }
 
         sportEventViewModel.incidentsList.observe(this) {
-            println()
-            println()
+            incidentsArrayAdapter.setItems(it.asReversed())
         }
     }
 
     private fun fillEventDetails(sportEvent: SportEvent) {
         binding.eventDetails.setEventInfo(sportEvent)
+    }
+
+    override fun onItemClick(item: Any) {
     }
 }
