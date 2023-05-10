@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/on_color_on_color_primary" />
+        app:titleTextColor="@color/on_surface_on_surface_lv_2" />
 
     <com.sofaacademy.sofaminiproject.views.customviews.EventDetailView
         android:id="@+id/event_details"
@@ -25,10 +25,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/incidents_rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:background="@color/surface_surface_1"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/event_details"
         app:layout_constraintVertical_bias="0" />
 

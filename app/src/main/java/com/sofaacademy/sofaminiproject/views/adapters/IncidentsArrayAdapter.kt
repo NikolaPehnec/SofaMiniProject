@@ -5,11 +5,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.sofaacademy.sofaminiproject.databinding.CardIncidentRowBinding
 import com.sofaacademy.sofaminiproject.databinding.GoalIncidentRowBinding
+import com.sofaacademy.sofaminiproject.databinding.PeriodRowBinding
 import com.sofaacademy.sofaminiproject.model.Incident
 import com.sofaacademy.sofaminiproject.model.IncidentEnum
 import com.sofaacademy.sofaminiproject.utils.EventDiffUtilCallback
+import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderCardIncident
 import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderGoalIncident
+import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderPeriodIncident
 
 class IncidentsArrayAdapter(
     private val context: Context,
@@ -27,43 +31,36 @@ class IncidentsArrayAdapter(
                 )
             )
 
-            /*  IncidentEnum.TYPE_CARD.ordinal -> ViewHolderTournament(
-                  TournamentRowBinding.inflate(
-                      LayoutInflater.from(parent.context),
-                      parent,
-                      false
-                  )
-              )
-
-              IncidentEnum.TYPE_PERIOD.ordinal -> ViewHolderTournament(
-                  TournamentRowBinding.inflate(
-                      LayoutInflater.from(parent.context),
-                      parent,
-                      false
-                  )
-              )*/
-
-            else -> {
-                ViewHolderGoalIncident(
-                    GoalIncidentRowBinding.inflate(
-                        LayoutInflater.from(parent.context),
-                        parent,
-                        false
-                    )
+            IncidentEnum.TYPE_CARD.ordinal -> ViewHolderCardIncident(
+                CardIncidentRowBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
                 )
-                //throw IllegalArgumentException("Nikad ne izvrseno")
-            }
+            )
+
+            IncidentEnum.TYPE_PERIOD.ordinal -> ViewHolderPeriodIncident(
+                PeriodRowBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+
+            else -> throw IllegalArgumentException("Nikad ne izvrseno")
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is ViewHolderGoalIncident -> {
-                //Poslije maknuti
-                if (items[position] is Incident.GoalIncident)
-                    holder.bind(items[position] as Incident.GoalIncident)
-            }
+            is ViewHolderGoalIncident ->
+                holder.bind(items[position] as Incident.GoalIncident)
 
+            is ViewHolderCardIncident ->
+                holder.bind(items[position] as Incident.CardIncident)
+
+            is ViewHolderPeriodIncident ->
+                holder.bind(items[position] as Incident.PeriodIncident)
         }
     }
 

@@ -134,7 +134,7 @@ sealed class Incident(
     }
 
     class PeriodIncident(
-        text: String?,
+        val text: String?,
         id: Int?,
         time: Int?,
         type: String
