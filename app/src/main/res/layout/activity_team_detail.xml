@@ -12,6 +12,8 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/color_primary_default"
         app:layout_collapseMode="pin"
+        android:elevation="0dp"
+        android:theme="@style/ToolbarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -61,7 +63,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="Zagreb"
+                        tools:text="Zagreb"
                         android:textColor="@color/surface_surface_1"
                         app:layout_constraintBottom_toTopOf="@+id/country_logo"
                         app:layout_constraintStart_toEndOf="@id/team_logo"
@@ -72,9 +74,24 @@
                         android:id="@+id/country_logo"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
+                        android:layout_marginTop="4dp"
                         app:layout_constraintBottom_toBottomOf="@+id/team_logo"
                         app:layout_constraintStart_toStartOf="@id/team_name"
                         app:layout_constraintTop_toBottomOf="@+id/team_name"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+
+                    <TextView
+                        android:id="@+id/country_name"
+                        style="@style/Headline3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        tools:text="Spain"
+                        android:textColor="@color/surface_surface_1"
+                        app:layout_constraintTop_toTopOf="@id/country_logo"
+                        app:layout_constraintBottom_toBottomOf="@id/country_logo"
+                        app:layout_constraintStart_toEndOf="@id/country_logo"
                         app:layout_constraintVertical_chainStyle="packed" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -89,7 +106,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <com.google.android.material.tabs.TabLayout
@@ -105,7 +122,7 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/view_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/specific_live"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"

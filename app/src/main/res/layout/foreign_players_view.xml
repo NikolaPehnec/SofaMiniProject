@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="32dp"
+    android:paddingVertical="8dp">
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/team_foreign_percent_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:progress="35"
+        android:src="@drawable/ic_team"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:trackColor="@color/color_secondary_default"
+        app:trackThickness="6dp" />
+
+    <TextView
+        android:id="@+id/foreign_players_number"
+        style="@style/Headline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/color_primary_default"
+        app:layout_constraintEnd_toEndOf="@id/team_foreign_percent_indicator"
+        app:layout_constraintStart_toStartOf="@id/team_foreign_percent_indicator"
+        app:layout_constraintTop_toBottomOf="@id/team_foreign_percent_indicator"
+        tools:text="24" />
+
+    <TextView
+        style="@style/Micro"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:text="@string/foreign_players"
+        android:textColor="@color/on_surface_on_surface_lv_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/foreign_players_number" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

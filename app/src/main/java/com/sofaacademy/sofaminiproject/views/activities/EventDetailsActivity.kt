@@ -108,10 +108,10 @@ class EventDetailsActivity : AppCompatActivity(), IncidentsArrayAdapter.OnItemCl
     }
 
     override fun onTeamHomeClicked() {
-        TeamDetailsActivity.start(sportEvent.homeTeam.id, this)
+        TeamDetailsActivity.start(sportEvent.homeTeam, this)
     }
 
     override fun onTeamAwayClicked() {
-        TeamDetailsActivity.start(sportEvent.awayTeam.id, this)
+        TeamDetailsActivity.start(sportEvent.awayTeam, this)
     }
 }

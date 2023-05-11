@@ -17,6 +17,15 @@
     <string name="no_results_yet">No results yet.</string>
     <string name="view_tournament_details">View Tournament Details</string>
 
+    <string name="team_info">Team info</string>
+    <string name="tournaments">Tournaments</string>
+    <string name="venue">Venue</string>
+    <string name="next_match">Next match</string>
+    <string name="stadium">Stadium</string>
+    <string name="coach">Coach:</string>
+    <string name="total_players">Total Players</string>
+    <string name="foreign_players">Foreign Players</string>
+
     <string-array name="tabs">
         <item>Football</item>
         <item>Basketball</item>

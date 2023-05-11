@@ -4,6 +4,7 @@ object Constants {
     const val BASE_URL = "https://academy.dev.sofascore.com/"
     const val BASE_TEAM_URL = BASE_URL + "team/"
     const val BASE_TOURNAMENT_URL = BASE_URL + "tournament/"
+    const val BASE_COUNTRY_URL = BASE_URL + "country/"
     const val IMG_ENDPOINT = "/image"
     const val SLUG_ARG = "slug_arg"
     const val TEAM_ID_ARG = "team_id_arg"

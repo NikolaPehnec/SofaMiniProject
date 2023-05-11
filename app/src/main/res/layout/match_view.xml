@@ -45,6 +45,7 @@
     <ImageView
         android:id="@+id/team_home_logo"
         android:layout_width="16dp"
+        tools:src="@drawable/croatia"
         android:layout_height="16dp"
         android:layout_marginStart="16dp"
         app:layout_constraintBottom_toTopOf="@+id/team_away_logo"
@@ -54,6 +55,7 @@
 
     <ImageView
         android:id="@+id/team_away_logo"
+        tools:src="@drawable/croatia"
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_marginStart="16dp"

@@ -12,7 +12,7 @@ import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.ActivityMainBinding
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getSportsTabLayoutConfigStrategy
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getTabTitlesByDate
-import com.sofaacademy.sofaminiproject.views.adapters.SportPagerAdapter
+import com.sofaacademy.sofaminiproject.views.adapters.pagerAdapters.SportPagerAdapter
 import com.sofaacademy.sofaminiproject.views.fragments.SportFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate

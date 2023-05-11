@@ -7,9 +7,11 @@ import android.widget.LinearLayout
 import coil.load
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.MatchViewBinding
-import com.sofaacademy.sofaminiproject.model.Score
+import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.utils.Constants.BASE_TEAM_URL
 import com.sofaacademy.sofaminiproject.utils.Constants.IMG_ENDPOINT
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions
+import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers
 
 class MatchView @JvmOverloads constructor(
     context: Context,
@@ -36,25 +38,25 @@ class MatchView @JvmOverloads constructor(
         }
     }
 
-    fun setMatchInfo(
-        matchTime: String,
-        currentTime: String,
-        teamHome: String,
-        teamAway: String,
-        homeScore: Score?,
-        awayScore: Score?
-    ) {
-        binding.timeStart.text = matchTime
-        binding.currentTime.text = currentTime
-        binding.teamHome.text = teamHome
-        binding.teamAway.text = teamAway
-        binding.teamHomeResult.text = homeScore?.total?.toString()
-        binding.teamAwayResult.text = awayScore?.total?.toString()
+    fun setMatchInfo(event:SportEvent) {
+        binding.teamHomeLogo.load("$BASE_TEAM_URL${event.homeTeam.id}$IMG_ENDPOINT")
+        binding.teamAwayLogo.load("$BASE_TEAM_URL${event.awayTeam.id}$IMG_ENDPOINT")
+
+        val startTime = UtilityFunctions.getHourFromDate(event.startDate!!)
+        val matchCurrentStatus = EventHelpers.getCurrentMatchStatus(event.status, event.startDate)
+        binding.timeStart.text = startTime
+        binding.currentTime.text = matchCurrentStatus
+        binding.teamHome.text =event.homeTeam.name
+        binding.teamAway.text = event.awayTeam.name
+        binding.teamHomeResult.text = event.homeScore?.total?.toString()
+        binding.teamAwayResult.text = event.awayScore?.total?.toString()
     }
 
-    fun loadTeamLogos(teamHomeId: Int, teamAwayId: Int) {
-        binding.teamHomeLogo.load("$BASE_TEAM_URL$teamHomeId$IMG_ENDPOINT")
-        binding.teamAwayLogo.load("$BASE_TEAM_URL$teamAwayId$IMG_ENDPOINT")
+    fun setNextMatchDateTime(event: SportEvent){
+        val startTime = UtilityFunctions.getHourFromDate(event.startDate!!)
+        val date = UtilityFunctions.getFormattedDetailDate(event.startDate)
+        binding.timeStart.text = date
+        binding.currentTime.text = startTime
     }
 
     fun setHomeTeamColor(color: Int) {

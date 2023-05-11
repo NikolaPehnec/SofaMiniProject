@@ -3,10 +3,12 @@ package com.sofaacademy.sofaminiproject.utils.helpers
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.model.MatchStatus
 import com.sofaacademy.sofaminiproject.model.Score
 import com.sofaacademy.sofaminiproject.model.SportEvent
+import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions
 
@@ -26,6 +28,7 @@ object EventHelpers {
                     context.getColor(R.color.on_surface_on_surface_lv_2)
                 }
             }
+
             else -> context.getColor(R.color.on_surface_on_surface_lv_1)
         }
     }
@@ -64,6 +67,25 @@ object EventHelpers {
             ) as SportEvent
         } else {
             intent.getSerializableExtra(Constants.EVENT_ID_KEY) as SportEvent
+        }
+    }
+
+    fun getTeamFromIntent(intent: Intent): Team2 {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra(
+                Constants.TEAM_ID_ARG,
+                Team2::class.java
+            ) as Team2
+        } else {
+            intent.getSerializableExtra(Constants.TEAM_ID_ARG) as Team2
+        }
+    }
+
+    fun Bundle.getTeam(): Team2 {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+             getSerializable(Constants.TEAM_ID_ARG, Team2::class.java) as Team2
+        } else {
+             getSerializable(Constants.TEAM_ID_ARG) as Team2
         }
     }
 

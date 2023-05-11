@@ -14,8 +14,6 @@ import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.utils.Constants.TYPE_SPORT_EVENT
 import com.sofaacademy.sofaminiproject.utils.Constants.TYPE_TOURNAMENT
 import com.sofaacademy.sofaminiproject.utils.EventDiffUtilCallback
-import com.sofaacademy.sofaminiproject.utils.UtilityFunctions
-import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getCurrentMatchStatus
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getCurrentStatusColor
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeamColorBasedOnTimeAndResult
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeamScoreColorBasedOnTimeAndResult
@@ -92,11 +90,7 @@ class SportEventsArrayAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: SportEvent, nextItem: Any?) {
-            val startTime = UtilityFunctions.getHourFromDate(item.startDate!!)
-            val matchCurrentStatus = getCurrentMatchStatus(item.status, item.startDate)
-
             binding.matchItem.apply {
-                loadTeamLogos(item.homeTeam.id, item.awayTeam.id)
                 setHomeTeamColor(
                     getTeamColorBasedOnTimeAndResult(
                         item.status,
@@ -130,14 +124,7 @@ class SportEventsArrayAdapter(
                     )
                 )
                 setCurrentTimeColor(getCurrentStatusColor(item.status, context))
-                setMatchInfo(
-                    startTime,
-                    matchCurrentStatus,
-                    item.homeTeam.name,
-                    item.awayTeam.name,
-                    item.homeScore,
-                    item.awayScore
-                )
+                setMatchInfo(item)
             }
             binding.separatorImg.visibility = GONE
             nextItem?.let {
@@ -156,8 +143,7 @@ class SportEventsArrayAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Tournament) {
-            binding.tournamentItem.setTournamentInfo(item.name, item.country.name)
-            binding.tournamentItem.loadTournamentLogo(item.id)
+            binding.tournamentItem.setTournamentInfo(item)
             binding.tournamentItem.setOnClickListener {
                 listener.onItemClick(item)
             }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="32dp"
+    android:paddingVertical="8dp">
+
+    <ImageView
+        android:id="@+id/team_img"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_team"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/player_number"
+        style="@style/Headline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/color_primary_default"
+        app:layout_constraintEnd_toEndOf="@id/team_img"
+        app:layout_constraintStart_toStartOf="@id/team_img"
+        app:layout_constraintTop_toBottomOf="@id/team_img"
+        tools:text="24" />
+
+    <TextView
+        style="@style/Micro"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:text="@string/total_players"
+        android:textColor="@color/on_surface_on_surface_lv_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/player_number" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

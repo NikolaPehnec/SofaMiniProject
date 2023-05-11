@@ -14,7 +14,7 @@
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_pointer_right" />
+        tools:src="@drawable/croatia" />
 
     <TextView
         android:id="@+id/country"

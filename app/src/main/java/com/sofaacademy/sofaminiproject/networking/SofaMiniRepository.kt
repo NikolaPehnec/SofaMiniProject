@@ -2,8 +2,10 @@ package com.sofaacademy.sofaminiproject.networking
 
 import android.content.Context
 import com.sofaacademy.sofaminiproject.model.NetworkIncident
+import com.sofaacademy.sofaminiproject.model.Player
 import com.sofaacademy.sofaminiproject.model.Result
 import com.sofaacademy.sofaminiproject.model.SportEvent
+import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.model.Tournament
 import javax.inject.Inject
 
@@ -23,4 +25,16 @@ open class SofaMiniRepository @Inject constructor(
 
     suspend fun getEventIncidents(eventId: String): Result<List<NetworkIncident>> =
         apiCall(call = { sofaMiniApi.getEventIncidents(eventId) })
+
+    suspend fun getTeamDetails(teamId: String): Result<Team2> =
+        apiCall(call = { sofaMiniApi.getTeamDetails(teamId) })
+
+    suspend fun getTeamPlayers(teamId: String): Result<List<Player>> =
+        apiCall(call = { sofaMiniApi.getTeamPlayers(teamId) })
+
+    suspend fun getTeamNextEvents(teamId: String, page: String): Result<List<SportEvent>> =
+        apiCall(call = { sofaMiniApi.getTeamNextEvents(teamId, page) })
+
+    suspend fun getTeamTournaments(teamId: String): Result<List<Tournament>> =
+        apiCall(call = { sofaMiniApi.getTeamTournaments(teamId) })
 }
