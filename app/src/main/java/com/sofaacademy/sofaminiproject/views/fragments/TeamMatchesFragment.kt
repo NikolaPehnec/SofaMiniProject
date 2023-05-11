@@ -13,10 +13,7 @@ import com.sofaacademy.sofaminiproject.utils.Constants.TEAM_ID_ARG
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeam
 import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
 import com.sofaacademy.sofaminiproject.views.adapters.TeamSportEventsArrayAdapter
-import com.sofaacademy.sofaminiproject.views.adapters.TeamTournamentsArrayAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class TeamMatchesFragment : Fragment(), TeamSportEventsArrayAdapter.OnItemClickListener {
@@ -58,10 +55,8 @@ class TeamMatchesFragment : Fragment(), TeamSportEventsArrayAdapter.OnItemClickL
         return binding.root
     }
 
-
     private fun setListeners() {
         teamViewModel.teamEvents.observe(viewLifecycleOwner) {
-
             teamSportEventsArrayAdapter.setItems(it)
 
             /*  if (it.isNotEmpty()) {
@@ -72,8 +67,6 @@ class TeamMatchesFragment : Fragment(), TeamSportEventsArrayAdapter.OnItemClickL
         }
     }
 
-
     override fun onItemClick(item: Any) {
     }
-
 }

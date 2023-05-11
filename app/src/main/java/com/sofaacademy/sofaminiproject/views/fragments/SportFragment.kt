@@ -65,7 +65,7 @@ class SportFragment : Fragment(), SportEventsArrayAdapter.OnItemClickListener {
         return binding.root
     }
 
-    //Load kod prvog selektiranja trenutnog datuma
+    // Load kod prvog selektiranja trenutnog datuma
     fun reloadSportData(date: LocalDate) {
         currentDate = date
         sportEventsHeaderAdapter.setHeaderInfo(currentDate, null)

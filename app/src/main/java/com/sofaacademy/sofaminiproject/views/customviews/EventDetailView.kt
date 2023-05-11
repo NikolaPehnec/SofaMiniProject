@@ -27,7 +27,6 @@ class EventDetailView @JvmOverloads constructor(
         true
     )
 
-
     fun setEventInfo(
         sportEvent: SportEvent
     ) {

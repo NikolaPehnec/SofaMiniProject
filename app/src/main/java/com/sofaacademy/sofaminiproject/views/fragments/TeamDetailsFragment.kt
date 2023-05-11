@@ -63,7 +63,6 @@ class TeamDetailsFragment : Fragment(), TeamTournamentsArrayAdapter.OnItemClickL
         return binding.root
     }
 
-
     private fun setListeners() {
         teamViewModel.teamDetails.observe(viewLifecycleOwner) {
             fillTeamDetails(it)
@@ -73,9 +72,11 @@ class TeamDetailsFragment : Fragment(), TeamTournamentsArrayAdapter.OnItemClickL
         }
         teamViewModel.nextTeamEvents.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
-                fillNextEventInfo(it.sortedBy { e ->
-                    ZonedDateTime.parse(e.startDate!!, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-                }.first())
+                fillNextEventInfo(
+                    it.sortedBy { e ->
+                        ZonedDateTime.parse(e.startDate!!, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+                    }.first()
+                )
             }
         }
         teamViewModel.teamTournaments.observe(viewLifecycleOwner) {
@@ -113,5 +114,4 @@ class TeamDetailsFragment : Fragment(), TeamTournamentsArrayAdapter.OnItemClickL
 
     override fun onItemClick(item: Any) {
     }
-
 }

@@ -49,6 +49,4 @@ interface SofaMiniApi {
     suspend fun getTeamTournaments(
         @Path(value = "id") id: String
     ): Response<List<Tournament>>
-
-
 }

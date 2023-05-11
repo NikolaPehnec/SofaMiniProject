@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.sofaacademy.sofaminiproject.databinding.TournamentDetailRowBinding
 import com.sofaacademy.sofaminiproject.databinding.TournamentTeamDetailRowBinding
 import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.utils.Constants.BASE_TOURNAMENT_URL

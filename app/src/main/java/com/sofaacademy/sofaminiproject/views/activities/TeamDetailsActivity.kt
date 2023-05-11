@@ -71,25 +71,25 @@ class TeamDetailsActivity : AppCompatActivity() {
 
     private fun setListeners() {
         binding.appbarlayout.addOnOffsetChangedListener(object :
-            AppBarLayout.OnOffsetChangedListener {
-            var isShow: Boolean? = null
-            var scrollRange: Int = -1
+                AppBarLayout.OnOffsetChangedListener {
+                var isShow: Boolean? = null
+                var scrollRange: Int = -1
 
-            override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout!!.totalScrollRange
-                }
-                if (scrollRange + verticalOffset <= 0) {
-                    if (binding.activityToolbar.title != team.name) {
-                        binding.activityToolbar.title = team.name
+                override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+                    if (scrollRange == -1) {
+                        scrollRange = appBarLayout!!.totalScrollRange
                     }
-                    isShow = true
-                } else if (isShow == true) {
-                    binding.activityToolbar.title = ""
-                    isShow = false
+                    if (scrollRange + verticalOffset <= 0) {
+                        if (binding.activityToolbar.title != team.name) {
+                            binding.activityToolbar.title = team.name
+                        }
+                        isShow = true
+                    } else if (isShow == true) {
+                        binding.activityToolbar.title = ""
+                        isShow = false
+                    }
                 }
-            }
-        })
+            })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -102,6 +102,4 @@ class TeamDetailsActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-
 }

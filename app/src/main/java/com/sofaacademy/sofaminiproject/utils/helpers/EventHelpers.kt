@@ -83,9 +83,9 @@ object EventHelpers {
 
     fun Bundle.getTeam(): Team2 {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-             getSerializable(Constants.TEAM_ID_ARG, Team2::class.java) as Team2
+            getSerializable(Constants.TEAM_ID_ARG, Team2::class.java) as Team2
         } else {
-             getSerializable(Constants.TEAM_ID_ARG) as Team2
+            getSerializable(Constants.TEAM_ID_ARG) as Team2
         }
     }
 

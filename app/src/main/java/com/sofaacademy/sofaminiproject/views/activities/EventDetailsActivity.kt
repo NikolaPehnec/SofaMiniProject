@@ -26,7 +26,9 @@ import dagger.hilt.android.AndroidEntryPoint
  * Prvi podaci preko intenta, onda dohvacanje svjezih s API-ja
  */
 @AndroidEntryPoint
-class EventDetailsActivity : AppCompatActivity(), IncidentsArrayAdapter.OnItemClickListener,
+class EventDetailsActivity :
+    AppCompatActivity(),
+    IncidentsArrayAdapter.OnItemClickListener,
     OnTeamClicked {
 
     private lateinit var sportEvent: SportEvent
