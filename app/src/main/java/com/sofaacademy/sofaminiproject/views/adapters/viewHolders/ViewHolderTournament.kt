@@ -13,7 +13,7 @@ class ViewHolderTournament(
 
     fun bind(item: Tournament) {
         binding.tournamentItem.setTournamentInfo(item)
-        binding.tournamentItem.setOnClickListener {
+        binding.root.setOnClickListener {
             listener.onTournamentClicked(item)
         }
     }

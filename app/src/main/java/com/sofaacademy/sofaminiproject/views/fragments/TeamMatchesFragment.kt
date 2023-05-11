@@ -61,8 +61,27 @@ class TeamMatchesFragment : Fragment(), OnTournamentClicked, OnEventClicked {
     }
 
     private fun setListeners() {
-        teamViewModel.teamEvents.observe(viewLifecycleOwner) {
-            teamSportEventsArrayAdapter.setItems(it.sortedByDateDesc())
+        teamViewModel.teamEvents.observe(viewLifecycleOwner) { sportEvents ->
+            val res1 = sportEvents.sortedByDateDesc()
+
+            var finished = mutableListOf<java.io.Serializable>()
+
+            for (i in res1.indices) {
+                if (i == 0) {
+                    finished.add(res1[i].tournament)
+                    finished.add(res1[i])
+                } else {
+                    if (res1[i - 1].tournament == res1[i].tournament) {
+                        finished.add(res1[i])
+                    } else {
+                        finished.add(res1[i].tournament)
+                        finished.add(res1[i])
+                    }
+                }
+            }
+
+            teamSportEventsArrayAdapter.setItems(finished)
+            binding.eventsRv.post(Runnable {  binding.eventsRv.smoothScrollToPosition(15) })
         }
     }
 
