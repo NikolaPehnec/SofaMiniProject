@@ -1,6 +1,5 @@
 package com.sofaacademy.sofaminiproject.networking
 
-import android.app.usage.UsageEvents.Event
 import com.sofaacademy.sofaminiproject.model.NetworkIncident
 import com.sofaacademy.sofaminiproject.model.Player
 import com.sofaacademy.sofaminiproject.model.SportEvent
@@ -39,9 +38,10 @@ interface SofaMiniApi {
     @GET("team/{id}/players")
     suspend fun getTeamPlayers(@Path(value = "id") id: String): Response<List<Player>>
 
-    @GET("team/{id}/events/next/{page}")
-    suspend fun getTeamNextEvents(
+    @GET("team/{id}/events/{span}/{page}")
+    suspend fun getTeamEvents(
         @Path(value = "id") id: String,
+        @Path(value = "span") span: String,
         @Path(value = "page") page: String
     ): Response<List<SportEvent>>
 

@@ -11,9 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/color_primary_default"
-        app:layout_collapseMode="pin"
         android:elevation="0dp"
         android:theme="@style/ToolbarTheme"
+        app:layout_collapseMode="pin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,6 +21,7 @@
         app:titleTextColor="@color/on_color_on_color_primary" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,12 +64,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        tools:text="Zagreb"
                         android:textColor="@color/surface_surface_1"
                         app:layout_constraintBottom_toTopOf="@+id/country_logo"
                         app:layout_constraintStart_toEndOf="@id/team_logo"
                         app:layout_constraintTop_toTopOf="@+id/team_logo"
-                        app:layout_constraintVertical_chainStyle="packed" />
+                        app:layout_constraintVertical_chainStyle="packed"
+                        tools:text="Zagreb" />
 
                     <ImageView
                         android:id="@+id/country_logo"
@@ -87,21 +88,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        tools:text="Spain"
                         android:textColor="@color/surface_surface_1"
-                        app:layout_constraintTop_toTopOf="@id/country_logo"
                         app:layout_constraintBottom_toBottomOf="@id/country_logo"
                         app:layout_constraintStart_toEndOf="@id/country_logo"
-                        app:layout_constraintVertical_chainStyle="packed" />
+                        app:layout_constraintTop_toTopOf="@id/country_logo"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        tools:text="Spain" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
-        </com.google.android.material.appbar.AppBarLayout>
 
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                style="@style/Tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_primary_default" />
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
@@ -109,26 +117,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tab_layout"
-                    style="@style/Tab"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/color_primary_default"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="parent" />
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/view_pager"
+                    android:paddingBottom="120dp"
+                    android:background="@color/surface_surface_0"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/specific_live"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
+                    android:orientation="horizontal" />
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

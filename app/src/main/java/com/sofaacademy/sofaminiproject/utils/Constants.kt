@@ -14,6 +14,8 @@ object Constants {
     const val SLUG_AMERICAN_FOOTBALL = "american-football"
     const val MIN_DAYS = -28
     const val MAX_DAYS = 7
+    const val NEXT = "next"
+    const val LAST = "last"
 
     const val TYPE_SPORT_EVENT = 1
     const val TYPE_TOURNAMENT = 2

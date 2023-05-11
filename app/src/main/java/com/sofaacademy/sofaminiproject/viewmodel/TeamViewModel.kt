@@ -10,6 +10,7 @@ import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.networking.SofaMiniRepository
+import com.sofaacademy.sofaminiproject.utils.Constants.NEXT
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -43,10 +44,16 @@ class TeamViewModel @Inject constructor(private val sofaMiniRepository: SofaMini
     private val _teamTournamentsError = MutableLiveData<String>()
     val teamTournamentsError: LiveData<String> = _teamTournamentsError
 
+    private val _teamEvents = MutableLiveData<List<SportEvent>>()
+    val teamEvents = _teamEvents
+
+    private val _teamEventsError = MutableLiveData<String>()
+    val teamEventsError: LiveData<String> = _teamEventsError
+
     fun getAllTeamDetails(teamId: String) {
         viewModelScope.launch {
             val detailsDeff = async { sofaMiniRepository.getTeamDetails(teamId) }
-            val eventsDeff = async { sofaMiniRepository.getTeamNextEvents(teamId, "0") }
+            val eventsDeff = async { sofaMiniRepository.getTeamEvents(teamId, NEXT, "0") }
             val playersDeff = async { sofaMiniRepository.getTeamPlayers(teamId) }
             val tournamentsDeff = async { sofaMiniRepository.getTeamTournaments(teamId) }
 
@@ -69,6 +76,18 @@ class TeamViewModel @Inject constructor(private val sofaMiniRepository: SofaMini
             when (resTournaments) {
                 is Result.Success -> _teamTournaments.value = resTournaments.data
                 is Result.Error -> _teamTournamentsError.value = resTournaments.exception.toString()
+            }
+        }
+    }
+
+    fun getEvents(teamId: String, span: String, page: String) {
+        viewModelScope.launch {
+            when (val result = sofaMiniRepository.getTeamEvents(teamId, span, page)) {
+                is Result.Success ->
+                    _teamEvents.value = result.data
+
+                is Result.Error ->
+                    _teamEventsError.value = result.exception.toString()
             }
         }
     }

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import coil.load
 import com.sofaacademy.sofaminiproject.databinding.FragmentTeamDetailBinding
 import com.sofaacademy.sofaminiproject.model.Player
@@ -15,14 +16,16 @@ import com.sofaacademy.sofaminiproject.utils.Constants.TEAM_ID_ARG
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeam
 import com.sofaacademy.sofaminiproject.utils.helpers.FlagHelper
 import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
+import com.sofaacademy.sofaminiproject.views.adapters.TeamTournamentsArrayAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
-class TeamDetailsFragment : Fragment() {
+class TeamDetailsFragment : Fragment(), TeamTournamentsArrayAdapter.OnItemClickListener {
     private var _binding: FragmentTeamDetailBinding? = null
+    private lateinit var teamTournamentsArrayAdapter: TeamTournamentsArrayAdapter
     private val binding get() = _binding!!
     private var team: Team2? = null
     private val teamViewModel: TeamViewModel by viewModels()
@@ -50,6 +53,10 @@ class TeamDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTeamDetailBinding.inflate(inflater, container, false)
+        teamTournamentsArrayAdapter =
+            TeamTournamentsArrayAdapter(requireContext(), mutableListOf(), this)
+        binding.tournamentsRv.adapter = teamTournamentsArrayAdapter
+        binding.tournamentsRv.layoutManager = GridLayoutManager(requireContext(), 3)
 
         setListeners()
         teamViewModel.getAllTeamDetails(team?.id.toString())
@@ -71,13 +78,12 @@ class TeamDetailsFragment : Fragment() {
                 }.first())
             }
         }
-        teamViewModel.teamTournaments.observe(viewLifecycleOwner){
-
+        teamViewModel.teamTournaments.observe(viewLifecycleOwner) {
+            teamTournamentsArrayAdapter.setItems(it)
         }
     }
 
     private fun fillTeamDetails(team: Team2) {
-        // binding.coachRow.managerImg.load()
         binding.coachRow.coachName.text = team.managerName.toString()
         binding.coachRow.countryLogo.load(
             FlagHelper.getFlagBitmap(
@@ -103,6 +109,9 @@ class TeamDetailsFragment : Fragment() {
         binding.nextMatchTournament.setTournamentInfo(event.tournament)
         binding.nextMatchEvent.setMatchInfo(event)
         binding.nextMatchEvent.setNextMatchDateTime(event)
+    }
+
+    override fun onItemClick(item: Any) {
     }
 
 }
