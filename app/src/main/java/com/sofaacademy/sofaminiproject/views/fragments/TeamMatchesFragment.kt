@@ -7,16 +7,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.sofaacademy.sofaminiproject.databinding.FragmentTeamMatchesBinding
+import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
+import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.Constants.TEAM_ID_ARG
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeam
+import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.sortedByDateDesc
+import com.sofaacademy.sofaminiproject.utils.listeners.OnEventClicked
+import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
 import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
 import com.sofaacademy.sofaminiproject.views.adapters.TeamSportEventsArrayAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TeamMatchesFragment : Fragment(), TeamSportEventsArrayAdapter.OnItemClickListener {
+class TeamMatchesFragment : Fragment(), OnTournamentClicked, OnEventClicked {
     private var _binding: FragmentTeamMatchesBinding? = null
     private lateinit var teamSportEventsArrayAdapter: TeamSportEventsArrayAdapter
     private val binding get() = _binding!!
@@ -47,26 +52,23 @@ class TeamMatchesFragment : Fragment(), TeamSportEventsArrayAdapter.OnItemClickL
     ): View {
         _binding = FragmentTeamMatchesBinding.inflate(inflater, container, false)
         teamSportEventsArrayAdapter =
-            TeamSportEventsArrayAdapter(requireContext(), mutableListOf(), this)
+            TeamSportEventsArrayAdapter(mutableListOf(), this, this)
         binding.eventsRv.adapter = teamSportEventsArrayAdapter
 
         setListeners()
-        teamViewModel.getEvents(team?.id.toString(), Constants.NEXT, "0")
+        teamViewModel.getEvents(team?.id.toString(), Constants.NEXT, "0", true)
         return binding.root
     }
 
     private fun setListeners() {
         teamViewModel.teamEvents.observe(viewLifecycleOwner) {
-            teamSportEventsArrayAdapter.setItems(it)
-
-            /*  if (it.isNotEmpty()) {
-                  fillNextEventInfo(it.sortedBy { e ->
-                      ZonedDateTime.parse(e.startDate!!, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-                  }.first())
-              }*/
+            teamSportEventsArrayAdapter.setItems(it.sortedByDateDesc())
         }
     }
 
-    override fun onItemClick(item: Any) {
+    override fun onEventClicked(sportEvent: SportEvent) {
+    }
+
+    override fun onTournamentClicked(tournamet: Tournament) {
     }
 }

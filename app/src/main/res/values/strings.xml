@@ -25,6 +25,8 @@
     <string name="coach">Coach:</string>
     <string name="total_players">Total Players</string>
     <string name="foreign_players">Foreign Players</string>
+    <string name="events">Events</string>
+    <string name="full_time">FT</string>
 
     <string-array name="tabs">
         <item>Football</item>

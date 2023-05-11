@@ -8,13 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.distinctUntilChanged
 import com.sofaacademy.sofaminiproject.databinding.FragmentLeagueBinding
+import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.utils.Constants.SLUG_ARG
+import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
 import com.sofaacademy.sofaminiproject.viewmodel.TournamentsViewModel
 import com.sofaacademy.sofaminiproject.views.adapters.TournamentsArrayAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LeagueFragment : Fragment(), TournamentsArrayAdapter.OnItemClickListener {
+class LeagueFragment : Fragment(), OnTournamentClicked {
     private var _binding: FragmentLeagueBinding? = null
     private val binding get() = _binding!!
     private var slug: String? = null
@@ -45,7 +47,7 @@ class LeagueFragment : Fragment(), TournamentsArrayAdapter.OnItemClickListener {
     ): View {
         _binding = FragmentLeagueBinding.inflate(inflater, container, false)
 
-        tournamentsArrayAdapter = TournamentsArrayAdapter(requireContext(), mutableListOf(), this)
+        tournamentsArrayAdapter = TournamentsArrayAdapter(mutableListOf(), this)
         binding.leaguesRv.adapter = tournamentsArrayAdapter
         setListeners()
 
@@ -55,25 +57,10 @@ class LeagueFragment : Fragment(), TournamentsArrayAdapter.OnItemClickListener {
 
     private fun setListeners() {
         tournamentsViewModel.tournamentsList.distinctUntilChanged().observe(viewLifecycleOwner) {
-            it?.let {
-                tournamentsArrayAdapter.setItems(it)
-                // Never empty state?
-                /* if (res.isEmpty()) {
-                     binding.eventsRv.visibility = View.GONE
-                     binding.noDataAnimation.visibility = View.VISIBLE
-                     binding.noDataMess.visibility = View.VISIBLE
-                     binding.noDataAnimation.playAnimation()
-                 } else {
-                     binding.eventsRv.visibility = View.VISIBLE
-                     binding.noDataAnimation.visibility = View.GONE
-                     binding.noDataMess.visibility = View.GONE
-                     binding.noDataAnimation.progress = 0f
-                     binding.noDataAnimation.pauseAnimation()
-                 }*/
-            }
+            tournamentsArrayAdapter.setItems(it)
         }
     }
 
-    override fun onItemClick(item: Any) {
+    override fun onTournamentClicked(tournamet: Tournament) {
     }
 }

@@ -58,7 +58,7 @@ class EventDetailsActivity :
 
         sportEvent = getEventFromIntent(intent)
         incidentsArrayAdapter =
-            IncidentsArrayAdapter(sportEvent.tournament.sport.slug, this, mutableListOf(), this)
+            IncidentsArrayAdapter(sportEvent.tournament.sport.slug, mutableListOf())
         binding.incidentsRv.adapter = incidentsArrayAdapter
 
         fillEventDetails(sportEvent)

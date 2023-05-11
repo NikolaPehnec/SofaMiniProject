@@ -1,38 +1,34 @@
 package com.sofaacademy.sofaminiproject.views.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.sofaacademy.sofaminiproject.databinding.TournamentDetailRowBinding
 import com.sofaacademy.sofaminiproject.model.Tournament
-import com.sofaacademy.sofaminiproject.utils.Constants.BASE_TOURNAMENT_URL
-import com.sofaacademy.sofaminiproject.utils.Constants.IMG_ENDPOINT
 import com.sofaacademy.sofaminiproject.utils.EventDiffUtilCallback
+import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
+import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderTournamentDetail
 
 class TournamentsArrayAdapter(
-    private val context: Context,
     private var items: MutableList<Tournament>,
-    private val listener: OnItemClickListener
-) : RecyclerView.Adapter<TournamentsArrayAdapter.ViewHolderTournament>() {
+    private val listener: OnTournamentClicked
+) : RecyclerView.Adapter<ViewHolderTournamentDetail>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderTournament {
-        return ViewHolderTournament(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderTournamentDetail {
+        return ViewHolderTournamentDetail(
             TournamentDetailRowBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ),
+            listener
         )
     }
 
-    override fun onBindViewHolder(holder: ViewHolderTournament, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolderTournamentDetail, position: Int) {
         holder.bind(items[position])
     }
-
-    fun getNumberOfItems(): Int = items.size
 
     fun setItems(newItems: List<Tournament>) {
         val diffResult = DiffUtil.calculateDiff(EventDiffUtilCallback(items, newItems))
@@ -42,17 +38,4 @@ class TournamentsArrayAdapter(
     }
 
     override fun getItemCount(): Int = items.size
-
-    interface OnItemClickListener {
-        fun onItemClick(item: Any)
-    }
-
-    inner class ViewHolderTournament(private val binding: TournamentDetailRowBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(item: Tournament) {
-            binding.tournamentName.text = item.name
-            binding.tournamentLogo.load("$BASE_TOURNAMENT_URL${item.id}$IMG_ENDPOINT")
-        }
-    }
 }

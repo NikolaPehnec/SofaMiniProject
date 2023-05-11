@@ -1,19 +1,17 @@
 package com.sofaacademy.sofaminiproject.views.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.EventHeaderBinding
-import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.dateLongFormat
+import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.EventHeaderViewHolder
 import java.time.LocalDate
 
-class SportEventsHeaderAdapter(val context: Context, var date: LocalDate?, var eventSize: String?) :
-    RecyclerView.Adapter<SportEventsHeaderAdapter.HeaderViewHolder>() {
+class SportEventsHeaderAdapter(var date: LocalDate?, var eventSize: String?) :
+    RecyclerView.Adapter<EventHeaderViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeaderViewHolder {
-        return HeaderViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventHeaderViewHolder {
+        return EventHeaderViewHolder(
             EventHeaderBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -22,7 +20,7 @@ class SportEventsHeaderAdapter(val context: Context, var date: LocalDate?, var e
         )
     }
 
-    override fun onBindViewHolder(holder: HeaderViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: EventHeaderViewHolder, position: Int) {
         holder.bind(date, eventSize)
     }
 
@@ -38,19 +36,5 @@ class SportEventsHeaderAdapter(val context: Context, var date: LocalDate?, var e
             eventSize = size
         }
         notifyDataSetChanged()
-    }
-
-    inner class HeaderViewHolder(private val binding: EventHeaderBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(date: LocalDate?, eventSize: String?) {
-            date?.let {
-                binding.date.text = dateLongFormat.format(date)
-            }
-            eventSize?.let {
-                binding.numOfEvents.text =
-                    context.getString(R.string.events_num, eventSize)
-            }
-        }
     }
 }

@@ -1,9 +1,6 @@
 package com.sofaacademy.sofaminiproject.views.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -14,14 +11,15 @@ import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.utils.Constants.TYPE_SPORT_EVENT
 import com.sofaacademy.sofaminiproject.utils.Constants.TYPE_TOURNAMENT
 import com.sofaacademy.sofaminiproject.utils.EventDiffUtilCallback
-import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getCurrentStatusColor
-import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeamColorBasedOnTimeAndResult
-import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeamScoreColorBasedOnTimeAndResult
+import com.sofaacademy.sofaminiproject.utils.listeners.OnEventClicked
+import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
+import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderEvent
+import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderTournament
 
 class SportEventsArrayAdapter(
-    private val context: Context,
     private var items: MutableList<Any>,
-    private val listener: OnItemClickListener
+    private val listenerTournament: OnTournamentClicked,
+    private val listenerEvent: OnEventClicked
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -31,7 +29,8 @@ class SportEventsArrayAdapter(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                )
+                ),
+                listenerEvent
             )
 
             TYPE_TOURNAMENT -> ViewHolderTournament(
@@ -39,7 +38,8 @@ class SportEventsArrayAdapter(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                )
+                ),
+                listenerTournament
             )
 
             else -> {
@@ -56,14 +56,12 @@ class SportEventsArrayAdapter(
                 } catch (e: java.lang.IndexOutOfBoundsException) {
                     null
                 }
-                holder.bind(items[position] as SportEvent, nextItem)
+                holder.bind(items[position] as SportEvent, nextItem, false)
             }
 
             is ViewHolderTournament -> holder.bind(items[position] as Tournament)
         }
     }
-
-    fun getNumberOfItems(): Int = items.size
 
     fun setItems(newItems: List<Any>) {
         val diffResult = DiffUtil.calculateDiff(EventDiffUtilCallback(items, newItems))
@@ -81,72 +79,4 @@ class SportEventsArrayAdapter(
     }
 
     override fun getItemCount(): Int = items.size
-
-    interface OnItemClickListener {
-        fun onItemClick(item: Any)
-    }
-
-    inner class ViewHolderEvent(private val binding: MatchRowBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(item: SportEvent, nextItem: Any?) {
-            binding.matchItem.apply {
-                setHomeTeamColor(
-                    getTeamColorBasedOnTimeAndResult(
-                        item.status,
-                        item.homeScore,
-                        item.awayScore,
-                        context
-                    )
-                )
-                setAwayTeamColor(
-                    getTeamColorBasedOnTimeAndResult(
-                        item.status,
-                        item.awayScore,
-                        item.homeScore,
-                        context
-                    )
-                )
-                setHomeTeamScoreColor(
-                    getTeamScoreColorBasedOnTimeAndResult(
-                        item.status,
-                        item.homeScore,
-                        item.awayScore,
-                        context
-                    )
-                )
-                setAwayTeamScoreColor(
-                    getTeamScoreColorBasedOnTimeAndResult(
-                        item.status,
-                        item.awayScore,
-                        item.homeScore,
-                        context
-                    )
-                )
-                setCurrentTimeColor(getCurrentStatusColor(item.status, context))
-                setMatchInfo(item)
-            }
-            binding.separatorImg.visibility = GONE
-            nextItem?.let {
-                if (it is Tournament) {
-                    binding.separatorImg.visibility = VISIBLE
-                }
-            }
-
-            binding.matchItem.setOnClickListener {
-                listener.onItemClick(item)
-            }
-        }
-    }
-
-    inner class ViewHolderTournament(private val binding: TournamentRowBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(item: Tournament) {
-            binding.tournamentItem.setTournamentInfo(item)
-            binding.tournamentItem.setOnClickListener {
-                listener.onItemClick(item)
-            }
-        }
-    }
 }

@@ -4,12 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sofaacademy.sofaminiproject.model.Player
-import com.sofaacademy.sofaminiproject.model.Result
-import com.sofaacademy.sofaminiproject.model.SportEvent
-import com.sofaacademy.sofaminiproject.model.Team2
-import com.sofaacademy.sofaminiproject.model.Tournament
+import com.sofaacademy.sofaminiproject.model.*
 import com.sofaacademy.sofaminiproject.networking.SofaMiniRepository
+import com.sofaacademy.sofaminiproject.utils.Constants.LAST
 import com.sofaacademy.sofaminiproject.utils.Constants.NEXT
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -80,14 +77,36 @@ class TeamViewModel @Inject constructor(private val sofaMiniRepository: SofaMini
         }
     }
 
-    fun getEvents(teamId: String, span: String, page: String) {
+    /**
+     * If firstFetch true, fetch one next and one previous page
+     */
+    fun getEvents(teamId: String, span: String, page: String, firstFetch: Boolean) {
         viewModelScope.launch {
-            when (val result = sofaMiniRepository.getTeamEvents(teamId, span, page)) {
-                is Result.Success ->
-                    _teamEvents.value = result.data
+            if (firstFetch) {
+                val nextEventsDeff = async { sofaMiniRepository.getTeamEvents(teamId, NEXT, "0") }
+                val previousEventsDeff =
+                    async { sofaMiniRepository.getTeamEvents(teamId, LAST, "0") }
+                val nextEvents = nextEventsDeff.await()
+                val previousEvents = previousEventsDeff.await()
 
-                is Result.Error ->
-                    _teamEventsError.value = result.exception.toString()
+                if (nextEvents is Result.Success && previousEvents is Result.Success) {
+                    _teamEvents.value = nextEvents.data + previousEvents.data
+                } else {
+                    _teamEventsError.value =
+                        if (nextEvents is Result.Error) {
+                            nextEvents.exception.toString()
+                        } else {
+                            (previousEvents as Result.Error).exception.toString()
+                        }
+                }
+            } else {
+                when (val result = sofaMiniRepository.getTeamEvents(teamId, span, page)) {
+                    is Result.Success ->
+                        _teamEvents.value = result.data
+
+                    is Result.Error ->
+                        _teamEventsError.value = result.exception.toString()
+                }
             }
         }
     }

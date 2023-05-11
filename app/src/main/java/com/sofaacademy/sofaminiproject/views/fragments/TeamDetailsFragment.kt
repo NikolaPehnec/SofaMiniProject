@@ -12,9 +12,11 @@ import com.sofaacademy.sofaminiproject.databinding.FragmentTeamDetailBinding
 import com.sofaacademy.sofaminiproject.model.Player
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
+import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.utils.Constants.TEAM_ID_ARG
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeam
 import com.sofaacademy.sofaminiproject.utils.helpers.FlagHelper
+import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
 import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
 import com.sofaacademy.sofaminiproject.views.adapters.TeamTournamentsArrayAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +25,7 @@ import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
-class TeamDetailsFragment : Fragment(), TeamTournamentsArrayAdapter.OnItemClickListener {
+class TeamDetailsFragment : Fragment(), OnTournamentClicked {
     private var _binding: FragmentTeamDetailBinding? = null
     private lateinit var teamTournamentsArrayAdapter: TeamTournamentsArrayAdapter
     private val binding get() = _binding!!
@@ -54,7 +56,7 @@ class TeamDetailsFragment : Fragment(), TeamTournamentsArrayAdapter.OnItemClickL
     ): View {
         _binding = FragmentTeamDetailBinding.inflate(inflater, container, false)
         teamTournamentsArrayAdapter =
-            TeamTournamentsArrayAdapter(requireContext(), mutableListOf(), this)
+            TeamTournamentsArrayAdapter(mutableListOf(), this)
         binding.tournamentsRv.adapter = teamTournamentsArrayAdapter
         binding.tournamentsRv.layoutManager = GridLayoutManager(requireContext(), 3)
 
@@ -109,9 +111,9 @@ class TeamDetailsFragment : Fragment(), TeamTournamentsArrayAdapter.OnItemClickL
     private fun fillNextEventInfo(event: SportEvent) {
         binding.nextMatchTournament.setTournamentInfo(event.tournament)
         binding.nextMatchEvent.setMatchInfo(event)
-        binding.nextMatchEvent.setNextMatchDateTime(event)
+        binding.nextMatchEvent.setMatchDateTime(event)
     }
 
-    override fun onItemClick(item: Any) {
+    override fun onTournamentClicked(tournamet: Tournament) {
     }
 }

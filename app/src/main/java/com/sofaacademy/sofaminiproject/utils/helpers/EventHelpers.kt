@@ -11,6 +11,8 @@ import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 object EventHelpers {
 
@@ -104,6 +106,18 @@ object EventHelpers {
             }
 
             else -> ""
+        }
+    }
+
+    fun List<SportEvent>.sortedByDate(): List<SportEvent> {
+        return sortedBy { e ->
+            ZonedDateTime.parse(e.startDate!!, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+        }
+    }
+
+    fun List<SportEvent>.sortedByDateDesc(): List<SportEvent> {
+        return sortedByDescending { e ->
+            ZonedDateTime.parse(e.startDate!!, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
         }
     }
 }

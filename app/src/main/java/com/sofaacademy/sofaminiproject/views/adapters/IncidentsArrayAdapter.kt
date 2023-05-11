@@ -1,6 +1,5 @@
 package com.sofaacademy.sofaminiproject.views.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -17,9 +16,7 @@ import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderPeri
 
 class IncidentsArrayAdapter(
     private val sportSlug: String,
-    private val context: Context,
-    private var items: MutableList<Any>,
-    private val listener: OnItemClickListener
+    private var items: MutableList<Any>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -65,8 +62,6 @@ class IncidentsArrayAdapter(
                 holder.bind(items[position] as Incident.PeriodIncident)
         }
     }
-
-    fun getNumberOfItems(): Int = items.size
 
     fun setItems(newItems: List<Any>) {
         val diffResult = DiffUtil.calculateDiff(EventDiffUtilCallback(items, newItems))

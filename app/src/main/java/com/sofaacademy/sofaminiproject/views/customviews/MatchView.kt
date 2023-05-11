@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import coil.load
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.MatchViewBinding
+import com.sofaacademy.sofaminiproject.model.MatchStatus
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.utils.Constants.BASE_TEAM_URL
 import com.sofaacademy.sofaminiproject.utils.Constants.IMG_ENDPOINT
@@ -52,11 +53,16 @@ class MatchView @JvmOverloads constructor(
         binding.teamAwayResult.text = event.awayScore?.total?.toString()
     }
 
-    fun setNextMatchDateTime(event: SportEvent) {
+    fun setMatchDateTime(event: SportEvent) {
         val startTime = UtilityFunctions.getHourFromDate(event.startDate!!)
         val date = UtilityFunctions.getFormattedDetailDate(event.startDate)
         binding.timeStart.text = date
-        binding.currentTime.text = startTime
+
+        if (event.status == MatchStatus.FINISHED.status) {
+            binding.currentTime.text = context.getString(R.string.full_time)
+        } else {
+            binding.currentTime.text = startTime
+        }
     }
 
     fun setHomeTeamColor(color: Int) {
