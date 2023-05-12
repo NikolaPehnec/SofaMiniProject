@@ -1,36 +1,33 @@
 package com.sofaacademy.sofaminiproject.views.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.lifecycleScope
 import com.sofaacademy.sofaminiproject.databinding.FragmentTeamMatchesBinding
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.model.Tournament
-import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.Constants.TEAM_ID_ARG
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeam
-import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.sortedByDateDesc
 import com.sofaacademy.sofaminiproject.utils.listeners.OnEventClicked
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
 import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
-import com.sofaacademy.sofaminiproject.views.adapters.TeamSportEventsArrayAdapter
+import com.sofaacademy.sofaminiproject.views.adapters.EventPagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.Serializable
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
 class TeamMatchesFragment : Fragment(), OnTournamentClicked, OnEventClicked {
     private var _binding: FragmentTeamMatchesBinding? = null
-    private lateinit var teamSportEventsArrayAdapter: TeamSportEventsArrayAdapter
     private val binding get() = _binding!!
     private var team: Team2? = null
     private val teamViewModel: TeamViewModel by viewModels()
+    private lateinit var pagerAdapter: EventPagingAdapter
 
     companion object {
         @JvmStatic
@@ -55,39 +52,20 @@ class TeamMatchesFragment : Fragment(), OnTournamentClicked, OnEventClicked {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTeamMatchesBinding.inflate(inflater, container, false)
-        teamSportEventsArrayAdapter =
-            TeamSportEventsArrayAdapter(mutableListOf(), this, this)
-        binding.eventsRv.adapter = teamSportEventsArrayAdapter
+        pagerAdapter = EventPagingAdapter(this, this)
+        binding.eventsRv.adapter = pagerAdapter
 
         setListeners()
-        teamViewModel.getEvents(team?.id.toString(), Constants.NEXT, "0", true)
         return binding.root
     }
 
     private fun setListeners() {
-        teamViewModel.teamEvents.observe(viewLifecycleOwner) { sportEvents ->
-            val res1 = sportEvents.sortedByDateDesc()
-
-            var finished = mutableListOf<Serializable>()
-
-            //Specific grouping and ordering as seen in sofascore
-            for (i in res1.indices) {
-                if (i == 0) {
-                    finished.add(res1[i].tournament)
-                    finished.add(res1[i])
-                } else {
-                    if (res1[i - 1].tournament == res1[i].tournament) {
-                        finished.add(res1[i])
-                    } else {
-                        finished.add(res1[i].tournament)
-                        finished.add(res1[i])
-                    }
+        lifecycleScope.launch {
+            teamViewModel.getAllTeamEvents(team?.id.toString()).observe(viewLifecycleOwner) {
+                it?.let {
+                    pagerAdapter.submitData(lifecycle, it)
                 }
             }
-
-            teamSportEventsArrayAdapter.setItems(finished)
-            val nextEventPosition = teamSportEventsArrayAdapter.findNextEventPosition()
-            binding.eventsRv.scrollToPosition(nextEventPosition)
         }
     }
 

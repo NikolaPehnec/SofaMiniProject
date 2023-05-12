@@ -11,6 +11,7 @@ import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions
+import java.io.Serializable
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -119,5 +120,25 @@ object EventHelpers {
         return sortedByDescending { e ->
             ZonedDateTime.parse(e.startDate!!, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
         }
+    }
+
+    fun groupEventsByTournamentAndDate(events:List<SportEvent>): MutableList<Serializable> {
+        var finished = mutableListOf<Serializable>()
+
+        //Specific grouping and ordering as seen in sofascore
+        for (i in events.indices) {
+            if (i == 0) {
+                finished.add(events[i].tournament)
+                finished.add(events[i])
+            } else {
+                if (events[i - 1].tournament == events[i].tournament) {
+                    finished.add(events[i])
+                } else {
+                    finished.add(events[i].tournament)
+                    finished.add(events[i])
+                }
+            }
+        }
+        return finished
     }
 }

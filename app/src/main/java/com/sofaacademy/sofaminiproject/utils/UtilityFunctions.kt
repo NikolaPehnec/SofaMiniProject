@@ -93,13 +93,4 @@ object UtilityFunctions {
         return dateTabs
     }
 
-    fun getResultValue(score: Any?): String {
-        return when (score) {
-            is Map<*, *> -> {
-                (score["total"] as? Double)?.toInt().toString()
-            }
-
-            else -> ""
-        }
-    }
 }

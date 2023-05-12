@@ -42,3 +42,25 @@ class EventDiffUtilCallback(
         return super.getChangePayload(oldItemPosition, newItemPosition)
     }
 }
+
+object EventComparator: DiffUtil.ItemCallback<Any>() {
+    override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
+        if (oldItem is Tournament && newItem is Tournament) {
+            return oldItem.id == newItem.id
+        }
+        if (oldItem is SportEvent && newItem is SportEvent) {
+            return oldItem.id == newItem.id
+        }
+        return false
+    }
+
+    override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
+        if (oldItem is Tournament && newItem is Tournament) {
+            return oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.country == newItem.country && oldItem.sport == newItem.sport
+        }
+        if (oldItem is SportEvent && newItem is SportEvent) {
+            return oldItem.id == newItem.id && oldItem.startDate == newItem.startDate && oldItem.awayScore == newItem.awayScore && oldItem.homeScore == newItem.homeScore && oldItem.awayTeam == newItem.awayTeam && oldItem.status == newItem.status
+        }
+        return false
+    }
+}

@@ -4,10 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
+import androidx.paging.cachedIn
+import androidx.paging.liveData
 import com.sofaacademy.sofaminiproject.model.*
 import com.sofaacademy.sofaminiproject.networking.SofaMiniRepository
 import com.sofaacademy.sofaminiproject.utils.Constants.LAST
 import com.sofaacademy.sofaminiproject.utils.Constants.NEXT
+import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.groupEventsByTournamentAndDate
+import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.sortedByDateDesc
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -46,6 +55,9 @@ class TeamViewModel @Inject constructor(private val sofaMiniRepository: SofaMini
 
     private val _teamEventsError = MutableLiveData<String>()
     val teamEventsError: LiveData<String> = _teamEventsError
+
+    private val _teamEventsPaging = MutableLiveData<PagingData<Any>>()
+    val teamEventsPaging = _teamEventsPaging
 
     fun getAllTeamDetails(teamId: String) {
         viewModelScope.launch {
@@ -110,4 +122,62 @@ class TeamViewModel @Inject constructor(private val sofaMiniRepository: SofaMini
             }
         }
     }
+
+    fun getAllTeamEvents(teamId: String): LiveData<PagingData<Any>> {
+        return getEventsPaging(teamId).cachedIn(viewModelScope)
+    }
+
+    fun getEventsPaging(teamId: String): LiveData<PagingData<Any>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 10,
+                enablePlaceholders = false,
+                initialLoadSize = 1
+            ),
+            pagingSourceFactory = {
+                EventPagingSource(teamId)
+            }, initialKey = 1
+        ).liveData
+    }
+
+    inner class EventPagingSource(val teamId: String) : PagingSource<Int, Any>() {
+        override fun getRefreshKey(state: PagingState<Int, Any>): Int? {
+            return state.anchorPosition?.let { anchorPosition ->
+                state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                    ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+            }
+        }
+
+        override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Any> {
+            var page = params.key ?: 0
+            val initialKey = params.key ?: 0
+
+            val result =
+                if (page <= 0) {
+                    page *= -1
+                    sofaMiniRepository.getTeamEvents(
+                        teamId,
+                        NEXT,
+                        page.toString()
+                    )
+                } else {
+                    page -= 1
+                    sofaMiniRepository.getTeamEvents(teamId, LAST, page.toString())
+                }
+
+            if (result is Result.Success) {
+                val groupedData = groupEventsByTournamentAndDate(result.data.sortedByDateDesc())
+                return LoadResult.Page(
+                    data = groupedData,
+                    prevKey = initialKey - 1,
+                    nextKey = initialKey + 1
+                )
+            } else {
+                return LoadResult.Error(Throwable("Err"))
+            }
+        }
+
+    }
+
+
 }
