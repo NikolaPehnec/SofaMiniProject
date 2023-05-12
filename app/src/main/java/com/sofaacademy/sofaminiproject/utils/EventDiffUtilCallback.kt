@@ -43,7 +43,7 @@ class EventDiffUtilCallback(
     }
 }
 
-object EventComparator: DiffUtil.ItemCallback<Any>() {
+object EventComparator : DiffUtil.ItemCallback<Any>() {
     override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
         if (oldItem is Tournament && newItem is Tournament) {
             return oldItem.id == newItem.id

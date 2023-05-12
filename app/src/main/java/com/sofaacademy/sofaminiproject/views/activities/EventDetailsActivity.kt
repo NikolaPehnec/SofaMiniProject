@@ -116,4 +116,7 @@ class EventDetailsActivity :
     override fun onTeamAwayClicked() {
         TeamDetailsActivity.start(sportEvent.awayTeam, this)
     }
+
+    override fun onTeamClicked(teamId: Int) {
+    }
 }

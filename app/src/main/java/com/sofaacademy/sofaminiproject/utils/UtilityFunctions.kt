@@ -92,5 +92,4 @@ object UtilityFunctions {
         }
         return dateTabs
     }
-
 }

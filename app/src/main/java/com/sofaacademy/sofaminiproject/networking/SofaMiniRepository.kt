@@ -7,6 +7,7 @@ import com.sofaacademy.sofaminiproject.model.Result
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.model.Tournament
+import com.sofaacademy.sofaminiproject.model.TournamentStandings
 import javax.inject.Inject
 
 open class SofaMiniRepository @Inject constructor(
@@ -41,4 +42,7 @@ open class SofaMiniRepository @Inject constructor(
 
     suspend fun getTeamTournaments(teamId: String): Result<List<Tournament>> =
         apiCall(call = { sofaMiniApi.getTeamTournaments(teamId) })
+
+    suspend fun getTournamentStandings(tournamentId: String): Result<List<TournamentStandings>> =
+        apiCall(call = { sofaMiniApi.getTournamentStandings(tournamentId) })
 }

@@ -27,6 +27,13 @@
     <string name="foreign_players">Foreign Players</string>
     <string name="events">Events</string>
     <string name="full_time">FT</string>
+    <string name="team">Team</string>
+    <string name="plays">P</string>
+    <string name="wins">W</string>
+    <string name="draws">D</string>
+    <string name="losses">L</string>
+    <string name="goals">Goals</string>
+    <string name="points">PTS</string>
 
     <string-array name="tabs">
         <item>Football</item>

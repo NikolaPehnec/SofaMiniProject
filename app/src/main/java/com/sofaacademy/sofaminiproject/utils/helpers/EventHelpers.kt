@@ -122,10 +122,10 @@ object EventHelpers {
         }
     }
 
-    fun groupEventsByTournamentAndDate(events:List<SportEvent>): MutableList<Serializable> {
+    fun groupEventsByTournamentAndDate(events: List<SportEvent>): MutableList<Serializable> {
         var finished = mutableListOf<Serializable>()
 
-        //Specific grouping and ordering as seen in sofascore
+        // Specific grouping and ordering as seen in sofascore
         for (i in events.indices) {
             if (i == 0) {
                 finished.add(events[i].tournament)

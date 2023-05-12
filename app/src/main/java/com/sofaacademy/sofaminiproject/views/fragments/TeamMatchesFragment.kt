@@ -20,7 +20,6 @@ import com.sofaacademy.sofaminiproject.views.adapters.EventPagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
 @AndroidEntryPoint
 class TeamMatchesFragment : Fragment(), OnTournamentClicked, OnEventClicked {
     private var _binding: FragmentTeamMatchesBinding? = null

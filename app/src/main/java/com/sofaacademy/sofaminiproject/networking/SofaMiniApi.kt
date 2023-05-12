@@ -5,6 +5,7 @@ import com.sofaacademy.sofaminiproject.model.Player
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.model.Tournament
+import com.sofaacademy.sofaminiproject.model.TournamentStandings
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -49,4 +50,9 @@ interface SofaMiniApi {
     suspend fun getTeamTournaments(
         @Path(value = "id") id: String
     ): Response<List<Tournament>>
+
+    @GET("tournament/{id}/standings")
+    suspend fun getTournamentStandings(
+        @Path(value = "id") id: String
+    ): Response<List<TournamentStandings>>
 }
