@@ -39,6 +39,15 @@ object UtilityFunctions {
         }
     }
 
+    fun elapsedMinutesBetweenTwoDates(localDate: LocalDateTime, date2: String): Long {
+        return try {
+            val localDate2 = LocalDateTime.parse(date2, dateTimeFormatter)
+            ChronoUnit.MINUTES.between(localDate, localDate2)
+        } catch (e: java.lang.Exception) {
+            0L
+        }
+    }
+
     fun elapsedMinutesFromDate(date: String): String {
         return try {
             val currentDateTime = LocalDateTime.now(ZoneOffset.UTC)

@@ -1,11 +1,13 @@
 package com.sofaacademy.sofaminiproject.views.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.RecyclerView
 import com.sofaacademy.sofaminiproject.databinding.FragmentTeamMatchesBinding
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
@@ -19,6 +21,8 @@ import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
 import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
 import com.sofaacademy.sofaminiproject.views.adapters.TeamSportEventsArrayAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.Serializable
+
 
 @AndroidEntryPoint
 class TeamMatchesFragment : Fragment(), OnTournamentClicked, OnEventClicked {
@@ -64,8 +68,9 @@ class TeamMatchesFragment : Fragment(), OnTournamentClicked, OnEventClicked {
         teamViewModel.teamEvents.observe(viewLifecycleOwner) { sportEvents ->
             val res1 = sportEvents.sortedByDateDesc()
 
-            var finished = mutableListOf<java.io.Serializable>()
+            var finished = mutableListOf<Serializable>()
 
+            //Specific grouping and ordering as seen in sofascore
             for (i in res1.indices) {
                 if (i == 0) {
                     finished.add(res1[i].tournament)
@@ -81,7 +86,8 @@ class TeamMatchesFragment : Fragment(), OnTournamentClicked, OnEventClicked {
             }
 
             teamSportEventsArrayAdapter.setItems(finished)
-            binding.eventsRv.post(Runnable {  binding.eventsRv.smoothScrollToPosition(15) })
+            val nextEventPosition = teamSportEventsArrayAdapter.findNextEventPosition()
+            binding.eventsRv.scrollToPosition(nextEventPosition)
         }
     }
 
