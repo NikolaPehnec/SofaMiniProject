@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="12dp"
+    android:backgroundTint="@color/surface_surface_0"
+    android:background="@drawable/rounded2_bg"
+     android:orientation="horizontal">
+
+    <ImageView
+        android:layout_marginStart="8dp"
+        android:id="@+id/tournament_img"
+        android:layout_width="16dp"
+        tools:src="@drawable/croatia"
+        android:layout_height="16dp"/>
+
+    <TextView
+        tools:text="LaLiga"
+        android:layout_marginStart="8dp"
+        style="@style/Assistive"
+        android:background="@color/surface_surface_0"
+        android:textColor="@color/on_surface_on_surface_lv_1"
+        android:id="@+id/tournament_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

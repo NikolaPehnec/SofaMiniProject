@@ -8,4 +8,9 @@ data class Tournament(
     val slug: String,
     val sport: Sport,
     val country: Country
-) : Serializable
+) : Serializable {
+
+    override fun toString(): String {
+        return name
+    }
+}

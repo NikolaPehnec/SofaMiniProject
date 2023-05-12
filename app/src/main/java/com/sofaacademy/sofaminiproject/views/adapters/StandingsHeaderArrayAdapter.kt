@@ -20,7 +20,8 @@ class StandingsHeaderArrayAdapter() : RecyclerView.Adapter<ViewHolderStandingsHe
         )
     }
 
-    override fun onBindViewHolder(holder: ViewHolderStandingsHeader, position: Int) {}
+    override fun onBindViewHolder(holder: ViewHolderStandingsHeader, position: Int) {
+    }
 
     override fun getItemCount(): Int = 1
 }

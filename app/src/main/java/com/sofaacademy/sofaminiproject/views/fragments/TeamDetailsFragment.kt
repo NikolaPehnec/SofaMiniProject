@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import coil.load
@@ -30,7 +31,8 @@ class TeamDetailsFragment : Fragment(), OnTournamentClicked {
     private lateinit var teamTournamentsArrayAdapter: TeamTournamentsArrayAdapter
     private val binding get() = _binding!!
     private var team: Team2? = null
-    private val teamViewModel: TeamViewModel by viewModels()
+    private val teamViewModel: TeamViewModel by activityViewModels()
+    private val tournamentViewModel: TeamViewModel by viewModels()
 
     companion object {
         @JvmStatic
@@ -62,6 +64,7 @@ class TeamDetailsFragment : Fragment(), OnTournamentClicked {
 
         setListeners()
         teamViewModel.getAllTeamDetails(team?.id.toString())
+        tournamentViewModel.teamTournaments
         return binding.root
     }
 
