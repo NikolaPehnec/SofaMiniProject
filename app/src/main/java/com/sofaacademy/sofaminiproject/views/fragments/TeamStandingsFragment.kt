@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -37,7 +36,6 @@ class TeamStandingsFragment : Fragment(), OnTeamClicked {
     private lateinit var headerAdapter: StandingsHeaderArrayAdapter
     private lateinit var arrayAdapter: StandingsArrayAdapter
     private lateinit var spinnerArrayAdapter: TournamentSpinnerAdapter
-    private lateinit var spinnerArrayAdapter2: ArrayAdapter<Tournament>
     private val tournamentStandingsMap = mutableMapOf<Int, List<StandingsRow>>()
 
     companion object {
@@ -64,15 +62,12 @@ class TeamStandingsFragment : Fragment(), OnTeamClicked {
     ): View {
         _binding = FragmentTeamStandingsBinding.inflate(inflater, container, false)
         headerAdapter = StandingsHeaderArrayAdapter()
-        arrayAdapter = StandingsArrayAdapter(mutableListOf(), this)
-        spinnerArrayAdapter2 =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, mutableListOf())
+        arrayAdapter = StandingsArrayAdapter(team!!.id,mutableListOf(), this)
         spinnerArrayAdapter = TournamentSpinnerAdapter(mutableListOf(), requireContext())
         binding.eventsRv.adapter = ConcatAdapter(headerAdapter, arrayAdapter)
         binding.tournamentSpinner.adapter = spinnerArrayAdapter
 
         setListeners()
-        tournamentsViewModel.getTournamentStandings("2")
         return binding.root
     }
 
@@ -91,8 +86,8 @@ class TeamStandingsFragment : Fragment(), OnTeamClicked {
         teamViewModel.teamTournaments.observe(viewLifecycleOwner) {
             tournaments.clear()
             tournaments.addAll(it)
-            //   spinnerArrayAdapter.clear()
             spinnerArrayAdapter.setItems(it)
+            binding.tournamentSpinner.setSelection(0)
         }
 
         binding.tournamentSpinner.onItemSelectedListener = object : OnItemSelectedListener {

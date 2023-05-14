@@ -11,12 +11,14 @@ import com.sofaacademy.sofaminiproject.utils.listeners.OnTeamClicked
 import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderStandings
 
 class StandingsArrayAdapter(
+    private var highlightTeamId: Int,
     private var items: MutableList<StandingsRow>,
     private val listener: OnTeamClicked
 ) : RecyclerView.Adapter<ViewHolderStandings>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderStandings {
         return ViewHolderStandings(
+            parent.context,
             TournamentStandingsRowBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -27,7 +29,7 @@ class StandingsArrayAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolderStandings, position: Int) {
-        holder.bind(items[position], position + 1)
+        holder.bind(highlightTeamId, items[position], position + 1)
     }
 
     fun setItems(newItems: List<StandingsRow>) {

@@ -24,21 +24,19 @@
 
             <Spinner
                 android:id="@+id/tournament_spinner"
+                style="@style/CustomSpinner"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
-
-                android:background="@drawable/rounded2_bg"
-                android:backgroundTint="@color/surface_surface_0" />
-
+                android:minWidth="64dp" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/events_rv"
             android:layout_width="match_parent"
-            android:paddingBottom="36dp"
             android:layout_height="match_parent"
+            android:paddingBottom="36dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
     </LinearLayout>
 

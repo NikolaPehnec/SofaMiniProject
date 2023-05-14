@@ -49,5 +49,10 @@
         <item name="cornerRadius">1dp</item>
     </style>
 
+    <style name="CustomSpinner" parent="@style/Widget.AppCompat.Spinner">
+        <item name="overlapAnchor">true</item>
+        <item name="android:background">@drawable/rounded3_bg</item>
+    </style>
+
 
 </resources>
