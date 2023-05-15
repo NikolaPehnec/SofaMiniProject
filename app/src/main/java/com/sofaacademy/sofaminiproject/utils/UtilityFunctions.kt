@@ -1,17 +1,21 @@
 package com.sofaacademy.sofaminiproject.utils
 
 import android.content.Context
+import android.widget.ImageView
 import androidx.appcompat.content.res.AppCompatResources
+import coil.load
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.utils.Constants.MAX_DAYS
 import com.sofaacademy.sofaminiproject.utils.Constants.MIN_DAYS
+import com.sofaacademy.sofaminiproject.utils.helpers.FlagHelper
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*
+import kotlin.math.roundToInt
 
 object UtilityFunctions {
     private val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
@@ -75,7 +79,8 @@ object UtilityFunctions {
 
     fun getTournamentDetailsTabLayoutConfigStrategy(context: Context): TabLayoutMediator.TabConfigurationStrategy =
         TabLayoutMediator.TabConfigurationStrategy { tab, position ->
-            tab.text = context.resources.getStringArray(R.array.tabs_tournament_detail_page)[position]
+            tab.text =
+                context.resources.getStringArray(R.array.tabs_tournament_detail_page)[position]
         }
 
     fun getTabTitlesByDate(context: Context): MutableMap<LocalDate, String> {
@@ -96,5 +101,32 @@ object UtilityFunctions {
             dateTabs[date] = dateStr
         }
         return dateTabs
+    }
+
+    fun getForeignPlayersPercentIndicator(totalPlayers: Int, foreignPlayers: Int): Int =
+        ((foreignPlayers * 1f / totalPlayers) * 100).roundToInt()
+
+    fun ImageView.loadTournamentImg(tournamentId: String) {
+        this.load(
+            "${Constants.BASE_TOURNAMENT_URL}${tournamentId}${Constants.IMG_ENDPOINT}"
+        )
+    }
+
+    fun ImageView.loadTeamImg(teamId: String) {
+        this.load(
+            "${Constants.BASE_TEAM_URL}${teamId}${Constants.IMG_ENDPOINT}"
+        )
+    }
+
+    fun ImageView.loadPlayerImg(playerId: String) {
+        this.load(
+            "${Constants.BASE_PLAYER_URL}${playerId}${Constants.IMG_ENDPOINT}"
+        )
+    }
+
+    fun ImageView.loadCountryFlag(countryName: String, context: Context) {
+        this.load(
+            FlagHelper.getFlagBitmap(context, countryName)
+        )
     }
 }

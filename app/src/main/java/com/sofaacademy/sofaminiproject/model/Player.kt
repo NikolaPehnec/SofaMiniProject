@@ -8,4 +8,4 @@ data class Player(
     val slug: String?,
     val country: Country?,
     val position: String?
-): Serializable
+) : Serializable

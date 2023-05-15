@@ -16,8 +16,8 @@ import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeam
 import com.sofaacademy.sofaminiproject.utils.listeners.OnPlayerClicked
 import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
 import com.sofaacademy.sofaminiproject.views.activities.PlayerDetailsActivity
-import com.sofaacademy.sofaminiproject.views.adapters.headerAdapters.SquadHeaderAdapter
 import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.TeamPlayersArrayAdapter
+import com.sofaacademy.sofaminiproject.views.adapters.headerAdapters.SquadHeaderAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -58,7 +58,7 @@ class TeamSquadFragment : Fragment(), OnPlayerClicked {
 
         teamPlayersArrayAdapter =
             TeamPlayersArrayAdapter(mutableListOf(), this)
-        // Nema manager entiteta s apija
+        // Nema manager entiteta s apija, bolje bi bilo jedan adapter i tip Coach, Player
         teamCoachArrayAdapter =
             TeamPlayersArrayAdapter(mutableListOf(), this)
 
@@ -83,7 +83,7 @@ class TeamSquadFragment : Fragment(), OnPlayerClicked {
         }
         teamViewModel.teamDetails.observe(viewLifecycleOwner) {
             teamCoachArrayAdapter.setItems(
-                mutableListOf(Player(1, it!!.managerName, null, it.country, null))
+                mutableListOf(Player(-1, it!!.managerName, null, it.country, null))
             )
         }
     }

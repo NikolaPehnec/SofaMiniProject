@@ -9,15 +9,14 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import coil.load
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.ActivityEventDetailsBinding
 import com.sofaacademy.sofaminiproject.databinding.EventDetailToolbarBinding
 import com.sofaacademy.sofaminiproject.model.Player
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
-import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.Constants.EVENT_ID_KEY
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadTournamentImg
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getEventFromIntent
 import com.sofaacademy.sofaminiproject.utils.listeners.OnIncidentClicked
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTeamClicked
@@ -95,9 +94,7 @@ class EventDetailsActivity :
 
     private fun fillEventDetails(sportEvent: SportEvent) {
         binding.eventDetails.setEventInfo(sportEvent)
-        customToolbarBinding.eventImg.load(
-            "${Constants.BASE_TOURNAMENT_URL}${sportEvent.tournament.id}${Constants.IMG_ENDPOINT}"
-        )
+        customToolbarBinding.eventImg.loadTournamentImg(sportEvent.tournament.id.toString())
         customToolbarBinding.eventDesc.text =
             getString(
                 R.string.event_details,
@@ -114,18 +111,12 @@ class EventDetailsActivity :
                 finish()
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-
-    override fun onTeamClicked(teamId: Int) {
-        if (teamId == sportEvent.homeTeam.id) {
-            TeamDetailsActivity.start(sportEvent.homeTeam, this)
-        } else {
-            TeamDetailsActivity.start(sportEvent.awayTeam, this)
-        }
+    override fun onTeamClicked(team: Team2) {
+        TeamDetailsActivity.start(team, this)
     }
 
     override fun onIncidentClicked(player: Player, team2: Team2) {

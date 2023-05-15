@@ -15,6 +15,7 @@ import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTournament
 import com.sofaacademy.sofaminiproject.utils.listeners.OnEventClicked
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
 import com.sofaacademy.sofaminiproject.viewmodel.TournamentsViewModel
+import com.sofaacademy.sofaminiproject.views.activities.EventDetailsActivity
 import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.EventPagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -59,15 +60,17 @@ class TournamentMatchesFragment : Fragment(), OnTournamentClicked, OnEventClicke
 
     private fun setListeners() {
         lifecycleScope.launch {
-            tournamentsViewModel.getAllTournamentEvents(tournament?.id.toString()).observe(viewLifecycleOwner) {
-                it?.let {
-                    pagingAdapter.submitData(lifecycle, it)
+            tournamentsViewModel.getAllTournamentEvents(tournament?.id.toString())
+                .observe(viewLifecycleOwner) {
+                    it?.let {
+                        pagingAdapter.submitData(lifecycle, it)
+                    }
                 }
-            }
         }
     }
 
     override fun onEventClicked(sportEvent: SportEvent) {
+        EventDetailsActivity.start(sportEvent, requireContext())
     }
 
     override fun onTournamentClicked(tournamet: Tournament) {

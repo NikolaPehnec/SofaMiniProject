@@ -1,10 +1,9 @@
 package com.sofaacademy.sofaminiproject.views.adapters.viewHolders
 
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.sofaacademy.sofaminiproject.databinding.TournamentTeamDetailRowBinding
 import com.sofaacademy.sofaminiproject.model.Tournament
-import com.sofaacademy.sofaminiproject.utils.Constants
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadTournamentImg
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
 
 class ViewHolderTournamentGrid(
@@ -15,7 +14,7 @@ class ViewHolderTournamentGrid(
 
     fun bind(item: Tournament) {
         binding.tournamentName.text = item.name
-        binding.tournamentLogo.load("${Constants.BASE_TOURNAMENT_URL}${item.id}${Constants.IMG_ENDPOINT}")
+        binding.tournamentLogo.loadTournamentImg(item.id.toString())
         binding.root.setOnClickListener {
             listener.onTournamentClicked(item)
         }

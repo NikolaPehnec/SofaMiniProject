@@ -4,10 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import coil.load
 import com.sofaacademy.sofaminiproject.databinding.TeamViewBinding
-import com.sofaacademy.sofaminiproject.utils.Constants.BASE_TEAM_URL
-import com.sofaacademy.sofaminiproject.utils.Constants.IMG_ENDPOINT
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadTeamImg
 
 class TeamView @JvmOverloads constructor(
     context: Context,
@@ -28,6 +26,6 @@ class TeamView @JvmOverloads constructor(
     }
 
     fun loadTeamLogo(teamHomeId: Int) {
-        binding.teamLogo.load("$BASE_TEAM_URL$teamHomeId$IMG_ENDPOINT")
+        binding.teamLogo.loadTeamImg(teamHomeId.toString())
     }
 }

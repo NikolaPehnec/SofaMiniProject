@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
-import coil.load
 import com.google.android.material.appbar.AppBarLayout
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.ActivityPlayerDetailBinding
@@ -20,9 +19,12 @@ import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.utils.Constants
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadCountryFlag
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadPlayerImg
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadTeamImg
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getPlayerFromIntent
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeamFromIntent
-import com.sofaacademy.sofaminiproject.utils.helpers.FlagHelper
+import com.sofaacademy.sofaminiproject.utils.helpers.TeamHelpers.getPlayerPositionName
 import com.sofaacademy.sofaminiproject.utils.listeners.OnEventClicked
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
 import com.sofaacademy.sofaminiproject.viewmodel.PlayerViewModel
@@ -74,31 +76,34 @@ class PlayerDetailsActivity : AppCompatActivity(), OnTournamentClicked, OnEventC
     private fun loadHeaderData() {
         binding.activityToolbar.title = ""
         binding.playerName.text = player.name
-        binding.playerLogo.load(
-            "${Constants.BASE_PLAYER_URL}${player.id}${Constants.IMG_ENDPOINT}"
-        )
+        binding.playerLogo.loadPlayerImg(player.id.toString())
 
         binding.playerContentLayout.apply {
-            teamLogo.load(
-                "${Constants.BASE_TEAM_URL}${team.id}${Constants.IMG_ENDPOINT}"
-            )
+            teamLogo.loadTeamImg(team.id.toString())
             teamName.text = team.name
-            nationalityItem.attribute.text = getString(R.string.nationality)
-            nationalityItem.attributeValue.text = player.country?.name?.substring(0, 3)
-            nationalityItem.img.load(
-                FlagHelper.getFlagBitmap(
-                    this@PlayerDetailsActivity,
-                    player.country?.name
-                )
-            )
+            nationalityItem.apply {
+                attribute.text = getString(R.string.nationality)
+                attributeValue.text = player.country!!.name.substring(0, 3)
+                img.loadCountryFlag(player.country!!.name, this@PlayerDetailsActivity)
+            }
 
-            positionItem.attribute.text = getString(R.string.position)
-            positionItem.attributeValue.text = player.position
-            positionItem.img.visibility = View.GONE
-            //Nema podataka na APIju?
-            ageItem.attribute.text = "9 Sep 1985"
-            ageItem.attributeValue.text = "37 Yrs"
-            ageItem.img.visibility = View.GONE
+            positionItem.apply {
+                attribute.text = getString(R.string.position)
+                attributeValue.text =
+                    getPlayerPositionName(player.position.toString(), this@PlayerDetailsActivity)
+                img.visibility = View.GONE
+            }
+
+            // Nema podataka na APIju?
+            ageItem.apply {
+                attribute.text = "9 Sep 1985"
+                attributeValue.text = "37 Yrs"
+                img.visibility = View.GONE
+            }
+        }
+
+        binding.playerContentLayout.teamLayout.setOnClickListener {
+            TeamDetailsActivity.start(team, this)
         }
     }
 
@@ -113,25 +118,25 @@ class PlayerDetailsActivity : AppCompatActivity(), OnTournamentClicked, OnEventC
         }
 
         binding.appbarlayout.addOnOffsetChangedListener(object :
-            AppBarLayout.OnOffsetChangedListener {
-            var isShow: Boolean? = null
-            var scrollRange: Int = -1
+                AppBarLayout.OnOffsetChangedListener {
+                var isShow: Boolean? = null
+                var scrollRange: Int = -1
 
-            override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout!!.totalScrollRange
-                }
-                if (scrollRange + verticalOffset <= 0) {
-                    if (binding.activityToolbar.title != player.name) {
-                        binding.activityToolbar.title = player.name
+                override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+                    if (scrollRange == -1) {
+                        scrollRange = appBarLayout!!.totalScrollRange
                     }
-                    isShow = true
-                } else if (isShow == true) {
-                    binding.activityToolbar.title = ""
-                    isShow = false
+                    if (scrollRange + verticalOffset <= 0) {
+                        if (binding.activityToolbar.title != player.name) {
+                            binding.activityToolbar.title = player.name
+                        }
+                        isShow = true
+                    } else if (isShow == true) {
+                        binding.activityToolbar.title = ""
+                        isShow = false
+                    }
                 }
-            }
-        })
+            })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -146,8 +151,10 @@ class PlayerDetailsActivity : AppCompatActivity(), OnTournamentClicked, OnEventC
     }
 
     override fun onEventClicked(sportEvent: SportEvent) {
+        EventDetailsActivity.start(sportEvent, this)
     }
 
     override fun onTournamentClicked(tournamet: Tournament) {
+        TournamentDetailsActivity.start(tournamet, this)
     }
 }

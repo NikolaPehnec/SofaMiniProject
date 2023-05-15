@@ -1,5 +1,7 @@
 package com.sofaacademy.sofaminiproject.utils.listeners
 
+import com.sofaacademy.sofaminiproject.model.Team2
+
 interface OnTeamClicked {
-    fun onTeamClicked(teamId: Int)
+    fun onTeamClicked(team: Team2)
 }

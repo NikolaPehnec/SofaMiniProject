@@ -40,6 +40,11 @@
     <string name="nationality">Nationality</string>
     <string name="position">Position</string>
 
+    <string name="midfield">Midfield</string>
+    <string name="defence">Defence</string>
+    <string name="goalkeeper">Goalkeeper</string>
+    <string name="forward">Forward</string>
+
     <string-array name="tabs">
         <item>Football</item>
         <item>Basketball</item>

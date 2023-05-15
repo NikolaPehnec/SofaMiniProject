@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.TournamentStandingsRowBinding
 import com.sofaacademy.sofaminiproject.model.StandingsRow
+import com.sofaacademy.sofaminiproject.utils.helpers.TeamHelpers.mapToTeam2
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTeamClicked
 
 class ViewHolderStandings(
@@ -25,7 +26,7 @@ class ViewHolderStandings(
         binding.goals.text = item.scoresFor?.toString() + ":" + item.scoresAgainst?.toString()
         binding.pts.text = item.played?.toString()
         binding.root.setOnClickListener {
-            listener.onTeamClicked(item.team!!.id)
+            listener.onTeamClicked(item.team!!.mapToTeam2())
         }
 
         if (highlightTeamId == item.team?.id) {

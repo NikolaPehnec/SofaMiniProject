@@ -52,7 +52,6 @@ class TeamViewModel @Inject constructor(private val sofaMiniRepository: SofaMini
     private val _teamEventsError = MutableLiveData<String>()
     val teamEventsError: LiveData<String> = _teamEventsError
 
-
     fun getAllTeamDetails(teamId: String) {
         viewModelScope.launch {
             val detailsDeff = async { sofaMiniRepository.getTeamDetails(teamId) }

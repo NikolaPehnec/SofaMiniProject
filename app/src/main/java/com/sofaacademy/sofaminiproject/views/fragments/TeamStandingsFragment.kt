@@ -20,9 +20,9 @@ import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeam
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTeamClicked
 import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
 import com.sofaacademy.sofaminiproject.viewmodel.TournamentsViewModel
+import com.sofaacademy.sofaminiproject.views.adapters.TournamentSpinnerAdapter
 import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.StandingsArrayAdapter
 import com.sofaacademy.sofaminiproject.views.adapters.headerAdapters.StandingsHeaderArrayAdapter
-import com.sofaacademy.sofaminiproject.views.adapters.TournamentSpinnerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -111,6 +111,6 @@ class TeamStandingsFragment : Fragment(), OnTeamClicked {
         }
     }
 
-    override fun onTeamClicked(teamId: Int) {
+    override fun onTeamClicked(team: Team2) {
     }
 }

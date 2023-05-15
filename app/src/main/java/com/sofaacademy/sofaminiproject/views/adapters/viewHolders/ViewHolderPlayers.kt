@@ -13,8 +13,10 @@ class ViewHolderPlayers(
 
     fun bind(item: Player) {
         binding.player.setPlayerInfo(item)
-        binding.root.setOnClickListener {
-            listener.onPlayerClicked(item)
+        if (item.id != -1) {
+            binding.root.setOnClickListener {
+                listener.onPlayerClicked(item)
+            }
         }
     }
 }

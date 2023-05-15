@@ -7,15 +7,15 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import coil.load
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sofaacademy.sofaminiproject.databinding.ActivityTournamentDetailBinding
 import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getTournamentDetailsTabLayoutConfigStrategy
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadCountryFlag
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadTournamentImg
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTournamentFromIntent
-import com.sofaacademy.sofaminiproject.utils.helpers.FlagHelper
 import com.sofaacademy.sofaminiproject.views.adapters.pagerAdapters.TournamentDetailsPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -61,12 +61,8 @@ class TournamentDetailsActivity : AppCompatActivity() {
         binding.activityToolbar.title = ""
         binding.tournamentName.text = tournament.name
         binding.countryName.text = tournament.country.name
-        binding.tournamentLogo.load(
-            "${Constants.BASE_TOURNAMENT_URL}${tournament.id}${Constants.IMG_ENDPOINT}"
-        )
-        binding.countryLogo.load(
-            FlagHelper.getFlagBitmap(this, tournament.country.name)
-        )
+        binding.tournamentLogo.loadTournamentImg(tournament.id.toString())
+        binding.countryLogo.loadCountryFlag(tournament.country.name, this)
     }
 
     private fun setListeners() {

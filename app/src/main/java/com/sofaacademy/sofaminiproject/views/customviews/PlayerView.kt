@@ -4,12 +4,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import coil.load
+import androidx.appcompat.content.res.AppCompatResources
+import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.TeamPlayerViewBinding
 import com.sofaacademy.sofaminiproject.model.Player
-import com.sofaacademy.sofaminiproject.utils.Constants
-import com.sofaacademy.sofaminiproject.utils.Constants.IMG_ENDPOINT
-import com.sofaacademy.sofaminiproject.utils.helpers.FlagHelper
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadCountryFlag
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadPlayerImg
 
 class PlayerView @JvmOverloads constructor(
     context: Context,
@@ -28,12 +28,17 @@ class PlayerView @JvmOverloads constructor(
     ) {
         binding.playerName.text = player.name
         binding.countryName.text = player.country!!.name
-        binding.playerImg.load("${Constants.BASE_PLAYER_URL}${player.id}$IMG_ENDPOINT")
-        binding.countryLogo.load(
-            FlagHelper.getFlagBitmap(
-                context,
-                player.country.name
+        binding.countryLogo.loadCountryFlag(player.country.name, context)
+        // Za coacha
+        if (player.id == -1) {
+            binding.playerImg.setImageDrawable(
+                AppCompatResources.getDrawable(
+                    context,
+                    R.drawable.coach_img
+                )
             )
-        )
+        } else {
+            binding.playerImg.loadPlayerImg(player.id.toString())
+        }
     }
 }

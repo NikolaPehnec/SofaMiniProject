@@ -65,6 +65,7 @@ class SportFragment : Fragment(), OnTournamentClicked, OnEventClicked {
         binding.eventsRv.adapter = ConcatAdapter(sportEventsHeaderAdapter, sportEventsArrayAdapter)
         setListeners()
 
+        sportEventViewModel.getSportEvents(slug!!, yearFormat.format(currentDate))
         return binding.root
     }
 

@@ -12,7 +12,6 @@ import com.sofaacademy.sofaminiproject.model.IncidentEnum
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.utils.EventDiffUtilCallback
 import com.sofaacademy.sofaminiproject.utils.listeners.OnIncidentClicked
-import com.sofaacademy.sofaminiproject.utils.listeners.OnPlayerClicked
 import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderCardIncident
 import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderGoalIncident
 import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderPeriodIncident
@@ -21,7 +20,7 @@ class IncidentsArrayAdapter(
     private val sportSlug: String,
     private var items: MutableList<Any>,
     private var sportEvent: SportEvent,
-    private var onIncidentClicked: OnIncidentClicked,
+    private var onIncidentClicked: OnIncidentClicked
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -41,7 +40,8 @@ class IncidentsArrayAdapter(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                ), sportEvent
+                ),
+                sportEvent
             )
 
             IncidentEnum.TYPE_PERIOD.ordinal -> ViewHolderPeriodIncident(

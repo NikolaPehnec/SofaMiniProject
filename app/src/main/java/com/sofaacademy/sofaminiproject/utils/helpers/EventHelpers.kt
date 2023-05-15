@@ -5,12 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import com.sofaacademy.sofaminiproject.R
-import com.sofaacademy.sofaminiproject.model.MatchStatus
-import com.sofaacademy.sofaminiproject.model.Player
-import com.sofaacademy.sofaminiproject.model.Score
-import com.sofaacademy.sofaminiproject.model.SportEvent
-import com.sofaacademy.sofaminiproject.model.Team2
-import com.sofaacademy.sofaminiproject.model.Tournament
+import com.sofaacademy.sofaminiproject.model.*
 import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions
 import java.io.Serializable
@@ -155,7 +150,7 @@ object EventHelpers {
     }
 
     fun groupEventsByTournamentAndDate(events: List<SportEvent>): MutableList<Serializable> {
-        var finished = mutableListOf<Serializable>()
+        val finished = mutableListOf<Serializable>()
 
         // Specific grouping and ordering as seen in sofascore
         for (i in events.indices) {

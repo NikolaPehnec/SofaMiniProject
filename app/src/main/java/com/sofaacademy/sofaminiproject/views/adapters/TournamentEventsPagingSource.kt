@@ -32,20 +32,24 @@ class TournamentEventsPagingSource(
                 )
             } else {
                 page -= 1
-                sofaMiniRepository.getTournamentEvents(tournamentId, Constants.LAST, page.toString())
+                sofaMiniRepository.getTournamentEvents(
+                    tournamentId,
+                    Constants.LAST,
+                    page.toString()
+                )
             }
 
-        if (result is Result.Success) {
+        return if (result is Result.Success) {
             val res = result.data.groupBy { it.round }.flatMap {
                 listOf(it.key) + it.value.sortedByDateDesc()
             }
-            return LoadResult.Page(
+            LoadResult.Page(
                 data = res,
-                prevKey = initialKey - 1,
-                nextKey = initialKey + 1
+                prevKey = if (res.isNotEmpty()) initialKey - 1 else null,
+                nextKey = if (res.isNotEmpty()) initialKey + 1 else null
             )
         } else {
-            return LoadResult.Error(Throwable("Err"))
+            LoadResult.Error(Throwable("Err"))
         }
     }
 }

@@ -16,6 +16,8 @@ import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeam
 import com.sofaacademy.sofaminiproject.utils.listeners.OnEventClicked
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
 import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
+import com.sofaacademy.sofaminiproject.views.activities.EventDetailsActivity
+import com.sofaacademy.sofaminiproject.views.activities.TournamentDetailsActivity
 import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.EventPagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -69,8 +71,10 @@ class TeamMatchesFragment : Fragment(), OnTournamentClicked, OnEventClicked {
     }
 
     override fun onEventClicked(sportEvent: SportEvent) {
+        EventDetailsActivity.start(sportEvent, requireContext())
     }
 
     override fun onTournamentClicked(tournamet: Tournament) {
+        TournamentDetailsActivity.start(tournamet, requireContext())
     }
 }

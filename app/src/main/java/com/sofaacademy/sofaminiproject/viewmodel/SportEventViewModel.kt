@@ -24,7 +24,6 @@ class SportEventViewModel @Inject constructor(private val sofaMiniRepository: So
     private val _incidentsList = MutableLiveData<List<Incident>>()
     val incidentsList = _incidentsList
 
-    // Koristiti uopce live datu za errore ili samo poslati empty list
     private val _sportEventsResponseError = MutableLiveData<String>()
     val sportEventsResponseError: LiveData<String> = _sportEventsResponseError
 

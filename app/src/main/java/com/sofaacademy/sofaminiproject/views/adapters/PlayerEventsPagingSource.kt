@@ -25,8 +25,7 @@ class PlayerEventsPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Any> {
         var page = params.key ?: 0
         val initialKey = params.key ?: 0
-        if (page < 0)
-            page *= -1
+        if (page < 0) page *= -1
 
         val result = sofaMiniRepository.getPlayerEvents(playerId, Constants.LAST, page.toString())
 
@@ -36,7 +35,7 @@ class PlayerEventsPagingSource(
             return LoadResult.Page(
                 data = groupedData,
                 prevKey = null,
-                nextKey = initialKey - 1
+                nextKey = if (groupedData.size > 0) initialKey - 1 else null
             )
         } else {
             return LoadResult.Error(Throwable("Err"))

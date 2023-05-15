@@ -18,7 +18,6 @@ class ViewHolderCardIncident(
         cardIncident: Incident.CardIncident,
         onIncidentClicked: OnIncidentClicked
     ) {
-
         when (cardIncident.teamSide) {
             CardTeamSide.AWAY.team -> {
                 binding.goalHome.visibility = View.GONE

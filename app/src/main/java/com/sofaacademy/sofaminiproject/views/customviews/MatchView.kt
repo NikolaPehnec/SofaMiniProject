@@ -4,14 +4,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import coil.load
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.MatchViewBinding
 import com.sofaacademy.sofaminiproject.model.MatchStatus
 import com.sofaacademy.sofaminiproject.model.SportEvent
-import com.sofaacademy.sofaminiproject.utils.Constants.BASE_TEAM_URL
-import com.sofaacademy.sofaminiproject.utils.Constants.IMG_ENDPOINT
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadTeamImg
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers
 
 class MatchView @JvmOverloads constructor(
@@ -40,8 +38,8 @@ class MatchView @JvmOverloads constructor(
     }
 
     fun setMatchInfo(event: SportEvent) {
-        binding.teamHomeLogo.load("$BASE_TEAM_URL${event.homeTeam.id}$IMG_ENDPOINT")
-        binding.teamAwayLogo.load("$BASE_TEAM_URL${event.awayTeam.id}$IMG_ENDPOINT")
+        binding.teamHomeLogo.loadTeamImg(event.homeTeam.id.toString())
+        binding.teamAwayLogo.loadTeamImg(event.awayTeam.id.toString())
 
         val startTime = UtilityFunctions.getHourFromDate(event.startDate!!)
         val matchCurrentStatus = EventHelpers.getCurrentMatchStatus(event.status, event.startDate)

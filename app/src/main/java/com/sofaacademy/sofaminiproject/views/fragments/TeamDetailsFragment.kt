@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import coil.load
 import com.sofaacademy.sofaminiproject.databinding.FragmentTeamDetailBinding
@@ -15,15 +14,17 @@ import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.utils.Constants.TEAM_ID_ARG
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getForeignPlayersPercentIndicator
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeam
 import com.sofaacademy.sofaminiproject.utils.helpers.FlagHelper
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
 import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
+import com.sofaacademy.sofaminiproject.views.activities.EventDetailsActivity
+import com.sofaacademy.sofaminiproject.views.activities.TournamentDetailsActivity
 import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.TeamTournamentsArrayAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
-import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class TeamDetailsFragment : Fragment(), OnTournamentClicked {
@@ -31,8 +32,8 @@ class TeamDetailsFragment : Fragment(), OnTournamentClicked {
     private lateinit var teamTournamentsArrayAdapter: TeamTournamentsArrayAdapter
     private val binding get() = _binding!!
     private var team: Team2? = null
+    private var nextSportEvent: SportEvent? = null
     private val teamViewModel: TeamViewModel by activityViewModels()
-    private val tournamentViewModel: TeamViewModel by viewModels()
 
     companion object {
         @JvmStatic
@@ -64,7 +65,6 @@ class TeamDetailsFragment : Fragment(), OnTournamentClicked {
 
         setListeners()
         teamViewModel.getAllTeamDetails(team?.id.toString())
-        tournamentViewModel.teamTournaments
         return binding.root
     }
 
@@ -77,15 +77,26 @@ class TeamDetailsFragment : Fragment(), OnTournamentClicked {
         }
         teamViewModel.nextTeamEvents.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
-                fillNextEventInfo(
-                    it.sortedBy { e ->
-                        ZonedDateTime.parse(e.startDate!!, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-                    }.first()
-                )
+                nextSportEvent = it.sortedBy { e ->
+                    ZonedDateTime.parse(e.startDate!!, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+                }.first()
+
+                fillNextEventInfo(nextSportEvent!!)
             }
         }
         teamViewModel.teamTournaments.observe(viewLifecycleOwner) {
             teamTournamentsArrayAdapter.setItems(it)
+        }
+
+        binding.nextMatchEvent.setOnClickListener {
+            nextSportEvent?.let {
+                EventDetailsActivity.start(it, requireContext())
+            }
+        }
+        binding.nextMatchTournament.setOnClickListener {
+            nextSportEvent?.let {
+                TournamentDetailsActivity.start(it.tournament, requireContext())
+            }
         }
     }
 
@@ -108,7 +119,7 @@ class TeamDetailsFragment : Fragment(), OnTournamentClicked {
         binding.totalPlayers.playerNumber.text = totalPlayersNum.toString()
         binding.foreignPlayers.foreignPlayersNumber.text = foreignPlayersNum.toString()
         binding.foreignPlayers.teamForeignPercentIndicator.progress =
-            ((foreignPlayersNum * 1f / totalPlayersNum) * 100).roundToInt()
+            getForeignPlayersPercentIndicator(totalPlayersNum, foreignPlayersNum)
     }
 
     private fun fillNextEventInfo(event: SportEvent) {
@@ -118,5 +129,6 @@ class TeamDetailsFragment : Fragment(), OnTournamentClicked {
     }
 
     override fun onTournamentClicked(tournamet: Tournament) {
+        TournamentDetailsActivity.start(tournamet, requireContext())
     }
 }

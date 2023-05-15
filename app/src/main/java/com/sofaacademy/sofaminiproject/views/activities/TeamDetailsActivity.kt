@@ -7,15 +7,15 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import coil.load
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sofaacademy.sofaminiproject.databinding.ActivityTeamDetailBinding
 import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getTeamDetailsTabLayoutConfigStrategy
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadCountryFlag
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadTeamImg
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeamFromIntent
-import com.sofaacademy.sofaminiproject.utils.helpers.FlagHelper
 import com.sofaacademy.sofaminiproject.views.adapters.pagerAdapters.TeamDetailsPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -61,12 +61,8 @@ class TeamDetailsActivity : AppCompatActivity() {
         binding.activityToolbar.title = ""
         binding.teamName.text = team.name
         binding.countryName.text = team.country.name
-        binding.teamLogo.load(
-            "${Constants.BASE_TEAM_URL}${team.id}${Constants.IMG_ENDPOINT}"
-        )
-        binding.countryLogo.load(
-            FlagHelper.getFlagBitmap(this, team.country.name)
-        )
+        binding.teamLogo.loadTeamImg(team.id.toString())
+        binding.countryLogo.loadCountryFlag(team.country.name, this)
     }
 
     private fun setListeners() {

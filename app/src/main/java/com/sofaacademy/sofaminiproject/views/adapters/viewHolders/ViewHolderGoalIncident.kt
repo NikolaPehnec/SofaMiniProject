@@ -16,7 +16,6 @@ class ViewHolderGoalIncident(
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(goalIncident: Incident.GoalIncident, onIncidentClicked: OnIncidentClicked) {
-
         when (goalIncident.scoringTeam) {
             GoalScoringTeam.AWAY.team -> {
                 binding.goalHome.visibility = View.GONE
