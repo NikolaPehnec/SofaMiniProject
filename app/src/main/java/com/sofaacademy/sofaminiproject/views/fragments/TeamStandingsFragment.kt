@@ -62,7 +62,7 @@ class TeamStandingsFragment : Fragment(), OnTeamClicked {
     ): View {
         _binding = FragmentTeamStandingsBinding.inflate(inflater, container, false)
         headerAdapter = StandingsHeaderArrayAdapter()
-        arrayAdapter = StandingsArrayAdapter(team!!.id,mutableListOf(), this)
+        arrayAdapter = StandingsArrayAdapter(team!!.id, mutableListOf(), this)
         spinnerArrayAdapter = TournamentSpinnerAdapter(mutableListOf(), requireContext())
         binding.eventsRv.adapter = ConcatAdapter(headerAdapter, arrayAdapter)
         binding.tournamentSpinner.adapter = spinnerArrayAdapter

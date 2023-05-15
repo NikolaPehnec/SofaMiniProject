@@ -35,11 +35,13 @@ class TournamentSpinnerAdapter(var tournaments: List<Tournament>, val context: C
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val binding = (convertView?.tag ?: TournamentSpinnerRowBinding.inflate(
-            layoutInflater,
-            parent,
-            false
-        )) as TournamentSpinnerRowBinding
+        val binding = (
+            convertView?.tag ?: TournamentSpinnerRowBinding.inflate(
+                layoutInflater,
+                parent,
+                false
+            )
+            ) as TournamentSpinnerRowBinding
 
         val tournament = tournaments[position]
         binding.tournamentName.text = tournament.name
@@ -53,11 +55,13 @@ class TournamentSpinnerAdapter(var tournaments: List<Tournament>, val context: C
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val binding = (convertView?.tag ?: TournamentSpinnerItemBinding.inflate(
-            layoutInflater,
-            parent,
-            false
-        )) as TournamentSpinnerItemBinding
+        val binding = (
+            convertView?.tag ?: TournamentSpinnerItemBinding.inflate(
+                layoutInflater,
+                parent,
+                false
+            )
+            ) as TournamentSpinnerItemBinding
 
         val tournament = tournaments[position]
         binding.tournamentName.text = tournament.name
