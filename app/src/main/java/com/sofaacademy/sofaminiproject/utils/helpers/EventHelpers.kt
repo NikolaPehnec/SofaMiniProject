@@ -9,6 +9,7 @@ import com.sofaacademy.sofaminiproject.model.MatchStatus
 import com.sofaacademy.sofaminiproject.model.Score
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
+import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions
 import java.io.Serializable
@@ -84,11 +85,30 @@ object EventHelpers {
         }
     }
 
+    fun getTournamentFromIntent(intent: Intent): Tournament {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra(
+                Constants.TOURNAMENT_ARG,
+                Tournament::class.java
+            ) as Tournament
+        } else {
+            intent.getSerializableExtra(Constants.TOURNAMENT_ARG) as Tournament
+        }
+    }
+
     fun Bundle.getTeam(): Team2 {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             getSerializable(Constants.TEAM_ID_ARG, Team2::class.java) as Team2
         } else {
             getSerializable(Constants.TEAM_ID_ARG) as Team2
+        }
+    }
+
+    fun Bundle.getTournament(): Tournament {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            getSerializable(Constants.TOURNAMENT_ARG, Tournament::class.java) as Tournament
+        } else {
+            getSerializable(Constants.TOURNAMENT_ARG) as Tournament
         }
     }
 

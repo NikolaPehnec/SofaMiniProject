@@ -103,7 +103,7 @@ class TeamDetailsFragment : Fragment(), OnTournamentClicked {
 
     private fun fillPlayersInfo(players: List<Player>) {
         val totalPlayersNum = players.size
-        val foreignPlayersNum = players.filter { p -> p.country.name == team!!.country.name }.size
+        val foreignPlayersNum = players.filter { p -> p.country?.name == team!!.country.name }.size
 
         binding.totalPlayers.playerNumber.text = totalPlayersNum.toString()
         binding.foreignPlayers.foreignPlayersNumber.text = foreignPlayersNum.toString()

@@ -34,6 +34,8 @@
     <string name="losses">L</string>
     <string name="goals">Goals</string>
     <string name="points">PTS</string>
+    <string name="coach_header">Coach</string>
+    <string name="players_header">Players</string>
 
     <string-array name="tabs">
         <item>Football</item>
@@ -46,6 +48,11 @@
         <item>Matches</item>
         <item>Standings</item>
         <item>Squad</item>
+    </string-array>
+
+    <string-array name="tabs_tournament_detail_page">
+        <item>Matches</item>
+        <item>Standings</item>
     </string-array>
 
 </resources>

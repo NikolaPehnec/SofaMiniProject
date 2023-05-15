@@ -6,6 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.views.fragments.TeamDetailsFragment
 import com.sofaacademy.sofaminiproject.views.fragments.TeamMatchesFragment
+import com.sofaacademy.sofaminiproject.views.fragments.TeamSquadFragment
 import com.sofaacademy.sofaminiproject.views.fragments.TeamStandingsFragment
 
 class TeamDetailsPagerAdapter(private val team: Team2, fa: FragmentActivity) :
@@ -17,7 +18,7 @@ class TeamDetailsPagerAdapter(private val team: Team2, fa: FragmentActivity) :
             0 -> TeamDetailsFragment.newInstance(team)
             1 -> TeamMatchesFragment.newInstance(team)
             2 -> TeamStandingsFragment.newInstance(team)
-            3 -> TeamDetailsFragment.newInstance(team)
+            3 -> TeamSquadFragment.newInstance(team)
             else -> TeamDetailsFragment.newInstance(team)
         }
     }

@@ -73,6 +73,11 @@ object UtilityFunctions {
             tab.text = context.resources.getStringArray(R.array.tabs_detail_page)[position]
         }
 
+    fun getTournamentDetailsTabLayoutConfigStrategy(context: Context): TabLayoutMediator.TabConfigurationStrategy =
+        TabLayoutMediator.TabConfigurationStrategy { tab, position ->
+            tab.text = context.resources.getStringArray(R.array.tabs_tournament_detail_page)[position]
+        }
+
     fun getTabTitlesByDate(context: Context): MutableMap<LocalDate, String> {
         val dateTabs = mutableMapOf<LocalDate, String>()
 
