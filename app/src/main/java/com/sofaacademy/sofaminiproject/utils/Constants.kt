@@ -10,6 +10,7 @@ object Constants {
     const val SLUG_ARG = "slug_arg"
     const val TEAM_ID_ARG = "team_id_arg"
     const val TOURNAMENT_ARG = "tournament_arg"
+    const val PLAYER_ARG = "player_arg"
 
     const val SLUG_FOOTBALL = "football"
     const val SLUG_BASKETBALL = "basketball"

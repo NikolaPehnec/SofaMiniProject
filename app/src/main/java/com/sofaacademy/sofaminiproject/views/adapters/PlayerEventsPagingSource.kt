@@ -8,9 +8,9 @@ import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.sortedByDateDesc
 
-class TeamEventsPagingSource(
+class PlayerEventsPagingSource(
     private val sofaMiniRepository: SofaMiniRepository,
-    val teamId: String,
+    val playerId: String
 ) : PagingSource<Int, Any>() {
     override fun getRefreshKey(state: PagingState<Int, Any>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -19,31 +19,24 @@ class TeamEventsPagingSource(
         }
     }
 
+    /**
+     * Matches that the player played in sorted by start date
+     */
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Any> {
         var page = params.key ?: 0
         val initialKey = params.key ?: 0
+        if (page < 0)
+            page *= -1
 
-        val result =
-            if (page <= 0) {
-                page *= -1
-                sofaMiniRepository.getTeamEvents(
-                    teamId,
-                    Constants.NEXT,
-                    page.toString()
-                )
-
-            } else {
-                page -= 1
-                sofaMiniRepository.getTeamEvents(teamId, Constants.LAST, page.toString())
-            }
+        val result = sofaMiniRepository.getPlayerEvents(playerId, Constants.LAST, page.toString())
 
         if (result is Result.Success) {
             val groupedData =
                 EventHelpers.groupEventsByTournamentAndDate(result.data.sortedByDateDesc())
             return LoadResult.Page(
                 data = groupedData,
-                prevKey = initialKey - 1,
-                nextKey = initialKey + 1
+                prevKey = null,
+                nextKey = initialKey - 1
             )
         } else {
             return LoadResult.Error(Throwable("Err"))

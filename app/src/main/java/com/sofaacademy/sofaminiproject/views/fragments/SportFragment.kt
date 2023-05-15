@@ -20,7 +20,7 @@ import com.sofaacademy.sofaminiproject.viewmodel.SportEventViewModel
 import com.sofaacademy.sofaminiproject.views.activities.EventDetailsActivity
 import com.sofaacademy.sofaminiproject.views.activities.MainActivity
 import com.sofaacademy.sofaminiproject.views.activities.TournamentDetailsActivity
-import com.sofaacademy.sofaminiproject.views.adapters.headerAdapters.SportEventsArrayAdapter
+import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.SportEventsArrayAdapter
 import com.sofaacademy.sofaminiproject.views.adapters.headerAdapters.SportEventsHeaderAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate

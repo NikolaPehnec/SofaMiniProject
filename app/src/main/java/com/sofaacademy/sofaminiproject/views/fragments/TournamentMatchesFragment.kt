@@ -25,7 +25,7 @@ class TournamentMatchesFragment : Fragment(), OnTournamentClicked, OnEventClicke
     private val binding get() = _binding!!
     private var tournament: Tournament? = null
     private val tournamentsViewModel: TournamentsViewModel by activityViewModels()
-    private lateinit var pagerAdapter: EventPagingAdapter
+    private lateinit var pagingAdapter: EventPagingAdapter
 
     companion object {
         @JvmStatic
@@ -50,8 +50,8 @@ class TournamentMatchesFragment : Fragment(), OnTournamentClicked, OnEventClicke
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTournamentMatchesBinding.inflate(inflater, container, false)
-        pagerAdapter = EventPagingAdapter(this, this)
-        binding.eventsRv.adapter = pagerAdapter
+        pagingAdapter = EventPagingAdapter(this, this)
+        binding.eventsRv.adapter = pagingAdapter
 
         setListeners()
         return binding.root
@@ -61,7 +61,7 @@ class TournamentMatchesFragment : Fragment(), OnTournamentClicked, OnEventClicke
         lifecycleScope.launch {
             tournamentsViewModel.getAllTournamentEvents(tournament?.id.toString()).observe(viewLifecycleOwner) {
                 it?.let {
-                    pagerAdapter.submitData(lifecycle, it)
+                    pagingAdapter.submitData(lifecycle, it)
                 }
             }
         }

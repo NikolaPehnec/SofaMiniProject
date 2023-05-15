@@ -52,8 +52,6 @@ class TeamViewModel @Inject constructor(private val sofaMiniRepository: SofaMini
     private val _teamEventsError = MutableLiveData<String>()
     val teamEventsError: LiveData<String> = _teamEventsError
 
-    private val _teamEventsPaging = MutableLiveData<PagingData<Any>>()
-    val teamEventsPaging = _teamEventsPaging
 
     fun getAllTeamDetails(teamId: String) {
         viewModelScope.launch {

@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.model.MatchStatus
+import com.sofaacademy.sofaminiproject.model.Player
 import com.sofaacademy.sofaminiproject.model.Score
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
@@ -93,6 +94,17 @@ object EventHelpers {
             ) as Tournament
         } else {
             intent.getSerializableExtra(Constants.TOURNAMENT_ARG) as Tournament
+        }
+    }
+
+    fun getPlayerFromIntent(intent: Intent): Player {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra(
+                Constants.PLAYER_ARG,
+                Player::class.java
+            ) as Player
+        } else {
+            intent.getSerializableExtra(Constants.PLAYER_ARG) as Player
         }
     }
 

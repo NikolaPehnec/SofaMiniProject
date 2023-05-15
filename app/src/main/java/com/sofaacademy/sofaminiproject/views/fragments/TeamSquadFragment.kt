@@ -15,6 +15,7 @@ import com.sofaacademy.sofaminiproject.utils.Constants.TEAM_ID_ARG
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeam
 import com.sofaacademy.sofaminiproject.utils.listeners.OnPlayerClicked
 import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
+import com.sofaacademy.sofaminiproject.views.activities.PlayerDetailsActivity
 import com.sofaacademy.sofaminiproject.views.adapters.headerAdapters.SquadHeaderAdapter
 import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.TeamPlayersArrayAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -88,5 +89,6 @@ class TeamSquadFragment : Fragment(), OnPlayerClicked {
     }
 
     override fun onPlayerClicked(player: Player) {
+        PlayerDetailsActivity.start(player, team, requireContext())
     }
 }

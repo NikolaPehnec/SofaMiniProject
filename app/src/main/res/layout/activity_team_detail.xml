@@ -24,6 +24,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
                 android:layout_marginTop="?attr/actionBarSize"
                 android:background="@color/color_primary_default">
 
@@ -31,6 +32,8 @@
                     android:id="@+id/team_logo"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
+                    android:background="@drawable/rounded_bg"
+                    android:backgroundTint="@color/surface_surface_1"
                     android:layout_marginStart="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

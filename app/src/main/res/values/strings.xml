@@ -36,6 +36,9 @@
     <string name="points">PTS</string>
     <string name="coach_header">Coach</string>
     <string name="players_header">Players</string>
+    <string name="matches_header">Matches</string>
+    <string name="nationality">Nationality</string>
+    <string name="position">Position</string>
 
     <string-array name="tabs">
         <item>Football</item>

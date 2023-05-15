@@ -1,4 +1,4 @@
-package com.sofaacademy.sofaminiproject.views.adapters.headerAdapters
+package com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
