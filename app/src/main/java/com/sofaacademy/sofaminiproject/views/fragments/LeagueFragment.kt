@@ -12,6 +12,7 @@ import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.utils.Constants.SLUG_ARG
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
 import com.sofaacademy.sofaminiproject.viewmodel.TournamentsViewModel
+import com.sofaacademy.sofaminiproject.views.activities.TournamentDetailsActivity
 import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.TournamentsArrayAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -62,5 +63,6 @@ class LeagueFragment : Fragment(), OnTournamentClicked {
     }
 
     override fun onTournamentClicked(tournamet: Tournament) {
+        TournamentDetailsActivity.start(tournamet, requireContext())
     }
 }

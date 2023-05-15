@@ -55,7 +55,7 @@ class PlayerDetailsActivity : AppCompatActivity(), OnTournamentClicked, OnEventC
         super.onCreate(savedInstanceState)
 
         binding = ActivityPlayerDetailBinding.inflate(layoutInflater)
-        playerMatchesHeaderAdapter = PlayerMatchesHeaderAdapter(getString(R.string.players_header))
+        playerMatchesHeaderAdapter = PlayerMatchesHeaderAdapter(getString(R.string.matches_header))
         pagingAdapter = EventPagingAdapter(this, this)
         setSupportActionBar(binding.activityToolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)

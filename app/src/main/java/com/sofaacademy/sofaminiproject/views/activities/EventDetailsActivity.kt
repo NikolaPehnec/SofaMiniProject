@@ -13,10 +13,13 @@ import coil.load
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.ActivityEventDetailsBinding
 import com.sofaacademy.sofaminiproject.databinding.EventDetailToolbarBinding
+import com.sofaacademy.sofaminiproject.model.Player
 import com.sofaacademy.sofaminiproject.model.SportEvent
+import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.Constants.EVENT_ID_KEY
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getEventFromIntent
+import com.sofaacademy.sofaminiproject.utils.listeners.OnIncidentClicked
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTeamClicked
 import com.sofaacademy.sofaminiproject.viewmodel.SportEventViewModel
 import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.IncidentsArrayAdapter
@@ -28,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class EventDetailsActivity :
     AppCompatActivity(),
-    IncidentsArrayAdapter.OnItemClickListener,
+    OnIncidentClicked,
     OnTeamClicked {
 
     private lateinit var sportEvent: SportEvent
@@ -58,7 +61,12 @@ class EventDetailsActivity :
 
         sportEvent = getEventFromIntent(intent)
         incidentsArrayAdapter =
-            IncidentsArrayAdapter(sportEvent.tournament.sport.slug, mutableListOf())
+            IncidentsArrayAdapter(
+                sportEvent.tournament.sport.slug,
+                mutableListOf(),
+                sportEvent,
+                this
+            )
         binding.incidentsRv.adapter = incidentsArrayAdapter
 
         fillEventDetails(sportEvent)
@@ -76,8 +84,13 @@ class EventDetailsActivity :
             binding.noIncidentsView.root.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
             incidentsArrayAdapter.setItems(it.asReversed())
         }
-
         binding.eventDetails.setOnItemClickListener(this)
+        binding.noIncidentsView.viewTournamentDetailsBtn.setOnClickListener {
+            TournamentDetailsActivity.start(sportEvent.tournament, this)
+        }
+        customToolbarBinding.root.setOnClickListener {
+            TournamentDetailsActivity.start(sportEvent.tournament, this)
+        }
     }
 
     private fun fillEventDetails(sportEvent: SportEvent) {
@@ -95,9 +108,6 @@ class EventDetailsActivity :
             )
     }
 
-    override fun onItemClick(item: Any) {
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -109,14 +119,16 @@ class EventDetailsActivity :
         }
     }
 
-    override fun onTeamHomeClicked() {
-        TeamDetailsActivity.start(sportEvent.homeTeam, this)
-    }
-
-    override fun onTeamAwayClicked() {
-        TeamDetailsActivity.start(sportEvent.awayTeam, this)
-    }
 
     override fun onTeamClicked(teamId: Int) {
+        if (teamId == sportEvent.homeTeam.id) {
+            TeamDetailsActivity.start(sportEvent.homeTeam, this)
+        } else {
+            TeamDetailsActivity.start(sportEvent.awayTeam, this)
+        }
+    }
+
+    override fun onIncidentClicked(player: Player, team2: Team2) {
+        PlayerDetailsActivity.start(player, team2, this)
     }
 }

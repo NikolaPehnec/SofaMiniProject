@@ -9,14 +9,19 @@ import com.sofaacademy.sofaminiproject.databinding.GoalIncidentRowBinding
 import com.sofaacademy.sofaminiproject.databinding.PeriodRowBinding
 import com.sofaacademy.sofaminiproject.model.Incident
 import com.sofaacademy.sofaminiproject.model.IncidentEnum
+import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.utils.EventDiffUtilCallback
+import com.sofaacademy.sofaminiproject.utils.listeners.OnIncidentClicked
+import com.sofaacademy.sofaminiproject.utils.listeners.OnPlayerClicked
 import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderCardIncident
 import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderGoalIncident
 import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderPeriodIncident
 
 class IncidentsArrayAdapter(
     private val sportSlug: String,
-    private var items: MutableList<Any>
+    private var items: MutableList<Any>,
+    private var sportEvent: SportEvent,
+    private var onIncidentClicked: OnIncidentClicked,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -27,7 +32,8 @@ class IncidentsArrayAdapter(
                     parent,
                     false
                 ),
-                sportSlug
+                sportSlug,
+                sportEvent
             )
 
             IncidentEnum.TYPE_CARD.ordinal -> ViewHolderCardIncident(
@@ -35,7 +41,7 @@ class IncidentsArrayAdapter(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                )
+                ), sportEvent
             )
 
             IncidentEnum.TYPE_PERIOD.ordinal -> ViewHolderPeriodIncident(
@@ -53,10 +59,10 @@ class IncidentsArrayAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ViewHolderGoalIncident ->
-                holder.bind(items[position] as Incident.GoalIncident)
+                holder.bind(items[position] as Incident.GoalIncident, onIncidentClicked)
 
             is ViewHolderCardIncident ->
-                holder.bind(items[position] as Incident.CardIncident)
+                holder.bind(items[position] as Incident.CardIncident, onIncidentClicked)
 
             is ViewHolderPeriodIncident ->
                 holder.bind(items[position] as Incident.PeriodIncident)
@@ -80,8 +86,4 @@ class IncidentsArrayAdapter(
     }
 
     override fun getItemCount(): Int = items.size
-
-    interface OnItemClickListener {
-        fun onItemClick(item: Any)
-    }
 }

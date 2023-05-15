@@ -27,9 +27,12 @@ class EventDetailView @JvmOverloads constructor(
         true
     )
 
+    private var sportEvent:SportEvent?=null
+
     fun setEventInfo(
         sportEvent: SportEvent
     ) {
+        this.sportEvent=sportEvent
         val colorHome =
             getTeamScoreColorBasedOnTimeAndResult(
                 sportEvent.status,
@@ -126,10 +129,10 @@ class EventDetailView @JvmOverloads constructor(
 
     fun setOnItemClickListener(onTeamClicked: OnTeamClicked) {
         binding.teamHome.setOnClickListener {
-            onTeamClicked.onTeamHomeClicked()
+            onTeamClicked.onTeamClicked(sportEvent!!.homeTeam.id)
         }
         binding.teamAway.setOnClickListener {
-            onTeamClicked.onTeamAwayClicked()
+            onTeamClicked.onTeamClicked(sportEvent!!.awayTeam.id)
         }
     }
 }

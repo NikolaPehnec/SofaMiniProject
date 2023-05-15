@@ -70,9 +70,5 @@ class TournamentStandingsFragment : Fragment(), OnTeamClicked {
         }
     }
 
-    override fun onTeamHomeClicked() {}
-
-    override fun onTeamAwayClicked() {}
-
     override fun onTeamClicked(teamId: Int) {}
 }
