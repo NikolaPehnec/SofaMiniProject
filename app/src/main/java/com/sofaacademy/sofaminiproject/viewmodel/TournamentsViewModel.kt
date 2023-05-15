@@ -4,10 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.liveData
 import com.sofaacademy.sofaminiproject.model.Result
 import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.model.TournamentStandings
 import com.sofaacademy.sofaminiproject.networking.SofaMiniRepository
+import com.sofaacademy.sofaminiproject.views.adapters.TournamentEventsPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -48,5 +54,23 @@ class TournamentsViewModel @Inject constructor(private val sofaMiniRepository: S
                 is Result.Error -> _tournamentStandingsError.value = result.exception.toString()
             }
         }
+    }
+
+    fun getAllTournamentEvents(tournamentId: String): LiveData<PagingData<Any>> {
+        return getEventsPaging(tournamentId).cachedIn(viewModelScope)
+    }
+
+    private fun getEventsPaging(tournamentId: String): LiveData<PagingData<Any>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 10,
+                enablePlaceholders = false,
+                initialLoadSize = 1
+            ),
+            pagingSourceFactory = {
+                TournamentEventsPagingSource(sofaMiniRepository, tournamentId)
+            },
+            initialKey = 1
+        ).liveData
     }
 }

@@ -5,35 +5,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import com.sofaacademy.sofaminiproject.databinding.FragmentTeamMatchesBinding
+import com.sofaacademy.sofaminiproject.databinding.FragmentTournamentMatchesBinding
 import com.sofaacademy.sofaminiproject.model.SportEvent
-import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.model.Tournament
-import com.sofaacademy.sofaminiproject.utils.Constants.TEAM_ID_ARG
-import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeam
+import com.sofaacademy.sofaminiproject.utils.Constants.TOURNAMENT_ARG
+import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTournament
 import com.sofaacademy.sofaminiproject.utils.listeners.OnEventClicked
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
-import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
+import com.sofaacademy.sofaminiproject.viewmodel.TournamentsViewModel
 import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.EventPagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TeamMatchesFragment : Fragment(), OnTournamentClicked, OnEventClicked {
-    private var _binding: FragmentTeamMatchesBinding? = null
+class TournamentMatchesFragment : Fragment(), OnTournamentClicked, OnEventClicked {
+    private var _binding: FragmentTournamentMatchesBinding? = null
     private val binding get() = _binding!!
-    private var team: Team2? = null
-    private val teamViewModel: TeamViewModel by viewModels()
+    private var tournament: Tournament? = null
+    private val tournamentsViewModel: TournamentsViewModel by activityViewModels()
     private lateinit var pagerAdapter: EventPagingAdapter
 
     companion object {
         @JvmStatic
-        fun newInstance(team: Team2) =
-            TeamMatchesFragment().apply {
+        fun newInstance(tournament: Tournament) =
+            TournamentMatchesFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(TEAM_ID_ARG, team)
+                    putSerializable(TOURNAMENT_ARG, tournament)
                 }
             }
     }
@@ -41,7 +40,7 @@ class TeamMatchesFragment : Fragment(), OnTournamentClicked, OnEventClicked {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            team = it.getTeam()
+            tournament = it.getTournament()
         }
     }
 
@@ -50,7 +49,7 @@ class TeamMatchesFragment : Fragment(), OnTournamentClicked, OnEventClicked {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentTeamMatchesBinding.inflate(inflater, container, false)
+        _binding = FragmentTournamentMatchesBinding.inflate(inflater, container, false)
         pagerAdapter = EventPagingAdapter(this, this)
         binding.eventsRv.adapter = pagerAdapter
 
@@ -60,7 +59,7 @@ class TeamMatchesFragment : Fragment(), OnTournamentClicked, OnEventClicked {
 
     private fun setListeners() {
         lifecycleScope.launch {
-            teamViewModel.getAllTeamEvents(team?.id.toString()).observe(viewLifecycleOwner) {
+            tournamentsViewModel.getAllTournamentEvents(tournament?.id.toString()).observe(viewLifecycleOwner) {
                 it?.let {
                     pagerAdapter.submitData(lifecycle, it)
                 }

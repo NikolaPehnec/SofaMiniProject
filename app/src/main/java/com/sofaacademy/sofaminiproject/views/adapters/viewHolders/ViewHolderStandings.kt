@@ -15,7 +15,7 @@ class ViewHolderStandings(
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(highlightTeamId: Int, item: StandingsRow, position: Int) {
+    fun bind(highlightTeamId: Int?, item: StandingsRow, position: Int) {
         binding.position.text = position.toString()
         binding.teamName.text = item.team?.name
         binding.plays.text = item.played?.toString()

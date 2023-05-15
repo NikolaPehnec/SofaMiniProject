@@ -20,8 +20,8 @@ import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeam
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTeamClicked
 import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
 import com.sofaacademy.sofaminiproject.viewmodel.TournamentsViewModel
-import com.sofaacademy.sofaminiproject.views.adapters.StandingsArrayAdapter
-import com.sofaacademy.sofaminiproject.views.adapters.StandingsHeaderArrayAdapter
+import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.StandingsArrayAdapter
+import com.sofaacademy.sofaminiproject.views.adapters.headerAdapters.StandingsHeaderArrayAdapter
 import com.sofaacademy.sofaminiproject.views.adapters.TournamentSpinnerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 

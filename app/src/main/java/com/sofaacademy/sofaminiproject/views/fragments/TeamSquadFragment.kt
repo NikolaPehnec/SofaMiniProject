@@ -15,8 +15,8 @@ import com.sofaacademy.sofaminiproject.utils.Constants.TEAM_ID_ARG
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeam
 import com.sofaacademy.sofaminiproject.utils.listeners.OnPlayerClicked
 import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
-import com.sofaacademy.sofaminiproject.views.adapters.SquadHeaderAdapter
-import com.sofaacademy.sofaminiproject.views.adapters.TeamPlayersArrayAdapter
+import com.sofaacademy.sofaminiproject.views.adapters.headerAdapters.SquadHeaderAdapter
+import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.TeamPlayersArrayAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

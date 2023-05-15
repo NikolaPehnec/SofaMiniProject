@@ -1,23 +1,23 @@
-package com.sofaacademy.sofaminiproject.views.adapters
+package com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.sofaacademy.sofaminiproject.databinding.TournamentDetailRowBinding
+import com.sofaacademy.sofaminiproject.databinding.TournamentTeamDetailRowBinding
 import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.utils.EventDiffUtilCallback
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
-import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderTournamentDetail
+import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderTournamentGrid
 
-class TournamentsArrayAdapter(
+class TeamTournamentsArrayAdapter(
     private var items: MutableList<Tournament>,
     private val listener: OnTournamentClicked
-) : RecyclerView.Adapter<ViewHolderTournamentDetail>() {
+) : RecyclerView.Adapter<ViewHolderTournamentGrid>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderTournamentDetail {
-        return ViewHolderTournamentDetail(
-            TournamentDetailRowBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderTournamentGrid {
+        return ViewHolderTournamentGrid(
+            TournamentTeamDetailRowBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -26,7 +26,7 @@ class TournamentsArrayAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: ViewHolderTournamentDetail, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolderTournamentGrid, position: Int) {
         holder.bind(items[position])
     }
 

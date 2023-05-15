@@ -71,7 +71,7 @@ class GoalHomeView @JvmOverloads constructor(
 
             else -> {
                 binding.minute.visibility = View.VISIBLE
-                binding.playerName.visibility = View.GONE
+                binding.playerName.visibility = View.VISIBLE
                 binding.minuteBasketball.visibility = View.GONE
                 binding.separatorH.visibility = View.GONE
             }

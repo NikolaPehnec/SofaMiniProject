@@ -12,7 +12,7 @@ import androidx.paging.liveData
 import com.sofaacademy.sofaminiproject.model.*
 import com.sofaacademy.sofaminiproject.networking.SofaMiniRepository
 import com.sofaacademy.sofaminiproject.utils.Constants.NEXT
-import com.sofaacademy.sofaminiproject.views.adapters.EventsPagingSource
+import com.sofaacademy.sofaminiproject.views.adapters.TeamEventsPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -97,7 +97,7 @@ class TeamViewModel @Inject constructor(private val sofaMiniRepository: SofaMini
                 initialLoadSize = 1
             ),
             pagingSourceFactory = {
-                EventsPagingSource(sofaMiniRepository, teamId)
+                TeamEventsPagingSource(sofaMiniRepository, teamId)
             },
             initialKey = 1
         ).liveData

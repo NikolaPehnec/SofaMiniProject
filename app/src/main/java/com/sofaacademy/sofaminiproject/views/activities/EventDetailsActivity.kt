@@ -19,7 +19,7 @@ import com.sofaacademy.sofaminiproject.utils.Constants.EVENT_ID_KEY
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getEventFromIntent
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTeamClicked
 import com.sofaacademy.sofaminiproject.viewmodel.SportEventViewModel
-import com.sofaacademy.sofaminiproject.views.adapters.IncidentsArrayAdapter
+import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.IncidentsArrayAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

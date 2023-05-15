@@ -19,7 +19,7 @@ import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeam
 import com.sofaacademy.sofaminiproject.utils.helpers.FlagHelper
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
 import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
-import com.sofaacademy.sofaminiproject.views.adapters.TeamTournamentsArrayAdapter
+import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.TeamTournamentsArrayAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter

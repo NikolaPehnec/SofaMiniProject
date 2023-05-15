@@ -5,12 +5,11 @@ import androidx.paging.PagingState
 import com.sofaacademy.sofaminiproject.model.Result
 import com.sofaacademy.sofaminiproject.networking.SofaMiniRepository
 import com.sofaacademy.sofaminiproject.utils.Constants
-import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.sortedByDateDesc
 
-class EventsPagingSource(
+class TournamentEventsPagingSource(
     private val sofaMiniRepository: SofaMiniRepository,
-    val teamId: String
+    val tournamentId: String
 ) : PagingSource<Int, Any>() {
     override fun getRefreshKey(state: PagingState<Int, Any>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -26,21 +25,22 @@ class EventsPagingSource(
         val result =
             if (page <= 0) {
                 page *= -1
-                sofaMiniRepository.getTeamEvents(
-                    teamId,
+                sofaMiniRepository.getTournamentEvents(
+                    tournamentId,
                     Constants.NEXT,
                     page.toString()
                 )
             } else {
                 page -= 1
-                sofaMiniRepository.getTeamEvents(teamId, Constants.LAST, page.toString())
+                sofaMiniRepository.getTournamentEvents(tournamentId, Constants.LAST, page.toString())
             }
 
         if (result is Result.Success) {
-            val groupedData =
-                EventHelpers.groupEventsByTournamentAndDate(result.data.sortedByDateDesc())
+            val res = result.data.groupBy { it.round }.flatMap {
+                listOf(it.key) + it.value.sortedByDateDesc()
+            }
             return LoadResult.Page(
-                data = groupedData,
+                data = res,
                 prevKey = initialKey - 1,
                 nextKey = initialKey + 1
             )

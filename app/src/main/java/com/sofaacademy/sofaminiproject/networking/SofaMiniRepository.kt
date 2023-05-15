@@ -40,6 +40,13 @@ open class SofaMiniRepository @Inject constructor(
     ): Result<List<SportEvent>> =
         apiCall(call = { sofaMiniApi.getTeamEvents(teamId, span, page) })
 
+    suspend fun getTournamentEvents(
+        tournamentId: String,
+        span: String,
+        page: String
+    ): Result<List<SportEvent>> =
+        apiCall(call = { sofaMiniApi.getTournamentEvents(tournamentId, span, page) })
+
     suspend fun getTeamTournaments(teamId: String): Result<List<Tournament>> =
         apiCall(call = { sofaMiniApi.getTeamTournaments(teamId) })
 

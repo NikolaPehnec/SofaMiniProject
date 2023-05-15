@@ -1,4 +1,4 @@
-package com.sofaacademy.sofaminiproject.views.adapters
+package com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import com.sofaacademy.sofaminiproject.utils.listeners.OnTeamClicked
 import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderStandings
 
 class StandingsArrayAdapter(
-    private var highlightTeamId: Int,
+    private var highlightTeamId: Int?,
     private var items: MutableList<StandingsRow>,
     private val listener: OnTeamClicked
 ) : RecyclerView.Adapter<ViewHolderStandings>() {
