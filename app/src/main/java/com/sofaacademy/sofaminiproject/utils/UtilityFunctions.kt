@@ -21,13 +21,14 @@ object UtilityFunctions {
     private val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
     private val hourFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
     var tabDateFormat = DateTimeFormatter.ofPattern("EEE dd.MM.", Locale.US)
-    val yearFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    var yearFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val dateLongFormat = DateTimeFormatter.ofPattern("EEE, dd.MM.yyyy.", Locale.US)
-    val detailDateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.US)
+    var detailDateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.US)
 
-    fun getFormattedDetailDate(date: String): String {
+    fun getFormattedDetailDate(date: String, context: Context): String {
         return try {
             val localDateTime = LocalDateTime.parse(date, dateTimeFormatter)
+            detailDateFormat = DateTimeFormatter.ofPattern(getDatePreference(context), Locale.US)
             detailDateFormat.format(localDateTime)
         } catch (e: java.lang.Exception) {
             ""
@@ -86,7 +87,8 @@ object UtilityFunctions {
     fun getTabTitlesByDate(context: Context): MutableMap<LocalDate, String> {
         val dateTabs = mutableMapOf<LocalDate, String>()
         tabDateFormat = DateTimeFormatter.ofPattern(
-            "EEE dd.MM.", context.resources.configuration.locales.get(0)
+            "EEE dd.MM.",
+            context.resources.configuration.locales.get(0)
         )
 
         for (i in MIN_DAYS..MAX_DAYS) {
@@ -147,4 +149,18 @@ object UtilityFunctions {
             Constants.LIGHT_THEME
         )!!
 
+    fun saveDatePreference(date: String, context: Context) {
+        val sharedPreferences =
+            context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString(Constants.PREF_DATE_KEY, date)
+        editor.apply()
+    }
+
+    fun getDatePreference(context: Context): String {
+        return context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE).getString(
+            Constants.PREF_DATE_KEY,
+            Constants.DATE_DD_MM
+        )!!
+    }
 }

@@ -59,7 +59,7 @@ class EventDetailView @JvmOverloads constructor(
                 sportEvent.startDate?.let {
                     binding.eventDate.apply {
                         visibility = View.VISIBLE
-                        text = getFormattedDetailDate(it)
+                        text = getFormattedDetailDate(it, context)
                     }
                     binding.eventTime.apply {
                         visibility = View.VISIBLE

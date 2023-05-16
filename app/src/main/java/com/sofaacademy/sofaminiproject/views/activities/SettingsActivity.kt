@@ -19,6 +19,7 @@ import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.ActivitySettingsBinding
 import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.saveDatePreference
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.saveThemePreference
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -61,7 +62,7 @@ class SettingsActivity : AppCompatActivity() {
             Constants.LIGHT_THEME -> binding.themeLight.isChecked = true
         }
 
-        binding.themeRg.setOnCheckedChangeListener { group, checkedId ->
+        binding.themeRg.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 binding.themeLight.id -> {
                     if (getDefaultNightMode() != MODE_NIGHT_NO) {
@@ -75,6 +76,18 @@ class SettingsActivity : AppCompatActivity() {
                         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
                         saveThemePreference(Constants.NIGHT_THEME, this)
                     }
+                }
+            }
+        }
+
+        binding.dateRg.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                binding.dateDdMm.id -> {
+                    saveDatePreference(Constants.DATE_DD_MM, this)
+                }
+
+                binding.dateMmDd.id -> {
+                    saveDatePreference(Constants.DATE_MM_DD, this)
                 }
             }
         }
@@ -137,5 +150,4 @@ class SettingsActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
 }

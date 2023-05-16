@@ -30,5 +30,7 @@ object Constants {
     const val PREF_THEME_KEY = "THEME"
     const val NIGHT_THEME = "NIGHT_THEME"
     const val LIGHT_THEME = "LIGHT_THEME"
-
+    const val PREF_DATE_KEY = "DATE"
+    const val DATE_DD_MM = "dd.MM.yyyy."
+    const val DATE_MM_DD = "MM.dd.yyyy."
 }

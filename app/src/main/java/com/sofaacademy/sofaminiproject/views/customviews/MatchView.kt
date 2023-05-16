@@ -53,7 +53,7 @@ class MatchView @JvmOverloads constructor(
 
     fun setMatchDateTime(event: SportEvent) {
         val startTime = UtilityFunctions.getHourFromDate(event.startDate!!)
-        val date = UtilityFunctions.getFormattedDetailDate(event.startDate)
+        val date = UtilityFunctions.getFormattedDetailDate(event.startDate, context)
         binding.timeStart.text = date
 
         if (event.status == MatchStatus.FINISHED.status) {
