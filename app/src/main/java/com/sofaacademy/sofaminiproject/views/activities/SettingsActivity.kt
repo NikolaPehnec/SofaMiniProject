@@ -2,16 +2,24 @@ package com.sofaacademy.sofaminiproject.views.activities
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.ArrayAdapter
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import androidx.appcompat.app.AppCompatDelegate.getDefaultNightMode
 import androidx.core.content.ContextCompat
 import androidx.core.os.LocaleListCompat
 import androidx.core.os.bundleOf
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.ActivitySettingsBinding
 import com.sofaacademy.sofaminiproject.utils.Constants
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.saveThemePreference
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,6 +34,7 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
@@ -46,10 +55,42 @@ class SettingsActivity : AppCompatActivity() {
             }
             setText(getCurrentLanguage())
         }
+
+        when (UtilityFunctions.getThemePreferences(this)) {
+            Constants.NIGHT_THEME -> binding.themeDark.isChecked = true
+            Constants.LIGHT_THEME -> binding.themeLight.isChecked = true
+        }
+
+        binding.themeRg.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                binding.themeLight.id -> {
+                    if (getDefaultNightMode() != MODE_NIGHT_NO) {
+                        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+                        saveThemePreference(Constants.LIGHT_THEME, this)
+                    }
+                }
+
+                binding.themeDark.id -> {
+                    if (getDefaultNightMode() != MODE_NIGHT_YES) {
+                        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+                        saveThemePreference(Constants.NIGHT_THEME, this)
+                    }
+                }
+            }
+        }
     }
 
     override fun onResume() {
         binding.languagesDropdown.setText(getCurrentLanguage())
+        binding.languagesDropdown.apply {
+            setStringArrayAdapter(
+                ArrayAdapter(
+                    this@SettingsActivity,
+                    android.R.layout.simple_list_item_1,
+                    resources.getStringArray(R.array.languages)
+                )
+            )
+        }
         super.onResume()
     }
 
@@ -80,6 +121,21 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         binding.languagesDropdown.setText(language)
+    }
+
+    override fun onBackPressed() {
+        finish()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 }

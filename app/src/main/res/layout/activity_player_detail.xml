@@ -17,6 +17,7 @@
             android:id="@+id/collapsingToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:titleTextColor="@color/surface_surface_1"
             android:fitsSystemWindows="true"
             app:titleEnabled="false"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -62,7 +63,7 @@
                 android:elevation="0dp"
                 android:theme="@style/ToolbarTheme"
                 app:layout_collapseMode="pin"
-                app:titleTextColor="@color/on_color_on_color_primary" />
+                app:titleTextColor="@color/surface_surface_1" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

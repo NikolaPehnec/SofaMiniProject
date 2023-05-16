@@ -38,7 +38,7 @@ class TextLayoutAndDropdownMenu @JvmOverloads constructor(
 
     fun setText(text: String) {
         binding.autoCompleteTv.apply {
-            setText(text, false)
+           setText(text, false)
         }
     }
 

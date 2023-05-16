@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.ActivityMainBinding
+import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getSportsTabLayoutConfigStrategy
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getTabTitlesByDate
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getThemePreferences
 import com.sofaacademy.sofaminiproject.views.adapters.pagerAdapters.SportPagerAdapter
 import com.sofaacademy.sofaminiproject.views.fragments.SportFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        loadTheme()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setSupportActionBar(binding.activityToolbar)
@@ -97,5 +101,22 @@ class MainActivity : AppCompatActivity() {
 
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun loadTheme() {
+        when (getThemePreferences(this)) {
+            Constants.NIGHT_THEME -> {
+                if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES)
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+            }
+
+            Constants.LIGHT_THEME -> {
+                if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_NO)
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
+
+
     }
 }

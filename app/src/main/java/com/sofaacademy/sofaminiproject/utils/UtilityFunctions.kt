@@ -132,4 +132,19 @@ object UtilityFunctions {
             FlagHelper.getFlagBitmap(context, countryName)
         )
     }
+
+    fun saveThemePreference(theme: String, context: Context) {
+        val sharedPreferences =
+            context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString(Constants.PREF_THEME_KEY, theme)
+        editor.apply()
+    }
+
+    fun getThemePreferences(context: Context) =
+        context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE).getString(
+            Constants.PREF_THEME_KEY,
+            Constants.LIGHT_THEME
+        )!!
+
 }

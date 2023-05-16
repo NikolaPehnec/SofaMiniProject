@@ -26,4 +26,9 @@ object Constants {
     const val EVENT_ID_KEY = "event_id"
     const val LANG_EN = "en"
     const val LANG_HR = "hr"
+    const val PREF_NAME = "MY_PREFERENCES"
+    const val PREF_THEME_KEY = "THEME"
+    const val NIGHT_THEME = "NIGHT_THEME"
+    const val LIGHT_THEME = "LIGHT_THEME"
+
 }
