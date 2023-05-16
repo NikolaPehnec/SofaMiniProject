@@ -1,7 +1,5 @@
 <resources>
-    <string name="app_name">SofaMiniProject</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="app_name" translatable="false">SofaMiniProject</string>
     <string name="title_football">Football</string>
     <string name="title_basketball">Basketball</string>
     <string name="title_american_football">Am. Football</string>
@@ -13,7 +11,7 @@
     <string name="leagues_title">Leagues</string>
     <string name="leagues" translatable="false">leagues</string>
     <string name="settings" translatable="false">settings</string>
-    <string name="match_status_finished">Full Time</string>
+    <string name="match_status_finished" translatable="false">Full Time</string>
     <string name="no_results_yet">No results yet.</string>
     <string name="view_tournament_details">View Tournament Details</string>
 
@@ -26,14 +24,14 @@
     <string name="total_players">Total Players</string>
     <string name="foreign_players">Foreign Players</string>
     <string name="events">Events</string>
-    <string name="full_time">FT</string>
+    <string name="full_time" translatable="false">FT</string>
     <string name="team">Team</string>
-    <string name="plays">P</string>
-    <string name="wins">W</string>
-    <string name="draws">D</string>
-    <string name="losses">L</string>
-    <string name="goals">Goals</string>
-    <string name="points">PTS</string>
+    <string name="plays" translatable="false">P</string>
+    <string name="wins" translatable="false">W</string>
+    <string name="draws" translatable="false">D</string>
+    <string name="losses" translatable="false">L</string>
+    <string name="goals" translatable="false">Goals</string>
+    <string name="points" translatable="false">PTS</string>
     <string name="coach_header">Coach</string>
     <string name="players_header">Players</string>
     <string name="matches_header">Matches</string>
@@ -44,6 +42,23 @@
     <string name="defence">Defence</string>
     <string name="goalkeeper">Goalkeeper</string>
     <string name="forward">Forward</string>
+
+    <string name="language">Language</string>
+    <string name="theme">Theme</string>
+    <string name="date_format">Date format</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="date_dd" translatable="false">DD / MM / YYYY</string>
+    <string name="date_mm" translatable="false">MM / DD / YYYY</string>
+    <string name="about">About</string>
+    <string name="academy">Sofascore Android Academy</string>
+    <string name="class_year">Class 2023</string>
+    <string name="app_name_title">App name</string>
+    <string name="api_credit_title">API Credit</string>
+    <string name="api_credit_val" translatable="false">Sofascore</string>
+    <string name="app_name_val" translatable="false">Mini Sofascore App</string>
+
+    <string name="settings_title">Settings</string>
 
     <string-array name="tabs">
         <item>Football</item>
@@ -61,6 +76,11 @@
     <string-array name="tabs_tournament_detail_page">
         <item>Matches</item>
         <item>Standings</item>
+    </string-array>
+
+    <string-array name="languages">
+        <item>English</item>
+        <item>Croatian</item>
     </string-array>
 
 </resources>

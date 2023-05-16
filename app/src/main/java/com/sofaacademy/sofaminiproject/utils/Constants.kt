@@ -24,4 +24,6 @@ object Constants {
     const val TYPE_ROUND = 3
 
     const val EVENT_ID_KEY = "event_id"
+    const val LANG_EN = "en"
+    const val LANG_HR = "hr"
 }

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface_surface_1">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/activity_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/color_primary_default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/settings_title"
+        app:titleTextColor="@color/surface_surface_0" />
+
+    <com.sofaacademy.sofaminiproject.views.customviews.TextLayoutAndDropdownMenu
+        android:id="@+id/languages_dropdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="16dp"
+        app:hint="@string/language"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_toolbar" />
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/on_surface_on_surface_lv_4"
+        app:layout_constraintTop_toBottomOf="@id/languages_dropdown" />
+
+    <TextView
+        android:id="@+id/theme_title"
+        style="@style/Assistive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        android:text="@string/theme"
+        android:textColor="@color/color_primary_default"
+        app:layout_constraintTop_toBottomOf="@id/separator" />
+
+    <RadioGroup
+        android:id="@+id/theme_rg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:checkedButton="@id/theme_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/theme_title">
+
+        <RadioButton
+            android:id="@+id/theme_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?android:selectableItemBackground"
+            android:layoutDirection="rtl"
+            android:layout_marginStart="16dp"
+            android:paddingHorizontal="16dp"
+            android:text="@string/light"
+            app:buttonTint="@color/color_primary_default"
+            app:layout_constraintTop_toBottomOf="@id/theme_title" />
+
+        <RadioButton
+            android:id="@+id/theme_dark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?android:selectableItemBackground"
+            android:layoutDirection="rtl"
+            android:paddingHorizontal="16dp"
+            android:text="@string/dark"
+            android:layout_marginStart="16dp"
+            app:buttonTint="@color/color_primary_default"
+            app:layout_constraintTop_toBottomOf="@id/theme_title" />
+    </RadioGroup>
+
+    <View
+        android:id="@+id/separator2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/on_surface_on_surface_lv_4"
+        app:layout_constraintTop_toBottomOf="@id/theme_rg" />
+
+    <TextView
+        android:id="@+id/date_format_title"
+        style="@style/Assistive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        android:text="@string/date_format"
+        android:textColor="@color/color_primary_default"
+        app:layout_constraintTop_toBottomOf="@id/separator2" />
+
+    <RadioGroup
+        android:id="@+id/date_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checkedButton="@id/date_dd_mm"
+        app:layout_constraintTop_toBottomOf="@id/date_format_title">
+
+        <RadioButton
+            android:id="@+id/date_dd_mm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?android:selectableItemBackground"
+            android:layoutDirection="rtl"
+            android:paddingHorizontal="16dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/date_dd"
+            app:buttonTint="@color/color_primary_default"
+            app:layout_constraintTop_toBottomOf="@id/theme_title" />
+
+        <RadioButton
+            android:id="@+id/date_mm_dd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?android:selectableItemBackground"
+            android:layoutDirection="rtl"
+            android:paddingHorizontal="16dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/date_mm"
+            app:buttonTint="@color/color_primary_default"
+            app:layout_constraintTop_toBottomOf="@id/theme_title" />
+    </RadioGroup>
+
+    <View
+        android:id="@+id/separator3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/on_surface_on_surface_lv_4"
+        app:layout_constraintTop_toBottomOf="@id/date_rg" />
+
+    <TextView
+        android:id="@+id/about_title"
+        style="@style/Headline1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="@string/about"
+        android:textColor="@color/on_surface_on_surface_lv_1"
+        app:layout_constraintTop_toBottomOf="@id/separator3" />
+
+    <TextView
+        android:id="@+id/academy_subtitle"
+        style="@style/Headline2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:text="@string/academy"
+        android:textColor="@color/on_surface_on_surface_lv_1"
+        app:layout_constraintTop_toBottomOf="@id/about_title" />
+
+    <TextView
+        android:id="@+id/class_paragraph"
+        style="@style/BodyParagraph"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:paddingHorizontal="16dp"
+        android:text="@string/class_year"
+        android:textColor="@color/on_surface_on_surface_lv_1"
+        app:layout_constraintTop_toBottomOf="@id/academy_subtitle" />
+
+    <View
+        android:id="@+id/separator4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/on_surface_on_surface_lv_4"
+        app:layout_constraintTop_toBottomOf="@id/class_paragraph" />
+
+    <TextView
+        android:id="@+id/app_name_title"
+        style="@style/Assistive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:paddingHorizontal="16dp"
+        android:text="@string/app_name_title"
+        android:textColor="@color/on_surface_on_surface_lv_2"
+        app:layout_constraintTop_toBottomOf="@id/separator4" />
+
+    <TextView
+        android:id="@+id/app_name"
+        style="@style/BodyParagraph"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:paddingHorizontal="16dp"
+        android:text="@string/app_name_val"
+        android:textColor="@color/on_surface_on_surface_lv_1"
+        app:layout_constraintTop_toBottomOf="@+id/app_name_title" />
+
+    <TextView
+        android:id="@+id/api_credit_title"
+        style="@style/Assistive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:paddingHorizontal="16dp"
+        android:text="@string/api_credit_title"
+        android:textColor="@color/on_surface_on_surface_lv_2"
+        app:layout_constraintTop_toBottomOf="@id/app_name" />
+
+    <TextView
+        android:id="@+id/api_credit"
+        style="@style/BodyParagraph"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:paddingHorizontal="16dp"
+        android:text="@string/api_credit_val"
+        android:textColor="@color/on_surface_on_surface_lv_1"
+        app:layout_constraintTop_toBottomOf="@+id/api_credit_title" />
+
+    <View
+        android:id="@+id/separator5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/on_surface_on_surface_lv_4"
+        app:layout_constraintTop_toBottomOf="@id/api_credit" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/sofascore_lockup_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/separator5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

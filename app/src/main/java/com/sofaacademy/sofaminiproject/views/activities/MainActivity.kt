@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.settings -> {
-                // Handle menu item 2 click
+                SettingsActivity.start(this)
                 true
             }
 
