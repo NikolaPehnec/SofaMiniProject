@@ -1,6 +1,5 @@
 package com.sofaacademy.sofaminiproject.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,15 +23,6 @@ class SportEventViewModel @Inject constructor(private val sofaMiniRepository: So
     private val _incidentsList = MutableLiveData<List<Incident>>()
     val incidentsList = _incidentsList
 
-    private val _sportEventsResponseError = MutableLiveData<String>()
-    val sportEventsResponseError: LiveData<String> = _sportEventsResponseError
-
-    private val _eventDetailsResponseError = MutableLiveData<String>()
-    val eventDetailsResponseError: LiveData<String> = _eventDetailsResponseError
-
-    private val _incidentsResponseError = MutableLiveData<String>()
-    val incidentsResponseError: LiveData<String> = _incidentsResponseError
-
     fun getSportEvents(slug: String, date: String) {
         viewModelScope.launch {
             when (val result = sofaMiniRepository.getSportEvents(slug, date)) {
@@ -40,8 +30,7 @@ class SportEventViewModel @Inject constructor(private val sofaMiniRepository: So
                     _sportEventsList.value = result.data
 
                 is Result.Error ->
-                    _sportEventsResponseError.value =
-                        result.exception.toString()
+                    _sportEventsList.value = emptyList()
             }
         }
     }
@@ -52,9 +41,7 @@ class SportEventViewModel @Inject constructor(private val sofaMiniRepository: So
                 is Result.Success ->
                     _eventDetails.value = result.data
 
-                is Result.Error ->
-                    _eventDetailsResponseError.value =
-                        result.exception.toString()
+                is Result.Error -> _sportEventsList.value = emptyList()
             }
         }
     }
@@ -66,9 +53,7 @@ class SportEventViewModel @Inject constructor(private val sofaMiniRepository: So
                     _incidentsList.value =
                         result.data.map { networkIncident -> networkIncident.mapIncident()!! }
 
-                is Result.Error ->
-                    _incidentsResponseError.value =
-                        result.exception.toString()
+                is Result.Error -> _sportEventsList.value = emptyList()
             }
         }
     }

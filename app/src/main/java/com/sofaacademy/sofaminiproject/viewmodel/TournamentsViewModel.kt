@@ -25,14 +25,8 @@ class TournamentsViewModel @Inject constructor(private val sofaMiniRepository: S
     private val _tournamentsList = MutableLiveData<List<Tournament>>()
     val tournamentsList = _tournamentsList
 
-    private val _tournamentsResponseError = MutableLiveData<String>()
-    val tournamentsResponseError: LiveData<String> = _tournamentsResponseError
-
     private val _tournamentStandings = MutableLiveData<List<TournamentStandings>>()
     val tournamentStandings = _tournamentStandings
-
-    private val _tournamentStandingsError = MutableLiveData<String>()
-    val tournamentStandingsError = _tournamentStandingsError
 
     fun getTournaments(slug: String) {
         viewModelScope.launch {
@@ -41,8 +35,7 @@ class TournamentsViewModel @Inject constructor(private val sofaMiniRepository: S
                     _tournamentsList.value = result.data
 
                 is Result.Error ->
-                    _tournamentsResponseError.value =
-                        result.exception.toString()
+                    _tournamentsList.value = emptyList()
             }
         }
     }
@@ -51,7 +44,7 @@ class TournamentsViewModel @Inject constructor(private val sofaMiniRepository: S
         viewModelScope.launch {
             when (val result = sofaMiniRepository.getTournamentStandings(tournamentId)) {
                 is Result.Success -> _tournamentStandings.value = result.data
-                is Result.Error -> _tournamentStandingsError.value = result.exception.toString()
+                is Result.Error -> _tournamentStandings.value = emptyList()
             }
         }
     }

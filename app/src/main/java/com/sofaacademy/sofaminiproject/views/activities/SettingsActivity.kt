@@ -30,7 +30,7 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setSupportActionBar(binding.activityToolbar)
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setContentView(binding.root)
 
         val adapter = ArrayAdapter(
@@ -46,6 +46,11 @@ class SettingsActivity : AppCompatActivity() {
             }
             setText(getCurrentLanguage())
         }
+    }
+
+    override fun onResume() {
+        binding.languagesDropdown.setText(getCurrentLanguage())
+        super.onResume()
     }
 
     private fun getCurrentLanguage(): String {
@@ -66,6 +71,7 @@ class SettingsActivity : AppCompatActivity() {
             resources.getStringArray(R.array.languages)[1] -> {
                 LocaleListCompat.forLanguageTags(Constants.LANG_HR)
             }
+
             else -> null
         }
 

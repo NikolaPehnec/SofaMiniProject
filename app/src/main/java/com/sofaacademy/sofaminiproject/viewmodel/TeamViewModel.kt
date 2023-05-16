@@ -31,26 +31,14 @@ class TeamViewModel @Inject constructor(private val sofaMiniRepository: SofaMini
     private val _nextTeamEvents = MutableLiveData<List<SportEvent>>()
     val nextTeamEvents = _nextTeamEvents
 
-    private val _nextTeamEventsError = MutableLiveData<String>()
-    val nextTeamEventsError: LiveData<String> = _nextTeamEventsError
-
     private val _teamPlayers = MutableLiveData<List<Player>>()
     val teamPlayers = _teamPlayers
-
-    private val _teamPlayersError = MutableLiveData<String>()
-    val teamPlayersError: LiveData<String> = _teamPlayersError
 
     private val _teamTournaments = MutableLiveData<List<Tournament>>()
     val teamTournaments = _teamTournaments
 
-    private val _teamTournamentsError = MutableLiveData<String>()
-    val teamTournamentsError: LiveData<String> = _teamTournamentsError
-
     private val _teamEvents = MutableLiveData<List<SportEvent>>()
     val teamEvents = _teamEvents
-
-    private val _teamEventsError = MutableLiveData<String>()
-    val teamEventsError: LiveData<String> = _teamEventsError
 
     fun getAllTeamDetails(teamId: String) {
         viewModelScope.launch {
@@ -69,15 +57,15 @@ class TeamViewModel @Inject constructor(private val sofaMiniRepository: SofaMini
             }
             when (resEvents) {
                 is Result.Success -> _nextTeamEvents.value = resEvents.data
-                is Result.Error -> _nextTeamEventsError.value = resEvents.exception.toString()
+                is Result.Error -> _nextTeamEvents.value = emptyList()
             }
             when (resPlayers) {
                 is Result.Success -> _teamPlayers.value = resPlayers.data
-                is Result.Error -> _teamPlayersError.value = resPlayers.exception.toString()
+                is Result.Error -> _teamPlayers.value = emptyList()
             }
             when (resTournaments) {
                 is Result.Success -> _teamTournaments.value = resTournaments.data
-                is Result.Error -> _teamTournamentsError.value = resTournaments.exception.toString()
+                is Result.Error -> _teamTournaments.value = emptyList()
             }
         }
     }

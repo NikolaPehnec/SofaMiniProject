@@ -20,7 +20,7 @@ import kotlin.math.roundToInt
 object UtilityFunctions {
     private val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
     private val hourFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-    val tabDateFormat = DateTimeFormatter.ofPattern("EEE dd.MM.", Locale.US)
+    var tabDateFormat = DateTimeFormatter.ofPattern("EEE dd.MM.", Locale.US)
     val yearFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val dateLongFormat = DateTimeFormatter.ofPattern("EEE, dd.MM.yyyy.", Locale.US)
     val detailDateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.US)
@@ -85,6 +85,9 @@ object UtilityFunctions {
 
     fun getTabTitlesByDate(context: Context): MutableMap<LocalDate, String> {
         val dateTabs = mutableMapOf<LocalDate, String>()
+        tabDateFormat = DateTimeFormatter.ofPattern(
+            "EEE dd.MM.", context.resources.configuration.locales.get(0)
+        )
 
         for (i in MIN_DAYS..MAX_DAYS) {
             val date = LocalDate.now().plusDays(i.toLong())
