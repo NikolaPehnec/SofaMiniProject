@@ -62,6 +62,7 @@
     <string name="search_hint">Players or teams</string>
     <string name="search">Search</string>
     <string name="player">Player</string>
+    <string name="scores_against_for" translatable="false">%1$s:%2$s</string>
 
     <string-array name="tabs">
         <item>Football</item>

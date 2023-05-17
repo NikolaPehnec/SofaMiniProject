@@ -1,16 +1,7 @@
 package com.sofaacademy.sofaminiproject.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import androidx.paging.insertSeparators
-import com.sofaacademy.sofaminiproject.model.Result
+import androidx.lifecycle.*
+import androidx.paging.*
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.model.TournamentStandings
@@ -33,22 +24,13 @@ class TournamentsViewModel @Inject constructor(private val sofaMiniRepository: S
 
     fun getTournaments(slug: String) {
         viewModelScope.launch {
-            when (val result = sofaMiniRepository.getTournaments(slug)) {
-                is Result.Success ->
-                    _tournamentsList.value = result.data
-
-                is Result.Error ->
-                    _tournamentsList.value = emptyList()
-            }
+            _tournamentsList.value = sofaMiniRepository.getTournaments(slug)
         }
     }
 
     fun getTournamentStandings(tournamentId: String) {
         viewModelScope.launch {
-            when (val result = sofaMiniRepository.getTournamentStandings(tournamentId)) {
-                is Result.Success -> _tournamentStandings.value = result.data
-                is Result.Error -> _tournamentStandings.value = emptyList()
-            }
+            _tournamentStandings.value = sofaMiniRepository.getTournamentStandings(tournamentId)
         }
     }
 

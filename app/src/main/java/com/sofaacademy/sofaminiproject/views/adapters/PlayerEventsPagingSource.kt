@@ -2,14 +2,13 @@ package com.sofaacademy.sofaminiproject.views.adapters
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.sofaacademy.sofaminiproject.model.Result
 import com.sofaacademy.sofaminiproject.networking.SofaMiniRepository
 import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.sortedByDateDesc
 
 class PlayerEventsPagingSource(
     private val sofaMiniRepository: SofaMiniRepository,
-    val playerId: String
+    private val playerId: String
 ) : PagingSource<Int, Any>() {
     override fun getRefreshKey(state: PagingState<Int, Any>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -26,17 +25,13 @@ class PlayerEventsPagingSource(
         val initialKey = params.key ?: 0
         if (page < 0) page *= -1
 
-        val result = sofaMiniRepository.getPlayerEvents(playerId, Constants.LAST, page.toString())
-
-        if (result is Result.Success) {
-            val playerEvents = result.data.sortedByDateDesc()
-            return LoadResult.Page(
-                data = playerEvents,
-                prevKey = null,
-                nextKey = if (playerEvents.isNotEmpty()) initialKey - 1 else null
-            )
-        } else {
-            return LoadResult.Error(Throwable("Err"))
-        }
+        val playerEvents =
+            sofaMiniRepository.getPlayerEvents(playerId, Constants.LAST, page.toString())
+                .sortedByDateDesc()
+        return LoadResult.Page(
+            data = playerEvents,
+            prevKey = null,
+            nextKey = if (playerEvents.isNotEmpty()) initialKey - 1 else null
+        )
     }
 }

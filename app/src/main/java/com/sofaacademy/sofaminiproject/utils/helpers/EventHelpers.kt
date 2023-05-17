@@ -79,7 +79,7 @@ object EventHelpers {
             intent.getSerializableExtra(
                 Constants.TEAM_ID_ARG,
                 Team2::class.java
-            ) as Team2?
+            )
         } else {
             intent.getSerializableExtra(Constants.TEAM_ID_ARG) as Team2?
         }

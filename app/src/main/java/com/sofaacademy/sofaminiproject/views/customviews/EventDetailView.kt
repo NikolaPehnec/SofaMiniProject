@@ -88,7 +88,7 @@ class EventDetailView @JvmOverloads constructor(
                 binding.matchStatus.apply {
                     visibility = View.VISIBLE
                     setTextColor(colorHome)
-                    text = elapsedMinutesFromDate(sportEvent.startDate ?: "")
+                    text = elapsedMinutesFromDate(sportEvent.startDate)
                 }
             }
 

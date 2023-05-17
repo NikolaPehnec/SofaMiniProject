@@ -17,6 +17,8 @@ class ViewHolderPlayers(
             binding.root.setOnClickListener {
                 listener.onPlayerClicked(item)
             }
+        } else {
+            binding.root.setOnClickListener(null)
         }
     }
 }

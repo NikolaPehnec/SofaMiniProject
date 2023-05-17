@@ -9,7 +9,7 @@ data class TournamentStandings(
 
 data class StandingsRow(
     val id: Int?,
-    val team: Team3?,
+    val team: Team2?,
     val points: Int?,
     val scoresFor: Int?,
     val scoresAgainst: Int?,

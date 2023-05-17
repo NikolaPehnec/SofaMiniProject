@@ -2,7 +2,6 @@ package com.sofaacademy.sofaminiproject.views.adapters
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.sofaacademy.sofaminiproject.model.Result
 import com.sofaacademy.sofaminiproject.networking.SofaMiniRepository
 import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.sortedByDateDesc
@@ -22,7 +21,7 @@ class TournamentEventsPagingSource(
         var page = params.key ?: 0
         val initialKey = params.key ?: 0
 
-        val result =
+        val tournamentEvents =
             if (page <= 0) {
                 page *= -1
                 sofaMiniRepository.getTournamentEvents(
@@ -37,17 +36,12 @@ class TournamentEventsPagingSource(
                     Constants.LAST,
                     page.toString()
                 )
-            }
+            }.sortedByDateDesc()
 
-        return if (result is Result.Success) {
-            val res = result.data.sortedByDateDesc()
-            LoadResult.Page(
-                data = res,
-                prevKey = if (res.isNotEmpty()) initialKey - 1 else null,
-                nextKey = if (res.isNotEmpty()) initialKey + 1 else null
-            )
-        } else {
-            LoadResult.Error(Throwable("Err"))
-        }
+        return LoadResult.Page(
+            data = tournamentEvents,
+            prevKey = if (tournamentEvents.isNotEmpty()) initialKey - 1 else null,
+            nextKey = if (tournamentEvents.isNotEmpty()) initialKey + 1 else null
+        )
     }
 }

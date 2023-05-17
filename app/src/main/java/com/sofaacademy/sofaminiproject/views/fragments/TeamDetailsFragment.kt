@@ -77,7 +77,7 @@ class TeamDetailsFragment : Fragment(), OnTournamentClicked {
         teamViewModel.nextTeamEvents.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 nextSportEvent = it.sortedBy { e ->
-                    ZonedDateTime.parse(e.startDate!!, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+                    ZonedDateTime.parse(e.startDate, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
                 }.first()
 
                 fillNextEventInfo(nextSportEvent!!)

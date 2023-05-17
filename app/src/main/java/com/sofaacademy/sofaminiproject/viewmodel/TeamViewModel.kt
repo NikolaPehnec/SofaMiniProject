@@ -1,17 +1,11 @@
 package com.sofaacademy.sofaminiproject.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import androidx.paging.insertSeparators
-import com.sofaacademy.sofaminiproject.model.*
+import androidx.lifecycle.*
+import androidx.paging.*
+import com.sofaacademy.sofaminiproject.model.Player
 import com.sofaacademy.sofaminiproject.model.SportEvent
+import com.sofaacademy.sofaminiproject.model.Team2
+import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.networking.SofaMiniRepository
 import com.sofaacademy.sofaminiproject.utils.Constants.NEXT
 import com.sofaacademy.sofaminiproject.views.adapters.TeamEventsPagingSource
@@ -28,9 +22,6 @@ class TeamViewModel @Inject constructor(private val sofaMiniRepository: SofaMini
     private val _teamDetails = MutableLiveData<Team2>()
     val teamDetails = _teamDetails
 
-    private val _teamDetailsError = MutableLiveData<String>()
-    val teamDetailsErrorr: LiveData<String> = _teamDetailsError
-
     private val _nextTeamEvents = MutableLiveData<List<SportEvent>>()
     val nextTeamEvents = _nextTeamEvents
 
@@ -40,36 +31,23 @@ class TeamViewModel @Inject constructor(private val sofaMiniRepository: SofaMini
     private val _teamTournaments = MutableLiveData<List<Tournament>>()
     val teamTournaments = _teamTournaments
 
-    private val _teamEvents = MutableLiveData<List<SportEvent>>()
-    val teamEvents = _teamEvents
-
     fun getAllTeamDetails(teamId: String) {
         viewModelScope.launch {
             val detailsDeff = async { sofaMiniRepository.getTeamDetails(teamId) }
             val eventsDeff = async { sofaMiniRepository.getTeamEvents(teamId, NEXT, "0") }
             val playersDeff = async { sofaMiniRepository.getTeamPlayers(teamId) }
             val tournamentsDeff = async { sofaMiniRepository.getTeamTournaments(teamId) }
-            val resDetails = detailsDeff.await()
-            val resEvents = eventsDeff.await()
-            val resPlayers = playersDeff.await()
-            val resTournaments = tournamentsDeff.await()
+            val teamDetails = detailsDeff.await()
+            val teamEvents = eventsDeff.await()
+            val teamPlayers = playersDeff.await()
+            val teamTournaments = tournamentsDeff.await()
 
-            when (resDetails) {
-                is Result.Success -> _teamDetails.value = resDetails.data
-                is Result.Error -> _teamDetailsError.value = resDetails.exception.toString()
+            teamDetails?.let {
+                _teamDetails.value = it
             }
-            when (resEvents) {
-                is Result.Success -> _nextTeamEvents.value = resEvents.data
-                is Result.Error -> _nextTeamEvents.value = emptyList()
-            }
-            when (resPlayers) {
-                is Result.Success -> _teamPlayers.value = resPlayers.data
-                is Result.Error -> _teamPlayers.value = emptyList()
-            }
-            when (resTournaments) {
-                is Result.Success -> _teamTournaments.value = resTournaments.data
-                is Result.Error -> _teamTournaments.value = emptyList()
-            }
+            _nextTeamEvents.value = teamEvents
+            _teamPlayers.value = teamPlayers
+            _teamTournaments.value = teamTournaments
         }
     }
 

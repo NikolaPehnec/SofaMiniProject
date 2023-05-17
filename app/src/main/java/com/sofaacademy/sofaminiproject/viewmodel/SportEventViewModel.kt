@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sofaacademy.sofaminiproject.model.Incident
-import com.sofaacademy.sofaminiproject.model.Result
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.networking.SofaMiniRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,36 +24,22 @@ class SportEventViewModel @Inject constructor(private val sofaMiniRepository: So
 
     fun getSportEvents(slug: String, date: String) {
         viewModelScope.launch {
-            when (val result = sofaMiniRepository.getSportEvents(slug, date)) {
-                is Result.Success ->
-                    _sportEventsList.value = result.data
-
-                is Result.Error ->
-                    _sportEventsList.value = emptyList()
-            }
+            _sportEventsList.value = sofaMiniRepository.getSportEvents(slug, date)
         }
     }
 
     fun getEventDetails(eventId: String) {
         viewModelScope.launch {
-            when (val result = sofaMiniRepository.getEventDetails(eventId)) {
-                is Result.Success ->
-                    _eventDetails.value = result.data
-
-                is Result.Error -> _sportEventsList.value = emptyList()
+            sofaMiniRepository.getEventDetails(eventId)?.let {
+                _eventDetails.value = it
             }
         }
     }
 
     fun getEventIncidents(eventId: String) {
         viewModelScope.launch {
-            when (val result = sofaMiniRepository.getEventIncidents(eventId)) {
-                is Result.Success ->
-                    _incidentsList.value =
-                        result.data.map { networkIncident -> networkIncident.mapIncident()!! }
-
-                is Result.Error -> _sportEventsList.value = emptyList()
-            }
+            _incidentsList.value = sofaMiniRepository.getEventIncidents(eventId)
+                .map { networkIncident -> networkIncident.mapIncident()!! }
         }
     }
 }

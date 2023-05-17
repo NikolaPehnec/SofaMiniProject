@@ -3,7 +3,6 @@ package com.sofaacademy.sofaminiproject.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sofaacademy.sofaminiproject.model.Result
 import com.sofaacademy.sofaminiproject.networking.SofaMiniRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -21,20 +20,10 @@ class SearchViewModel @Inject constructor(private val sofaMiniRepository: SofaMi
         viewModelScope.launch {
             val teamsDeff = async { sofaMiniRepository.searchTeams(query) }
             val playersDeff = async { sofaMiniRepository.searchPlayers(query) }
-            val teamsRes = teamsDeff.await()
-            val playersRes = playersDeff.await()
+            val searchedTeams = teamsDeff.await()
+            val searchedPlayers = playersDeff.await()
 
-            val searchResult = mutableListOf<Any>()
-            when (teamsRes) {
-                is Result.Success -> searchResult.addAll(teamsRes.data)
-                is Result.Error -> {}
-            }
-            when (playersRes) {
-                is Result.Success -> searchResult.addAll(playersRes.data)
-                is Result.Error -> {}
-            }
-
-            _searchTeamsPlayers.value = searchResult
+            _searchTeamsPlayers.value = searchedTeams + searchedPlayers
         }
     }
 }
