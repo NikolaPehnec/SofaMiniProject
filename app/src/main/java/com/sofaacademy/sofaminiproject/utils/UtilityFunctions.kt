@@ -20,16 +20,34 @@ import kotlin.math.roundToInt
 object UtilityFunctions {
     private val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
     private val hourFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-    var tabDateFormat = DateTimeFormatter.ofPattern("EEE dd.MM.", Locale.US)
-    var yearFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-    val dateLongFormat = DateTimeFormatter.ofPattern("EEE, dd.MM.yyyy.", Locale.US)
-    var detailDateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.US)
+
+    fun getTabDateFormat(context: Context, locale: Locale): DateTimeFormatter {
+        return when (getDatePreference(context)) {
+            Constants.DATE_DD_MM -> DateTimeFormatter.ofPattern("EEE dd.MM.", locale)
+            else -> DateTimeFormatter.ofPattern("EEE MM.dd.", locale)
+        }
+    }
+
+    fun getYearFormatAPI(): DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US)
+
+    fun getDateLongFormat(context: Context): DateTimeFormatter {
+        return when (getDatePreference(context)) {
+            Constants.DATE_DD_MM -> DateTimeFormatter.ofPattern("EEE, dd.MM.yyyy.", Locale.US)
+            else -> DateTimeFormatter.ofPattern("EEE, MM.dd.yyyy.", Locale.US)
+        }
+    }
+
+    fun getDetailDateFormat(context: Context): DateTimeFormatter {
+        return when (getDatePreference(context)) {
+            Constants.DATE_DD_MM -> DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.US)
+            else -> DateTimeFormatter.ofPattern("MM.dd.yyyy.", Locale.US)
+        }
+    }
 
     fun getFormattedDetailDate(date: String, context: Context): String {
         return try {
             val localDateTime = LocalDateTime.parse(date, dateTimeFormatter)
-            detailDateFormat = DateTimeFormatter.ofPattern(getDatePreference(context), Locale.US)
-            detailDateFormat.format(localDateTime)
+            getDetailDateFormat(context).format(localDateTime)
         } catch (e: java.lang.Exception) {
             ""
         }
@@ -86,10 +104,8 @@ object UtilityFunctions {
 
     fun getTabTitlesByDate(context: Context): MutableMap<LocalDate, String> {
         val dateTabs = mutableMapOf<LocalDate, String>()
-        tabDateFormat = DateTimeFormatter.ofPattern(
-            "EEE dd.MM.",
-            context.resources.configuration.locales.get(0)
-        )
+        val tabDateFormat =
+            getTabDateFormat(context, context.resources.configuration.locales.get(0))
 
         for (i in MIN_DAYS..MAX_DAYS) {
             val date = LocalDate.now().plusDays(i.toLong())

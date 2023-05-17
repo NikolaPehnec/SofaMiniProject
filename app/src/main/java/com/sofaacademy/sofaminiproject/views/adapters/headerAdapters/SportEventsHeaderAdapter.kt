@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sofaacademy.sofaminiproject.databinding.EventHeaderBinding
 import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.EventHeaderViewHolder
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
-class SportEventsHeaderAdapter(var date: LocalDate?, var eventSize: String?) :
+class SportEventsHeaderAdapter(var date: LocalDate?, var eventSize: String?,val dateLongFormatter: DateTimeFormatter) :
     RecyclerView.Adapter<EventHeaderViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventHeaderViewHolder {
@@ -16,7 +17,8 @@ class SportEventsHeaderAdapter(var date: LocalDate?, var eventSize: String?) :
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ),
+            dateLongFormatter
         )
     }
 

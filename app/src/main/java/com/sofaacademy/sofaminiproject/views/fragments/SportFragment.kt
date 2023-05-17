@@ -12,7 +12,8 @@ import com.sofaacademy.sofaminiproject.databinding.FragmentSportBinding
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.utils.Constants.SLUG_ARG
-import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.yearFormat
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getDateLongFormat
+import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getYearFormatAPI
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.sortedByDate
 import com.sofaacademy.sofaminiproject.utils.listeners.OnEventClicked
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
@@ -61,11 +62,15 @@ class SportFragment : Fragment(), OnTournamentClicked, OnEventClicked {
         currentDate = (requireActivity() as MainActivity).getCurrentDate()
 
         sportEventsArrayAdapter = SportEventsArrayAdapter(mutableListOf(), this, this)
-        sportEventsHeaderAdapter = SportEventsHeaderAdapter(currentDate, null)
+        sportEventsHeaderAdapter =
+            SportEventsHeaderAdapter(currentDate, null, getDateLongFormat(requireContext()))
         binding.eventsRv.adapter = ConcatAdapter(sportEventsHeaderAdapter, sportEventsArrayAdapter)
         setListeners()
 
-        sportEventViewModel.getSportEvents(slug!!, yearFormat.format(currentDate))
+        sportEventViewModel.getSportEvents(
+            slug!!,
+            getYearFormatAPI().format(currentDate)
+        )
         return binding.root
     }
 
@@ -73,7 +78,7 @@ class SportFragment : Fragment(), OnTournamentClicked, OnEventClicked {
     fun reloadSportData(date: LocalDate) {
         currentDate = date
         sportEventsHeaderAdapter.setHeaderInfo(currentDate, null)
-        sportEventViewModel.getSportEvents(slug!!, yearFormat.format(date))
+        sportEventViewModel.getSportEvents(slug!!, getYearFormatAPI().format(date))
     }
 
     private fun setListeners() {

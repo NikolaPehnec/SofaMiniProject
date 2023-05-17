@@ -61,7 +61,14 @@ class SettingsActivity : AppCompatActivity() {
             Constants.NIGHT_THEME -> binding.themeDark.isChecked = true
             Constants.LIGHT_THEME -> binding.themeLight.isChecked = true
         }
+        when (UtilityFunctions.getDatePreference(this)) {
+            Constants.DATE_DD_MM -> binding.dateDdMm.isChecked = true
+            Constants.DATE_MM_DD -> binding.dateMmDd.isChecked = true
+        }
+        setListeners()
+    }
 
+    private fun setListeners() {
         binding.themeRg.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 binding.themeLight.id -> {
