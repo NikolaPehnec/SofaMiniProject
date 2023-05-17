@@ -57,7 +57,6 @@ class TournamentStandingsFragment : Fragment(), OnTeamClicked {
 
         binding.standingsRv.adapter = ConcatAdapter(standingsHeaderAdapter, standingsArrayAdapter)
         setListeners()
-        tournamentsViewModel.getTournamentStandings(tournament?.id.toString())
         return binding.root
     }
 

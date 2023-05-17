@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -16,6 +17,7 @@ import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getTeamDetailsTabL
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadCountryFlag
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadTeamImg
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeamFromIntent
+import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
 import com.sofaacademy.sofaminiproject.views.adapters.pagerAdapters.TeamDetailsPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +26,7 @@ class TeamDetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTeamDetailBinding
     private lateinit var team: Team2
+    private val teamViewModel: TeamViewModel by viewModels()
 
     companion object {
         fun start(team: Team2, context: Context) {
@@ -53,6 +56,8 @@ class TeamDetailsActivity : AppCompatActivity() {
             binding.viewPager,
             getTeamDetailsTabLayoutConfigStrategy(this)
         ).attach()
+
+        teamViewModel.getAllTeamDetails(team.id.toString())
 
         setListeners()
     }

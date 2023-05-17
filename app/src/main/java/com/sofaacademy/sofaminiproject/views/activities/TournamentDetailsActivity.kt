@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -16,6 +17,7 @@ import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getTournamentDetai
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadCountryFlag
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadTournamentImg
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTournamentFromIntent
+import com.sofaacademy.sofaminiproject.viewmodel.TournamentsViewModel
 import com.sofaacademy.sofaminiproject.views.adapters.pagerAdapters.TournamentDetailsPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +26,7 @@ class TournamentDetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTournamentDetailBinding
     private lateinit var tournament: Tournament
+    private val tournamentsViewModel: TournamentsViewModel by viewModels()
 
     companion object {
         fun start(tournament: Tournament, context: Context) {
@@ -53,6 +56,8 @@ class TournamentDetailsActivity : AppCompatActivity() {
             binding.viewPager,
             getTournamentDetailsTabLayoutConfigStrategy(this)
         ).attach()
+
+        tournamentsViewModel.getTournamentStandings(tournament.id.toString())
 
         setListeners()
     }

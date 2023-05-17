@@ -64,7 +64,6 @@ class TeamDetailsFragment : Fragment(), OnTournamentClicked {
         binding.tournamentsRv.layoutManager = GridLayoutManager(requireContext(), 3)
 
         setListeners()
-        teamViewModel.getAllTeamDetails(team?.id.toString())
         return binding.root
     }
 
