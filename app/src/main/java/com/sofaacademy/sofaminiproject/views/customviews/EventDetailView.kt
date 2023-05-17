@@ -56,7 +56,7 @@ class EventDetailView @JvmOverloads constructor(
                 binding.scoreSlash.visibility = View.GONE
                 binding.matchStatus.visibility = View.GONE
 
-                sportEvent.startDate?.let {
+                sportEvent.startDate.let {
                     binding.eventDate.apply {
                         visibility = View.VISIBLE
                         text = getFormattedDetailDate(it, context)
@@ -74,12 +74,12 @@ class EventDetailView @JvmOverloads constructor(
                 binding.scoreHome.apply {
                     visibility = View.VISIBLE
                     setTextColor(colorHome)
-                    text = sportEvent.homeScore?.total.toString()
+                    text = sportEvent.homeScore.total.toString()
                 }
                 binding.scoreAway.apply {
                     visibility = View.VISIBLE
                     setTextColor(colorAway)
-                    text = sportEvent.awayScore?.total.toString()
+                    text = sportEvent.awayScore.total.toString()
                 }
                 binding.scoreSlash.apply {
                     visibility = View.VISIBLE
@@ -98,12 +98,12 @@ class EventDetailView @JvmOverloads constructor(
                 binding.scoreHome.apply {
                     visibility = View.VISIBLE
                     setTextColor(colorHome)
-                    text = sportEvent.homeScore?.total.toString()
+                    text = sportEvent.homeScore.total.toString()
                 }
                 binding.scoreAway.apply {
                     visibility = View.VISIBLE
                     setTextColor(colorAway)
-                    text = sportEvent.awayScore?.total.toString()
+                    text = sportEvent.awayScore.total.toString()
                 }
                 binding.scoreSlash.apply {
                     visibility = View.VISIBLE

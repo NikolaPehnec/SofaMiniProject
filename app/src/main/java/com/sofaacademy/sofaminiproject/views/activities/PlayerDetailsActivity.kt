@@ -28,7 +28,6 @@ import com.sofaacademy.sofaminiproject.utils.helpers.TeamHelpers.getPlayerPositi
 import com.sofaacademy.sofaminiproject.utils.listeners.OnEventClicked
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
 import com.sofaacademy.sofaminiproject.viewmodel.PlayerViewModel
-import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
 import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.EventPagingAdapter
 import com.sofaacademy.sofaminiproject.views.adapters.headerAdapters.PlayerMatchesHeaderAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,7 +40,6 @@ class PlayerDetailsActivity : AppCompatActivity(), OnTournamentClicked, OnEventC
     private lateinit var player: Player
     private var team: Team2? = null
     private val playerViewModel: PlayerViewModel by viewModels()
-    private val teamViewModel: TeamViewModel by viewModels()
     private lateinit var pagingAdapter: EventPagingAdapter
     private lateinit var playerMatchesHeaderAdapter: PlayerMatchesHeaderAdapter
 

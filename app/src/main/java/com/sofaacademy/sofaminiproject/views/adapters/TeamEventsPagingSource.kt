@@ -5,7 +5,6 @@ import androidx.paging.PagingState
 import com.sofaacademy.sofaminiproject.model.Result
 import com.sofaacademy.sofaminiproject.networking.SofaMiniRepository
 import com.sofaacademy.sofaminiproject.utils.Constants
-import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.sortedByDateDesc
 
 class TeamEventsPagingSource(
@@ -37,12 +36,11 @@ class TeamEventsPagingSource(
             }
 
         return if (result is Result.Success) {
-            val groupedData =
-                EventHelpers.groupEventsByTournamentAndDate(result.data.sortedByDateDesc())
+            val teamEvents = result.data.sortedByDateDesc()
             LoadResult.Page(
-                data = groupedData,
-                prevKey = if (groupedData.size > 0) initialKey - 1 else null,
-                nextKey = if (groupedData.size > 0) initialKey + 1 else null
+                data = teamEvents,
+                prevKey = if (teamEvents.isNotEmpty()) initialKey - 1 else null,
+                nextKey = if (teamEvents.isNotEmpty()) initialKey + 1 else null
             )
         } else {
             LoadResult.Error(Throwable("Err"))

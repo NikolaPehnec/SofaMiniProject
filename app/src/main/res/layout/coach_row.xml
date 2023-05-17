@@ -17,7 +17,7 @@
         android:background="@drawable/oval_bg"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/coach_img"
+        android:src="@drawable/team_manager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

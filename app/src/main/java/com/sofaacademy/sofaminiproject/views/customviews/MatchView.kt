@@ -41,18 +41,18 @@ class MatchView @JvmOverloads constructor(
         binding.teamHomeLogo.loadTeamImg(event.homeTeam.id.toString())
         binding.teamAwayLogo.loadTeamImg(event.awayTeam.id.toString())
 
-        val startTime = UtilityFunctions.getHourFromDate(event.startDate!!)
+        val startTime = UtilityFunctions.getHourFromDate(event.startDate)
         val matchCurrentStatus = EventHelpers.getCurrentMatchStatus(event.status, event.startDate)
         binding.timeStart.text = startTime
         binding.currentTime.text = matchCurrentStatus
         binding.teamHome.text = event.homeTeam.name
         binding.teamAway.text = event.awayTeam.name
-        binding.teamHomeResult.text = event.homeScore?.total?.toString()
-        binding.teamAwayResult.text = event.awayScore?.total?.toString()
+        binding.teamHomeResult.text = event.homeScore.total?.toString()
+        binding.teamAwayResult.text = event.awayScore.total?.toString()
     }
 
     fun setMatchDateTime(event: SportEvent) {
-        val startTime = UtilityFunctions.getHourFromDate(event.startDate!!)
+        val startTime = UtilityFunctions.getHourFromDate(event.startDate)
         val date = UtilityFunctions.getFormattedDetailDate(event.startDate, context)
         binding.timeStart.text = date
 

@@ -34,7 +34,7 @@ class PlayerView @JvmOverloads constructor(
             binding.playerImg.setImageDrawable(
                 AppCompatResources.getDrawable(
                     context,
-                    R.drawable.coach_img
+                    R.drawable.team_manager
                 )
             )
         } else {

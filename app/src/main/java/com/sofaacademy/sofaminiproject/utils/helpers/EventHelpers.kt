@@ -5,10 +5,14 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import com.sofaacademy.sofaminiproject.R
-import com.sofaacademy.sofaminiproject.model.*
+import com.sofaacademy.sofaminiproject.model.MatchStatus
+import com.sofaacademy.sofaminiproject.model.Player
+import com.sofaacademy.sofaminiproject.model.Score
+import com.sofaacademy.sofaminiproject.model.SportEvent
+import com.sofaacademy.sofaminiproject.model.Team2
+import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions
-import java.io.Serializable
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -119,12 +123,6 @@ object EventHelpers {
         }
     }
 
-    /**
-     * Za home i away score na docsima pise da su object tipa Score,
-     * ali kad nema podataka onda je prazna lista, primjer:
-     * "homeScore": [], ili
-     * "homeScore": {"total": 4,"period1": 2,"period2": 2}, ne moze biti ni score ni lista scorea
-     */
     fun getCurrentMatchStatus(status: String, matchStartTime: String): String {
         return when (status) {
             MatchStatus.NOT_STARTED.status -> "-"
@@ -139,33 +137,13 @@ object EventHelpers {
 
     fun List<SportEvent>.sortedByDate(): List<SportEvent> {
         return sortedBy { e ->
-            ZonedDateTime.parse(e.startDate!!, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+            ZonedDateTime.parse(e.startDate, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
         }
     }
 
     fun List<SportEvent>.sortedByDateDesc(): List<SportEvent> {
         return sortedByDescending { e ->
-            ZonedDateTime.parse(e.startDate!!, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+            ZonedDateTime.parse(e.startDate, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
         }
-    }
-
-    fun groupEventsByTournamentAndDate(events: List<SportEvent>): MutableList<Serializable> {
-        val finished = mutableListOf<Serializable>()
-
-        // Specific grouping and ordering as seen in sofascore
-        for (i in events.indices) {
-            if (i == 0) {
-                finished.add(events[i].tournament)
-                finished.add(events[i])
-            } else {
-                if (events[i - 1].tournament == events[i].tournament) {
-                    finished.add(events[i])
-                } else {
-                    finished.add(events[i].tournament)
-                    finished.add(events[i])
-                }
-            }
-        }
-        return finished
     }
 }

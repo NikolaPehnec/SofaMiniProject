@@ -9,7 +9,7 @@ import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.sortedByDateDe
 
 class TournamentEventsPagingSource(
     private val sofaMiniRepository: SofaMiniRepository,
-    val tournamentId: String
+    private val tournamentId: String
 ) : PagingSource<Int, Any>() {
     override fun getRefreshKey(state: PagingState<Int, Any>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -40,9 +40,7 @@ class TournamentEventsPagingSource(
             }
 
         return if (result is Result.Success) {
-            val res = result.data.groupBy { it.round }.flatMap {
-                listOf(it.key) + it.value.sortedByDateDesc()
-            }
+            val res = result.data.sortedByDateDesc()
             LoadResult.Page(
                 data = res,
                 prevKey = if (res.isNotEmpty()) initialKey - 1 else null,

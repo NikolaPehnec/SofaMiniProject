@@ -69,7 +69,12 @@ class EventPagingAdapter(
             }
 
             is ViewHolderTournament -> holder.bind(getItem(position) as Tournament)
-            is TournamentRoundHeaderViewHolder -> holder.bind("Round " + getItem(position).toString())
+            is TournamentRoundHeaderViewHolder -> {
+                //  val roundItem = getItem(position) as SportEventModel.SportEventRound
+                holder.bind(
+                    "Round " + getItem(position).toString()
+                )
+            }
         }
     }
 
