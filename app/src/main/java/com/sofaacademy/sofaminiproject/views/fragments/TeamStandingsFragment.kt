@@ -8,7 +8,6 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ConcatAdapter
 import com.sofaacademy.sofaminiproject.databinding.FragmentTeamStandingsBinding
 import com.sofaacademy.sofaminiproject.model.StandingsRow
@@ -30,7 +29,7 @@ class TeamStandingsFragment : Fragment(), OnTeamClicked {
     private var _binding: FragmentTeamStandingsBinding? = null
     private val binding get() = _binding!!
     private var team: Team2? = null
-    private val tournamentsViewModel: TournamentsViewModel by viewModels()
+    private val tournamentsViewModel: TournamentsViewModel by activityViewModels()
     private val teamViewModel: TeamViewModel by activityViewModels()
     private val tournaments = mutableListOf<Tournament>()
     private lateinit var headerAdapter: StandingsHeaderArrayAdapter

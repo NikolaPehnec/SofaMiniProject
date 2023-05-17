@@ -18,6 +18,7 @@ import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadCountryFlag
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadTeamImg
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeamFromIntent
 import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
+import com.sofaacademy.sofaminiproject.viewmodel.TournamentsViewModel
 import com.sofaacademy.sofaminiproject.views.adapters.pagerAdapters.TeamDetailsPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,6 +28,7 @@ class TeamDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTeamDetailBinding
     private lateinit var team: Team2
     private val teamViewModel: TeamViewModel by viewModels()
+    private val tournamentsViewModel: TournamentsViewModel by viewModels()
 
     companion object {
         fun start(team: Team2, context: Context) {
@@ -72,25 +74,31 @@ class TeamDetailsActivity : AppCompatActivity() {
 
     private fun setListeners() {
         binding.appbarlayout.addOnOffsetChangedListener(object :
-                AppBarLayout.OnOffsetChangedListener {
-                var isShow: Boolean? = null
-                var scrollRange: Int = -1
+            AppBarLayout.OnOffsetChangedListener {
+            var isShow: Boolean? = null
+            var scrollRange: Int = -1
 
-                override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
-                    if (scrollRange == -1) {
-                        scrollRange = appBarLayout!!.totalScrollRange
-                    }
-                    if (scrollRange + verticalOffset <= 0) {
-                        if (binding.activityToolbar.title != team.name) {
-                            binding.activityToolbar.title = team.name
-                        }
-                        isShow = true
-                    } else if (isShow == true) {
-                        binding.activityToolbar.title = ""
-                        isShow = false
-                    }
+            override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout!!.totalScrollRange
                 }
-            })
+                if (scrollRange + verticalOffset <= 0) {
+                    if (binding.activityToolbar.title != team.name) {
+                        binding.activityToolbar.title = team.name
+                    }
+                    isShow = true
+                } else if (isShow == true) {
+                    binding.activityToolbar.title = ""
+                    isShow = false
+                }
+            }
+        })
+
+        teamViewModel.teamTournaments.observe(this) {
+            if (it.isNotEmpty()) {
+                tournamentsViewModel.getTournamentStandings(it[0].id.toString())
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
