@@ -4,6 +4,8 @@ import android.content.Context
 import com.sofaacademy.sofaminiproject.model.NetworkIncident
 import com.sofaacademy.sofaminiproject.model.Player
 import com.sofaacademy.sofaminiproject.model.Result
+import com.sofaacademy.sofaminiproject.model.SearchPlayer
+import com.sofaacademy.sofaminiproject.model.SearchTeam
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.model.Tournament
@@ -59,4 +61,10 @@ open class SofaMiniRepository @Inject constructor(
 
     suspend fun getTournamentStandings(tournamentId: String): Result<List<TournamentStandings>> =
         apiCall(call = { sofaMiniApi.getTournamentStandings(tournamentId) })
+
+    suspend fun searchTeams(query: String): Result<List<SearchTeam>> =
+        apiCall(call = { sofaMiniApi.searchTeams(query) })
+
+    suspend fun searchPlayers(query: String): Result<List<SearchPlayer>> =
+        apiCall(call = { sofaMiniApi.searchPlayers(query) })
 }

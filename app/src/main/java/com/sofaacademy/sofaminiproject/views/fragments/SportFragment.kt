@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.distinctUntilChanged
 import androidx.recyclerview.widget.ConcatAdapter
 import com.sofaacademy.sofaminiproject.databinding.FragmentSportBinding
 import com.sofaacademy.sofaminiproject.model.SportEvent
@@ -82,7 +81,7 @@ class SportFragment : Fragment(), OnTournamentClicked, OnEventClicked {
     }
 
     private fun setListeners() {
-        sportEventViewModel.sportEventsList.distinctUntilChanged().observe(viewLifecycleOwner) {
+        sportEventViewModel.sportEventsList.observe(viewLifecycleOwner) {
             it?.let { sportEvents ->
                 val res = sportEvents.groupBy { it.tournament }.flatMap {
                     listOf(it.key) + it.value.sortedByDate()

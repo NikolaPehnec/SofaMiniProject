@@ -59,6 +59,9 @@
     <string name="app_name_val" translatable="false">Mini Sofascore App</string>
 
     <string name="settings_title">Settings</string>
+    <string name="search_hint">Players or teams</string>
+    <string name="search">Search</string>
+    <string name="player">Player</string>
 
     <string-array name="tabs">
         <item>Football</item>

@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var dateTabTitles = mutableMapOf<LocalDate, String>()
     private var dateTabs = mutableMapOf<LocalDate, TabLayout.Tab>()
+    private var initialDateSelected = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +57,7 @@ class MainActivity : AppCompatActivity() {
                 0f,
                 true
             )
+            initialDateSelected = true
         }
 
         binding.datesTabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
@@ -77,8 +79,15 @@ class MainActivity : AppCompatActivity() {
 
     fun getCurrentDate(): LocalDate {
         binding.datesTabLayout.let {
-            val selectedTab = it.getTabAt(it.selectedTabPosition)
-            return dateTabs.filterValues { tab -> tab.text == selectedTab?.text }.keys.first()
+            // Ako nije zavrsio scroll do danasnjeg datuma, kod pokretanja je moguci load podataka za krivi datumn
+            return when (initialDateSelected) {
+                true -> {
+                    val selectedTab = it.getTabAt(it.selectedTabPosition)
+                    dateTabs.filterValues { tab -> tab.text == selectedTab?.text }.keys.first()
+                }
+
+                false -> LocalDate.now()
+            }
         }
     }
 
@@ -96,6 +105,11 @@ class MainActivity : AppCompatActivity() {
 
             R.id.settings -> {
                 SettingsActivity.start(this)
+                true
+            }
+
+            R.id.search -> {
+                SearchActivity.start(this)
                 true
             }
 

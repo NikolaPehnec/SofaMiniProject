@@ -48,7 +48,7 @@ class TeamDetailsActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         setContentView(binding.root)
 
-        team = getTeamFromIntent(intent)
+        team = getTeamFromIntent(intent)!!
         loadHeaderData()
 
         val pagerAdapter = TeamDetailsPagerAdapter(team, this)

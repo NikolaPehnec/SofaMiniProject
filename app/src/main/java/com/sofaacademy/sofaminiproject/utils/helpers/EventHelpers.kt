@@ -70,14 +70,14 @@ object EventHelpers {
         }
     }
 
-    fun getTeamFromIntent(intent: Intent): Team2 {
+    fun getTeamFromIntent(intent: Intent): Team2? {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getSerializableExtra(
                 Constants.TEAM_ID_ARG,
                 Team2::class.java
-            ) as Team2
+            ) as Team2?
         } else {
-            intent.getSerializableExtra(Constants.TEAM_ID_ARG) as Team2
+            intent.getSerializableExtra(Constants.TEAM_ID_ARG) as Team2?
         }
     }
 

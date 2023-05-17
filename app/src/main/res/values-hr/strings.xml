@@ -41,6 +41,10 @@
     <string name="api_credit_title">API zasluge</string>
     <string name="settings_title">Postavke</string>
 
+    <string name="search_hint">Igrači ili timovi</string>
+    <string name="search">Pretraži</string>
+    <string name="player">Igrač</string>
+
     <string-array name="tabs">
         <item>Nogomet</item>
         <item>Košarka</item>

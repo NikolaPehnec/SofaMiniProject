@@ -28,6 +28,7 @@ import com.sofaacademy.sofaminiproject.utils.helpers.TeamHelpers.getPlayerPositi
 import com.sofaacademy.sofaminiproject.utils.listeners.OnEventClicked
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
 import com.sofaacademy.sofaminiproject.viewmodel.PlayerViewModel
+import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
 import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.EventPagingAdapter
 import com.sofaacademy.sofaminiproject.views.adapters.headerAdapters.PlayerMatchesHeaderAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,10 +39,11 @@ class PlayerDetailsActivity : AppCompatActivity(), OnTournamentClicked, OnEventC
 
     private lateinit var binding: ActivityPlayerDetailBinding
     private lateinit var player: Player
+    private var team: Team2? = null
     private val playerViewModel: PlayerViewModel by viewModels()
+    private val teamViewModel: TeamViewModel by viewModels()
     private lateinit var pagingAdapter: EventPagingAdapter
     private lateinit var playerMatchesHeaderAdapter: PlayerMatchesHeaderAdapter
-    private lateinit var team: Team2
 
     companion object {
         fun start(player: Player, team2: Team2?, context: Context) {
@@ -79,8 +81,12 @@ class PlayerDetailsActivity : AppCompatActivity(), OnTournamentClicked, OnEventC
         binding.playerLogo.loadPlayerImg(player.id.toString())
 
         binding.playerContentLayout.apply {
-            teamLogo.loadTeamImg(team.id.toString())
-            teamName.text = team.name
+            // Tim je null jer kod searcha player (SearchPlayer entitet) ne dolazi sa timom,
+            // treba se dohvatit s apija
+            team?.let {
+                teamLogo.loadTeamImg(it.id.toString())
+                teamName.text = it.name
+            }
             nationalityItem.apply {
                 attribute.text = getString(R.string.nationality)
                 attributeValue.text = player.country!!.name.substring(0, 3)
@@ -103,7 +109,7 @@ class PlayerDetailsActivity : AppCompatActivity(), OnTournamentClicked, OnEventC
         }
 
         binding.playerContentLayout.teamLayout.setOnClickListener {
-            TeamDetailsActivity.start(team, this)
+            team?.let { it1 -> TeamDetailsActivity.start(it1, this) }
         }
     }
 

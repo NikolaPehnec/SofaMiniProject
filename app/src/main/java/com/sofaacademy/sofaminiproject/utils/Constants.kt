@@ -22,6 +22,8 @@ object Constants {
     const val TYPE_SPORT_EVENT = 1
     const val TYPE_TOURNAMENT = 2
     const val TYPE_ROUND = 3
+    const val TYPE_PLAYER = 4
+    const val TYPE_TEAM = 5
 
     const val EVENT_ID_KEY = "event_id"
     const val LANG_EN = "en"
@@ -33,4 +35,6 @@ object Constants {
     const val PREF_DATE_KEY = "DATE"
     const val DATE_DD_MM = "dd.MM.yyyy."
     const val DATE_MM_DD = "MM.dd.yyyy."
+
+    const val SEARCH_TRESHOLD = 2
 }
