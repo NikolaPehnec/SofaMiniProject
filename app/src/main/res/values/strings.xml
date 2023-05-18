@@ -10,6 +10,8 @@
 
     <string name="leagues_title">Leagues</string>
     <string name="leagues" translatable="false">leagues</string>
+    <string name="favorite" translatable="false">favorites</string>
+    <string name="unfavorite" translatable="false">unfavorite</string>
     <string name="settings" translatable="false">settings</string>
     <string name="match_status_finished" translatable="false">Full Time</string>
     <string name="no_results_yet">No results yet.</string>
@@ -57,11 +59,14 @@
     <string name="api_credit_title">API Credit</string>
     <string name="api_credit_val" translatable="false">Sofascore</string>
     <string name="app_name_val" translatable="false">Mini Sofascore App</string>
+    <string name="developer" translatable="false">Developer</string>
+    <string name="developer_val" translatable="false">Nikola Pehnec</string>
 
     <string name="settings_title">Settings</string>
     <string name="search_hint">Players or teams</string>
     <string name="search">Search</string>
     <string name="recent_searches">Recent searches</string>
+    <string name="favorites">Favorites</string>
     <string name="player">Player</string>
     <string name="scores_against_for" translatable="false">%1$s:%2$s</string>
 

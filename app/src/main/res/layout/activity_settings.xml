@@ -228,6 +228,29 @@
             android:textColor="@color/on_surface_on_surface_lv_1"
             app:layout_constraintTop_toBottomOf="@+id/api_credit_title" />
 
+        <TextView
+            android:id="@+id/dev_title"
+            style="@style/Assistive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingHorizontal="16dp"
+            android:text="@string/developer"
+            android:textColor="@color/on_surface_on_surface_lv_2"
+            app:layout_constraintTop_toBottomOf="@id/api_credit" />
+
+        <TextView
+            android:id="@+id/dev"
+            style="@style/BodyParagraph"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:paddingHorizontal="16dp"
+            android:text="@string/developer_val"
+            android:textColor="@color/on_surface_on_surface_lv_1"
+            app:layout_constraintTop_toBottomOf="@+id/dev_title" />
+
+
         <View
             android:id="@+id/separator5"
             android:layout_width="match_parent"
@@ -235,7 +258,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="24dp"
             android:background="@color/on_surface_on_surface_lv_4"
-            app:layout_constraintTop_toBottomOf="@id/api_credit" />
+            app:layout_constraintTop_toBottomOf="@id/dev" />
 
         <ImageView
             android:layout_width="wrap_content"

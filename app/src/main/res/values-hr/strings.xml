@@ -43,6 +43,7 @@
 
     <string name="search_hint">Igrači ili timovi</string>
     <string name="search">Pretraži</string>
+    <string name="favorites">Favoriti</string>
     <string name="recent_searches">Nedavne pretrage</string>
 
     <string name="player">Igrač</string>

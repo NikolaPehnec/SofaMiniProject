@@ -12,6 +12,7 @@ import com.sofaacademy.sofaminiproject.databinding.FragmentTeamSquadBinding
 import com.sofaacademy.sofaminiproject.model.Player
 import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.utils.Constants.TEAM_ID_ARG
+import com.sofaacademy.sofaminiproject.utils.Constants.TYPE_PLAYER
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeam
 import com.sofaacademy.sofaminiproject.utils.listeners.OnPlayerClicked
 import com.sofaacademy.sofaminiproject.viewmodel.TeamViewModel
@@ -83,7 +84,18 @@ class TeamSquadFragment : Fragment(), OnPlayerClicked {
         }
         teamViewModel.teamDetails.observe(viewLifecycleOwner) {
             teamCoachArrayAdapter.setItems(
-                mutableListOf(Player(-1, it!!.managerName, null, it.country, null, null))
+                mutableListOf(
+                    Player(
+                        -1,
+                        it!!.managerName,
+                        null,
+                        it.country,
+                        null,
+                        null,
+                        TYPE_PLAYER,
+                        false
+                    )
+                )
             )
         }
     }

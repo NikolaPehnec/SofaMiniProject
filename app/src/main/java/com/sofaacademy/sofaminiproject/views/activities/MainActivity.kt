@@ -113,6 +113,11 @@ class MainActivity : AppCompatActivity() {
                 true
             }
 
+            R.id.favorite -> {
+                FavoriteActivity.start(this)
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

@@ -20,5 +20,6 @@ data class Player(
     @Embedded
     val sport: Sport?,
     @ColumnInfo(name = "item_type")
-    val itemType: Int = Constants.TYPE_PLAYER
+    val itemType: Int = Constants.TYPE_PLAYER,
+    var favorite: Boolean?
 ) : Serializable

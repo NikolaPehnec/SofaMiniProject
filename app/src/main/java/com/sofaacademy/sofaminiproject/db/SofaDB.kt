@@ -8,9 +8,8 @@ import com.sofaacademy.sofaminiproject.model.Team2
 
 @Database(
     entities = [Searched::class, Player::class, Team2::class],
-    version = 1
+    version = 2
 )
 abstract class SofaDB : RoomDatabase() {
-
     abstract fun sofaDao(): SofaDao
 }

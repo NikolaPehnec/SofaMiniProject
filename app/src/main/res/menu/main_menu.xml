@@ -15,6 +15,12 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/favorite"
+        android:icon="@drawable/ic_baseline_star_24"
+        android:title="@string/favorite"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/settings"
         android:icon="@drawable/settings_icon"
         android:title="@string/settings"

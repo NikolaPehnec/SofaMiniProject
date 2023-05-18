@@ -9,15 +9,21 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
+import com.sofaacademy.sofaminiproject.db.SofaDao
+import com.sofaacademy.sofaminiproject.model.Player
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.networking.SofaMiniRepository
 import com.sofaacademy.sofaminiproject.views.adapters.PlayerEventsPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PlayerViewModel @Inject constructor(private val sofaMiniRepository: SofaMiniRepository) :
+class PlayerViewModel @Inject constructor(
+    private val sofaMiniRepository: SofaMiniRepository,
+    private val sofaDao: SofaDao
+) :
     ViewModel() {
 
     fun getAllPlayerEvents(playerId: String): LiveData<PagingData<Any>> {
@@ -48,5 +54,11 @@ class PlayerViewModel @Inject constructor(private val sofaMiniRepository: SofaMi
                 }
             }
         }.asLiveData()
+    }
+
+    fun savePlayer(player: Player) {
+        viewModelScope.launch {
+            sofaDao.savePlayer(player)
+        }
     }
 }

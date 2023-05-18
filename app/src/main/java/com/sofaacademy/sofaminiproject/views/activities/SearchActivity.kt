@@ -3,7 +3,6 @@ package com.sofaacademy.sofaminiproject.views.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
@@ -12,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.ActivitySearchBinding
@@ -27,7 +25,6 @@ import com.sofaacademy.sofaminiproject.viewmodel.SearchViewModel
 import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.SearchArrayAdapter
 import com.sofaacademy.sofaminiproject.views.adapters.headerAdapters.SquadHeaderAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchActivity : AppCompatActivity(), OnTeamClicked, OnPlayerClicked, OnSearchDelete {
@@ -115,16 +112,11 @@ class SearchActivity : AppCompatActivity(), OnTeamClicked, OnPlayerClicked, OnSe
             // Search ili brisanje teksta ovisno o kliku na koji drawable
             setOnTouchListener(object : View.OnTouchListener {
                 override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                    val drawableLeftIndex = 0
                     val drawableRightIndex = 2
-
                     if (event?.action == MotionEvent.ACTION_UP) {
                         binding.autoCompleteTv.compoundDrawables[drawableRightIndex]?.let {
                             if (event.rawX >= (binding.autoCompleteTv.right - it.bounds.width() + 100)) {
                                 binding.autoCompleteTv.setText("")
-                                return true
-                            } else if (event.rawX <= (binding.autoCompleteTv.left + binding.autoCompleteTv.compoundDrawables[drawableLeftIndex].bounds.width())) {
-                                // startSearch(binding.autoCompleteTv.text.toString().lowercase())
                                 return true
                             }
                         }
@@ -132,16 +124,6 @@ class SearchActivity : AppCompatActivity(), OnTeamClicked, OnPlayerClicked, OnSe
                     return false
                 }
             })
-
-            setOnKeyListener { _, keyCode, event ->
-                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    binding.autoCompleteTv.text.toString().apply {
-                        // startSearch(this)
-                    }
-                    return@setOnKeyListener true
-                }
-                return@setOnKeyListener false
-            }
         }
     }
 
@@ -172,9 +154,7 @@ class SearchActivity : AppCompatActivity(), OnTeamClicked, OnPlayerClicked, OnSe
     }
 
     override fun onTeamDeleteClicked(team: Team2) {
-        lifecycleScope.launch {
-            searchViewModel.removeItemFromSearches(team.id, Constants.TYPE_TEAM.toString())
-            searchAdapterDB.deleteItem(team.id, Constants.TYPE_TEAM)
-        }
+        searchViewModel.removeItemFromSearches(team.id, Constants.TYPE_TEAM.toString())
+        searchAdapterDB.deleteItem(team.id, Constants.TYPE_TEAM)
     }
 }

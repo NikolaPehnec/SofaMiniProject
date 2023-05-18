@@ -46,14 +46,14 @@ class SearchViewModel @Inject constructor(
 
     fun saveSearchedPlayer(player: Player) {
         viewModelScope.launch {
-            sofaDao.saveSearchedPlayer(player)
+            sofaDao.insertPlayer(player)
             sofaDao.saveSearched(Searched(player.id, TYPE_PLAYER))
         }
     }
 
     fun saveSearchedTeam(team: Team2) {
         viewModelScope.launch {
-            sofaDao.saveSearchedTeam(team)
+            sofaDao.insertTeam(team)
             sofaDao.saveSearched(Searched(team.id, TYPE_TEAM))
         }
     }

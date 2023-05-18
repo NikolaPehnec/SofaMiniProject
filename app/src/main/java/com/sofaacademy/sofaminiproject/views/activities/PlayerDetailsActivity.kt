@@ -3,6 +3,7 @@ package com.sofaacademy.sofaminiproject.views.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
@@ -27,6 +28,7 @@ import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeamFromInt
 import com.sofaacademy.sofaminiproject.utils.helpers.TeamHelpers.getPlayerPositionName
 import com.sofaacademy.sofaminiproject.utils.listeners.OnEventClicked
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
+import com.sofaacademy.sofaminiproject.viewmodel.FavoriteViewModel
 import com.sofaacademy.sofaminiproject.viewmodel.PlayerViewModel
 import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.EventPagingAdapter
 import com.sofaacademy.sofaminiproject.views.adapters.headerAdapters.PlayerMatchesHeaderAdapter
@@ -40,8 +42,11 @@ class PlayerDetailsActivity : AppCompatActivity(), OnTournamentClicked, OnEventC
     private lateinit var player: Player
     private var team: Team2? = null
     private val playerViewModel: PlayerViewModel by viewModels()
+    private val favoriteViewModel: FavoriteViewModel by viewModels()
     private lateinit var pagingAdapter: EventPagingAdapter
     private lateinit var playerMatchesHeaderAdapter: PlayerMatchesHeaderAdapter
+    private var initialFavorite: Boolean? = null
+    private lateinit var _menu: Menu
 
     companion object {
         fun start(player: Player, team2: Team2?, context: Context) {
@@ -71,6 +76,7 @@ class PlayerDetailsActivity : AppCompatActivity(), OnTournamentClicked, OnEventC
 
         loadHeaderData()
         setListeners()
+        favoriteViewModel.getAllFavoritePlayers()
     }
 
     private fun loadHeaderData() {
@@ -112,6 +118,14 @@ class PlayerDetailsActivity : AppCompatActivity(), OnTournamentClicked, OnEventC
     }
 
     private fun setListeners() {
+        favoriteViewModel.favoritePlayers.observe(this) {
+            if (it.any { p -> p.id == player.id }) {
+                setInitialFavorite(true)
+            } else {
+                setInitialFavorite(false)
+            }
+        }
+
         lifecycleScope.launch {
             playerViewModel.getAllPlayerEvents(player.id.toString())
                 .observe(this@PlayerDetailsActivity) {
@@ -143,10 +157,38 @@ class PlayerDetailsActivity : AppCompatActivity(), OnTournamentClicked, OnEventC
             })
     }
 
+    private fun setInitialFavorite(favorite: Boolean) {
+        if (::_menu.isInitialized) {
+            _menu.findItem(R.id.favorite)
+                .setIcon(if (favorite) R.drawable.ic_baseline_star_24 else R.drawable.ic_baseline_star_outline_24)
+            _menu.findItem(R.id.favorite).title =
+                getString(if (favorite) R.string.favorite else R.string.unfavorite)
+        }
+    }
+
+    private fun changeFavorite(item: MenuItem) {
+        if (item.title!! == getString(R.string.unfavorite)) {
+            item.setIcon(R.drawable.ic_baseline_star_24)
+            item.title = getString(R.string.favorite)
+            player.favorite = true
+        } else {
+            item.setIcon(R.drawable.ic_baseline_star_outline_24)
+            item.title = getString(R.string.unfavorite)
+            player.favorite = false
+        }
+
+        playerViewModel.savePlayer(player)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
                 finish()
+                true
+            }
+
+            R.id.favorite -> {
+                changeFavorite(item)
                 true
             }
 
@@ -160,5 +202,15 @@ class PlayerDetailsActivity : AppCompatActivity(), OnTournamentClicked, OnEventC
 
     override fun onTournamentClicked(tournamet: Tournament) {
         TournamentDetailsActivity.start(tournamet, this)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.player_details_menu, menu)
+        _menu = menu!!
+
+        initialFavorite?.let {
+            setInitialFavorite(it)
+        }
+        return super.onCreateOptionsMenu(menu)
     }
 }

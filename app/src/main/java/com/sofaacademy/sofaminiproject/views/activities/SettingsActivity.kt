@@ -27,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingsBinding
+    private lateinit var adapter: ArrayAdapter<String>
 
     companion object {
         fun start(context: Context) {
@@ -43,7 +44,7 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setContentView(binding.root)
 
-        val adapter = ArrayAdapter(
+        adapter = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1,
             resources.getStringArray(R.array.languages)
@@ -54,7 +55,6 @@ class SettingsActivity : AppCompatActivity() {
             setOnItemClickListener { _, _, _, _ ->
                 changeLocalization(getSelectedItemText())
             }
-            setText(getCurrentLanguage())
         }
 
         when (UtilityFunctions.getThemePreferences(this)) {
@@ -101,8 +101,8 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        binding.languagesDropdown.setText(getCurrentLanguage())
         binding.languagesDropdown.apply {
+            setText(getCurrentLanguage())
             setStringArrayAdapter(
                 ArrayAdapter(
                     this@SettingsActivity,
@@ -110,6 +110,7 @@ class SettingsActivity : AppCompatActivity() {
                     resources.getStringArray(R.array.languages)
                 )
             )
+            dismissDropdown()
         }
         super.onResume()
     }
@@ -141,6 +142,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         binding.languagesDropdown.setText(language)
+        binding.languagesDropdown.dismissDropdown()
     }
 
     override fun onBackPressed() {

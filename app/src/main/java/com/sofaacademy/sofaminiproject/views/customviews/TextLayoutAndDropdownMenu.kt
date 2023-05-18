@@ -42,8 +42,10 @@ class TextLayoutAndDropdownMenu @JvmOverloads constructor(
         }
     }
 
-    fun setStringArrayAdapter(adapter: ArrayAdapter<String>) {
-        binding.autoCompleteTv.setAdapter(adapter)
+    fun setStringArrayAdapter(adapter: ArrayAdapter<String>?) {
+        binding.autoCompleteTv.apply {
+            binding.autoCompleteTv.setAdapter(adapter)
+        }
     }
 
     fun getSelectedItemText(): String {
@@ -52,5 +54,9 @@ class TextLayoutAndDropdownMenu @JvmOverloads constructor(
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
         binding.autoCompleteTv.onItemClickListener = onItemClickListener
+    }
+
+    fun dismissDropdown() {
+        binding.autoCompleteTv.dismissDropDown()
     }
 }

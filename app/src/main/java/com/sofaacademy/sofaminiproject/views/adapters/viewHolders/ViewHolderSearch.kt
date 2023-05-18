@@ -29,35 +29,59 @@ class ViewHolderSearch(
     fun bind(item: Any, context: Context) {
         when (item) {
             is Player -> {
-                binding.name.text = item.name
-                binding.img.loadPlayerImg(item.id.toString())
-                binding.smallImg.load(FlagHelper.getFlagBitmap(context, item.country!!.name))
-                binding.smallName.text = item.country.name
-                val res = getSlugDrawable(item.sport!!.slug, context)
-                binding.smallImgSport.setImageDrawable(res)
-                binding.sportName.text = item.sport.name
-                binding.type.text = context.getString(R.string.player)
-                binding.root.setOnClickListener {
-                    listenerPlayer.onPlayerClicked(item)
-                }
-                binding.deleteItem.setOnClickListener {
-                    listenerDelete.onPlayerDeleteClicked(item)
+                binding.apply {
+                    name.text = item.name
+                    img.loadPlayerImg(item.id.toString())
+                    smallImg.load(FlagHelper.getFlagBitmap(context, item.country!!.name))
+                    smallName.text = item.country.name
+                    if (item.sport != null) {
+                        smallImgSport.visibility = View.VISIBLE
+                        sportName.visibility = View.VISIBLE
+                        smallImgSport.setImageDrawable(getSlugDrawable(item.sport.slug, context))
+                        sportName.text = item.sport.name
+                    } else {
+                        smallImgSport.visibility = View.GONE
+                        sportName.visibility = View.GONE
+                    }
+
+                    type.text = context.getString(R.string.player)
+                    root.setOnClickListener {
+                        listenerPlayer.onPlayerClicked(item)
+                    }
+                    deleteItem.setOnClickListener {
+                        listenerDelete.onPlayerDeleteClicked(item)
+                    }
                 }
             }
 
             is Team2 -> {
-                binding.name.text = item.name
-                binding.img.loadTeamImg(item.id.toString())
-                binding.smallImg.load(FlagHelper.getFlagBitmap(context, item.country.name))
-                binding.smallName.text = item.country.name
-                binding.smallImgSport.setImageDrawable(getSlugDrawable(item.sport!!.slug, context))
-                binding.sportName.text = item.sport.name
-                binding.type.text = context.getString(R.string.team)
-                binding.root.setOnClickListener {
-                    listenerTeam.onTeamClicked(item)
-                }
-                binding.deleteItem.setOnClickListener {
-                    listenerDelete.onTeamDeleteClicked(item)
+                binding.apply {
+                    name.text = item.name
+                    img.loadTeamImg(item.id.toString())
+                    smallImg.load(FlagHelper.getFlagBitmap(context, item.country.name))
+                    smallName.text = item.country.name
+                    if (item.sport != null) {
+                        smallImgSport.visibility = View.VISIBLE
+                        sportName.visibility = View.VISIBLE
+                        smallImgSport.setImageDrawable(
+                            getSlugDrawable(
+                                item.sport.slug,
+                                context
+                            )
+                        )
+                        sportName.text = item.sport.name
+                    } else {
+                        smallImgSport.visibility = View.GONE
+                        sportName.visibility = View.GONE
+                    }
+
+                    type.text = context.getString(R.string.team)
+                    root.setOnClickListener {
+                        listenerTeam.onTeamClicked(item)
+                    }
+                    deleteItem.setOnClickListener {
+                        listenerDelete.onTeamDeleteClicked(item)
+                    }
                 }
             }
         }

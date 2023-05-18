@@ -2,6 +2,7 @@ package com.sofaacademy.sofaminiproject.viewmodel
 
 import androidx.lifecycle.*
 import androidx.paging.*
+import com.sofaacademy.sofaminiproject.db.SofaDao
 import com.sofaacademy.sofaminiproject.model.Player
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
@@ -16,7 +17,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TeamViewModel @Inject constructor(private val sofaMiniRepository: SofaMiniRepository) :
+class TeamViewModel @Inject constructor(
+    private val sofaMiniRepository: SofaMiniRepository,
+    private val sofaDao: SofaDao
+) :
     ViewModel() {
 
     private val _teamDetails = MutableLiveData<Team2>()
@@ -79,5 +83,11 @@ class TeamViewModel @Inject constructor(private val sofaMiniRepository: SofaMini
                 }
             }
         }.asLiveData()
+    }
+
+    fun saveTeam(team: Team2) {
+        viewModelScope.launch {
+            sofaDao.saveTeam(team)
+        }
     }
 }
