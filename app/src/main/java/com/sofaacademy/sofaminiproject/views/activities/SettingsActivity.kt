@@ -22,6 +22,7 @@ import com.sofaacademy.sofaminiproject.utils.UtilityFunctions
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.saveDatePreference
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.saveThemePreference
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 
 @AndroidEntryPoint
 class SettingsActivity : AppCompatActivity() {
@@ -119,7 +120,13 @@ class SettingsActivity : AppCompatActivity() {
         return when (resources.configuration.locales.get(0).toString()) {
             Constants.LANG_EN -> resources.getStringArray(R.array.languages)[0]
             Constants.LANG_HR -> resources.getStringArray(R.array.languages)[1]
-            else -> ""
+            else -> {
+                if (Locale.getDefault().language.toString() == "hr") {
+                    return resources.getStringArray(R.array.languages)[1]
+                } else {
+                    return resources.getStringArray(R.array.languages)[0]
+                }
+            }
         }
     }
 
