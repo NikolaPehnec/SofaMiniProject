@@ -61,6 +61,7 @@
     <string name="settings_title">Settings</string>
     <string name="search_hint">Players or teams</string>
     <string name="search">Search</string>
+    <string name="recent_searches">Recent searches</string>
     <string name="player">Player</string>
     <string name="scores_against_for" translatable="false">%1$s:%2$s</string>
 

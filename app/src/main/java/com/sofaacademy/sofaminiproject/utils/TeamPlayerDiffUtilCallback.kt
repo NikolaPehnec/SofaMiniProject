@@ -1,8 +1,8 @@
 package com.sofaacademy.sofaminiproject.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import com.sofaacademy.sofaminiproject.model.SearchPlayer
-import com.sofaacademy.sofaminiproject.model.SearchTeam
+import com.sofaacademy.sofaminiproject.model.Player
+import com.sofaacademy.sofaminiproject.model.Team2
 
 class TeamPlayerDiffUtilCallback(
     private val oldList: List<Any>,
@@ -15,10 +15,10 @@ class TeamPlayerDiffUtilCallback(
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         val oldItem = oldList[oldItemPosition]
         val newItem = newList[newItemPosition]
-        if (oldItem is SearchTeam && newItem is SearchTeam) {
+        if (oldItem is Team2 && newItem is Team2) {
             return oldItem.id == newItem.id
         }
-        if (oldItem is SearchPlayer && newItem is SearchPlayer) {
+        if (oldItem is Player && newItem is Player) {
             return oldItem.id == newItem.id
         }
         return false
@@ -28,10 +28,10 @@ class TeamPlayerDiffUtilCallback(
         val oldItem = oldList[oldItemPosition]
         val newItem = newList[newItemPosition]
 
-        if (oldItem is SearchTeam && newItem is SearchTeam) {
+        if (oldItem is Team2 && newItem is Team2) {
             return oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.country == newItem.country && oldItem.sport == newItem.sport
         }
-        if (oldItem is SearchPlayer && newItem is SearchPlayer) {
+        if (oldItem is Player && newItem is Player) {
             return oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.country == newItem.country && oldItem.position == newItem.position && oldItem.slug == newItem.slug &&
                 oldItem.sport == newItem.sport
         }

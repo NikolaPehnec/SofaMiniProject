@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sofaacademy.sofaminiproject.databinding.PlayerTeamSearchViewBinding
-import com.sofaacademy.sofaminiproject.model.SearchPlayer
-import com.sofaacademy.sofaminiproject.model.SearchTeam
+import com.sofaacademy.sofaminiproject.model.Player
+import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.utils.Constants.TYPE_PLAYER
 import com.sofaacademy.sofaminiproject.utils.Constants.TYPE_TEAM
 import com.sofaacademy.sofaminiproject.utils.TeamPlayerDiffUtilCallback
@@ -55,8 +55,8 @@ class SearchArrayAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when (items[position]) {
-            is SearchTeam -> TYPE_TEAM
-            is SearchPlayer -> TYPE_PLAYER
+            is Team2 -> TYPE_TEAM
+            is Player -> TYPE_PLAYER
             else -> -1
         }
     }

@@ -107,14 +107,14 @@ open class SofaMiniRepository @Inject constructor(
         }
     }
 
-    suspend fun searchTeams(query: String): List<SearchTeam> {
+    suspend fun searchTeams(query: String): List<Team2> {
         return when (val res = apiCall(call = { sofaMiniApi.searchTeams(query) })) {
             is Result.Success -> return res.data
             else -> emptyList()
         }
     }
 
-    suspend fun searchPlayers(query: String): List<SearchPlayer> {
+    suspend fun searchPlayers(query: String): List<Player> {
         return when (val res = apiCall(call = { sofaMiniApi.searchPlayers(query) })) {
             is Result.Success -> return res.data
             else -> emptyList()

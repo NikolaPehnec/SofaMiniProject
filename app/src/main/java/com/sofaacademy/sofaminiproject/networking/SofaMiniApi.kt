@@ -2,8 +2,6 @@ package com.sofaacademy.sofaminiproject.networking
 
 import com.sofaacademy.sofaminiproject.model.NetworkIncident
 import com.sofaacademy.sofaminiproject.model.Player
-import com.sofaacademy.sofaminiproject.model.SearchPlayer
-import com.sofaacademy.sofaminiproject.model.SearchTeam
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.model.Tournament
@@ -75,10 +73,10 @@ interface SofaMiniApi {
     @GET("search/team/{query}")
     suspend fun searchTeams(
         @Path(value = "query") query: String
-    ): Response<List<SearchTeam>>
+    ): Response<List<Team2>>
 
     @GET("search/player/{query}")
     suspend fun searchPlayers(
         @Path(value = "query") query: String
-    ): Response<List<SearchPlayer>>
+    ): Response<List<Player>>
 }

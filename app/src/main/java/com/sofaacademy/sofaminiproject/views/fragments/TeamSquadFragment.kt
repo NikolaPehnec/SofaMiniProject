@@ -83,7 +83,7 @@ class TeamSquadFragment : Fragment(), OnPlayerClicked {
         }
         teamViewModel.teamDetails.observe(viewLifecycleOwner) {
             teamCoachArrayAdapter.setItems(
-                mutableListOf(Player(-1, it!!.managerName, null, it.country, null))
+                mutableListOf(Player(-1, it!!.managerName, null, it.country, null, null))
             )
         }
     }

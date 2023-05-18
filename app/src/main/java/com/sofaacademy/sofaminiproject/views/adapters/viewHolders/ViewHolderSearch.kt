@@ -7,10 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.PlayerTeamSearchViewBinding
-import com.sofaacademy.sofaminiproject.model.SearchPlayer
-import com.sofaacademy.sofaminiproject.model.SearchTeam
-import com.sofaacademy.sofaminiproject.model.toPlayer
-import com.sofaacademy.sofaminiproject.model.toTeam2
+import com.sofaacademy.sofaminiproject.model.Player
+import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadPlayerImg
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.loadTeamImg
@@ -26,30 +24,30 @@ class ViewHolderSearch(
 
     fun bind(item: Any, context: Context) {
         when (item) {
-            is SearchPlayer -> {
+            is Player -> {
                 binding.name.text = item.name
                 binding.img.loadPlayerImg(item.id.toString())
-                binding.smallImg.load(FlagHelper.getFlagBitmap(context, item.country.name))
+                binding.smallImg.load(FlagHelper.getFlagBitmap(context, item.country!!.name))
                 binding.smallName.text = item.country.name
-                val res = getSlugDrawable(item.sport.slug, context)
+                val res = getSlugDrawable(item.sport!!.slug, context)
                 binding.smallImgSport.setImageDrawable(res)
                 binding.sportName.text = item.sport.name
                 binding.type.text = context.getString(R.string.player)
                 binding.root.setOnClickListener {
-                    listenerPlayer.onPlayerClicked(item.toPlayer())
+                    listenerPlayer.onPlayerClicked(item)
                 }
             }
 
-            is SearchTeam -> {
+            is Team2 -> {
                 binding.name.text = item.name
                 binding.img.loadTeamImg(item.id.toString())
                 binding.smallImg.load(FlagHelper.getFlagBitmap(context, item.country.name))
                 binding.smallName.text = item.country.name
-                binding.smallImgSport.setImageDrawable(getSlugDrawable(item.sport.slug, context))
+                binding.smallImgSport.setImageDrawable(getSlugDrawable(item.sport!!.slug, context))
                 binding.sportName.text = item.sport.name
                 binding.type.text = context.getString(R.string.team)
                 binding.root.setOnClickListener {
-                    listenerTeam.onTeamClicked(item.toTeam2())
+                    listenerTeam.onTeamClicked(item)
                 }
             }
         }

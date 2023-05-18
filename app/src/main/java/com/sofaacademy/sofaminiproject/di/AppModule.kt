@@ -1,7 +1,11 @@
 package com.sofaacademy.sofaminiproject.di
 
 import android.content.Context
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.google.gson.GsonBuilder
+import com.sofaacademy.sofaminiproject.db.SofaDB
+import com.sofaacademy.sofaminiproject.db.SofaDao
 import com.sofaacademy.sofaminiproject.networking.SofaMiniApi
 import com.sofaacademy.sofaminiproject.utils.Constants
 import dagger.Module
@@ -13,6 +17,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.Executors
 import javax.inject.Singleton
 
 @Module
@@ -39,4 +44,28 @@ class AppModule {
             .client(httpClient).build()
             .create(SofaMiniApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(@ApplicationContext appContext: Context): SofaDB {
+        return Room.databaseBuilder(
+            appContext,
+            SofaDB::class.java,
+            "SofaDB"
+        ).fallbackToDestructiveMigration()
+            .setQueryCallback(
+                object : RoomDatabase.QueryCallback {
+                    override fun onQuery(sqlQuery: String, bindArgs: List<Any?>) {
+                        println("SQL Query: $sqlQuery SQL Args: $bindArgs")
+                    }
+                },
+                Executors.newSingleThreadExecutor()
+            )
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSofaDAO(sofaDB: SofaDB): SofaDao =
+        sofaDB.sofaDao()
 }

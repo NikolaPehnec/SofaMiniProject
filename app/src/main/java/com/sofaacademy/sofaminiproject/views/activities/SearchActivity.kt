@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
+import androidx.recyclerview.widget.ConcatAdapter
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.ActivitySearchBinding
 import com.sofaacademy.sofaminiproject.model.Player
@@ -21,6 +22,7 @@ import com.sofaacademy.sofaminiproject.utils.listeners.OnPlayerClicked
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTeamClicked
 import com.sofaacademy.sofaminiproject.viewmodel.SearchViewModel
 import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.SearchArrayAdapter
+import com.sofaacademy.sofaminiproject.views.adapters.headerAdapters.SquadHeaderAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,6 +31,8 @@ class SearchActivity : AppCompatActivity(), OnTeamClicked, OnPlayerClicked {
     private lateinit var binding: ActivitySearchBinding
     private val searchViewModel: SearchViewModel by viewModels()
     private lateinit var searchAdapter: SearchArrayAdapter
+    private lateinit var searchAdapterDB: SearchArrayAdapter
+    private lateinit var searchedHeaderAdapter: SquadHeaderAdapter
 
     companion object {
         fun start(context: Context) {
@@ -45,15 +49,27 @@ class SearchActivity : AppCompatActivity(), OnTeamClicked, OnPlayerClicked {
         setContentView(binding.root)
 
         searchAdapter = SearchArrayAdapter(mutableListOf(), this, this, this)
+        searchAdapterDB = SearchArrayAdapter(mutableListOf(), this, this, this)
+        searchedHeaderAdapter = SquadHeaderAdapter(getString(R.string.recent_searches))
         binding.searchRv.adapter = searchAdapter
+        binding.searchedDBRv.adapter = ConcatAdapter(searchedHeaderAdapter, searchAdapterDB)
         setListeners()
 
+        searchViewModel.getAllSearchedItems()
         binding.autoCompleteTv.requestFocus()
     }
 
     private fun setListeners() {
         searchViewModel.searchTeamPlayers.observe(this) {
             searchAdapter.setItems(it)
+            binding.searchedDBRv.visibility = View.GONE
+            binding.searchRv.visibility = View.VISIBLE
+        }
+
+        searchViewModel.searchedTeamsPlayersDB.observe(this) {
+            searchAdapterDB.setItems(it)
+            binding.searchedDBRv.visibility = View.VISIBLE
+            binding.searchRv.visibility = View.GONE
         }
 
         binding.autoCompleteTv.apply {
@@ -87,6 +103,8 @@ class SearchActivity : AppCompatActivity(), OnTeamClicked, OnPlayerClicked {
 
                 if (it.toString().length >= SEARCH_TRESHOLD) {
                     searchViewModel.searchTeamsPlayers(it.toString())
+                } else {
+                    searchViewModel.getAllSearchedItems()
                 }
             }
 
@@ -135,10 +153,12 @@ class SearchActivity : AppCompatActivity(), OnTeamClicked, OnPlayerClicked {
     }
 
     override fun onPlayerClicked(player: Player) {
+        searchViewModel.saveSearchedPlayer(player)
         PlayerDetailsActivity.start(player, null, this)
     }
 
     override fun onTeamClicked(team: Team2) {
+        searchViewModel.saveSearchedTeam(team)
         TeamDetailsActivity.start(team, this)
     }
 }
