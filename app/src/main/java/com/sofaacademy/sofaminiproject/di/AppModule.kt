@@ -1,6 +1,7 @@
 package com.sofaacademy.sofaminiproject.di
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.google.gson.GsonBuilder
@@ -56,7 +57,7 @@ class AppModule {
             .setQueryCallback(
                 object : RoomDatabase.QueryCallback {
                     override fun onQuery(sqlQuery: String, bindArgs: List<Any?>) {
-                        println("SQL Query: $sqlQuery SQL Args: $bindArgs")
+                        Log.v("SQL", "$sqlQuery SQL Args: $bindArgs")
                     }
                 },
                 Executors.newSingleThreadExecutor()

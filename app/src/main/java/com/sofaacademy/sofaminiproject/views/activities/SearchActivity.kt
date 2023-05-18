@@ -12,21 +12,25 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
 import com.sofaacademy.sofaminiproject.R
 import com.sofaacademy.sofaminiproject.databinding.ActivitySearchBinding
 import com.sofaacademy.sofaminiproject.model.Player
 import com.sofaacademy.sofaminiproject.model.Team2
+import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.Constants.SEARCH_TRESHOLD
 import com.sofaacademy.sofaminiproject.utils.listeners.OnPlayerClicked
+import com.sofaacademy.sofaminiproject.utils.listeners.OnSearchDelete
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTeamClicked
 import com.sofaacademy.sofaminiproject.viewmodel.SearchViewModel
 import com.sofaacademy.sofaminiproject.views.adapters.arrayAdapters.SearchArrayAdapter
 import com.sofaacademy.sofaminiproject.views.adapters.headerAdapters.SquadHeaderAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchActivity : AppCompatActivity(), OnTeamClicked, OnPlayerClicked {
+class SearchActivity : AppCompatActivity(), OnTeamClicked, OnPlayerClicked, OnSearchDelete {
 
     private lateinit var binding: ActivitySearchBinding
     private val searchViewModel: SearchViewModel by viewModels()
@@ -48,8 +52,8 @@ class SearchActivity : AppCompatActivity(), OnTeamClicked, OnPlayerClicked {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setContentView(binding.root)
 
-        searchAdapter = SearchArrayAdapter(mutableListOf(), this, this, this)
-        searchAdapterDB = SearchArrayAdapter(mutableListOf(), this, this, this)
+        searchAdapter = SearchArrayAdapter(mutableListOf(), this, this, this, false, this)
+        searchAdapterDB = SearchArrayAdapter(mutableListOf(), this, this, this, true, this)
         searchedHeaderAdapter = SquadHeaderAdapter(getString(R.string.recent_searches))
         binding.searchRv.adapter = searchAdapter
         binding.searchedDBRv.adapter = ConcatAdapter(searchedHeaderAdapter, searchAdapterDB)
@@ -160,5 +164,17 @@ class SearchActivity : AppCompatActivity(), OnTeamClicked, OnPlayerClicked {
     override fun onTeamClicked(team: Team2) {
         searchViewModel.saveSearchedTeam(team)
         TeamDetailsActivity.start(team, this)
+    }
+
+    override fun onPlayerDeleteClicked(player: Player) {
+        searchViewModel.removeItemFromSearches(player.id, Constants.TYPE_PLAYER.toString())
+        searchAdapterDB.deleteItem(player.id, Constants.TYPE_PLAYER)
+    }
+
+    override fun onTeamDeleteClicked(team: Team2) {
+        lifecycleScope.launch {
+            searchViewModel.removeItemFromSearches(team.id, Constants.TYPE_TEAM.toString())
+            searchAdapterDB.deleteItem(team.id, Constants.TYPE_TEAM)
+        }
     }
 }

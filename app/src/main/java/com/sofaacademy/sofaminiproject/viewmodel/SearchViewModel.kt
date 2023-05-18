@@ -40,31 +40,27 @@ class SearchViewModel @Inject constructor(
 
     fun getAllSearchedItems() {
         viewModelScope.launch {
-            val a = sofaDao.getAllSearchedTeams()
-            val b = sofaDao.getAllSearchedPlayers()
-            _searchedTeamsPlayersDB.postValue(a + b)
+            _searchedTeamsPlayersDB.postValue(sofaDao.getAllSearchedTeams() + sofaDao.getAllSearchedPlayers())
         }
     }
 
     fun saveSearchedPlayer(player: Player) {
         viewModelScope.launch {
-            try {
-                sofaDao.saveSearchedPlayer(player)
-                sofaDao.saveSearched(Searched(player.id, TYPE_PLAYER))
-            } catch (e: Exception) {
-                println()
-            }
+            sofaDao.saveSearchedPlayer(player)
+            sofaDao.saveSearched(Searched(player.id, TYPE_PLAYER))
         }
     }
 
     fun saveSearchedTeam(team: Team2) {
         viewModelScope.launch {
-            try {
-                sofaDao.saveSearchedTeam(team)
-                sofaDao.saveSearched(Searched(team.id, TYPE_TEAM))
-            } catch (e: Exception) {
-                println()
-            }
+            sofaDao.saveSearchedTeam(team)
+            sofaDao.saveSearched(Searched(team.id, TYPE_TEAM))
+        }
+    }
+
+    fun removeItemFromSearches(itemId: Int, itemType: String) {
+        viewModelScope.launch {
+            sofaDao.deleteFromSearched(itemId, itemType)
         }
     }
 }

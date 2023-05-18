@@ -25,4 +25,7 @@ interface SofaDao {
 
     @Query("SELECT T.* FROM searched S INNER JOIN team T ON S.searched_id=T.id WHERE S.item_type=$TYPE_TEAM")
     suspend fun getAllSearchedTeams(): List<Team2>
+
+    @Query("DELETE FROM searched  WHERE searched_id=:id AND item_type=:itemType")
+    suspend fun deleteFromSearched(id: Int, itemType: String)
 }
