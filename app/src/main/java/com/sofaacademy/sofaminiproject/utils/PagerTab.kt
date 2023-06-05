@@ -32,7 +32,7 @@ import com.google.accompanist.pager.PagerState
 fun Modifier.pagerTabIndicatorOffset(
     pagerState: PagerState,
     tabPositions: List<androidx.compose.material3.TabPosition>,
-    pageIndexMapping: (Int) -> Int = { it },
+    pageIndexMapping: (Int) -> Int = { it }
 ): Modifier = layout { measurable, constraints ->
     if (tabPositions.isEmpty()) {
         // If there are no pages, nothing to show

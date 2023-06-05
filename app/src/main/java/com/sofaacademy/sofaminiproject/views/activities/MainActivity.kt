@@ -99,7 +99,8 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.leagues -> {
-                LeaguesActivity.start(binding.tabLayout.selectedTabPosition, this)
+                // LeaguesActivity.start(binding.tabLayout.selectedTabPosition, this)
+                LeaguesActivityCompose.start(binding.tabLayout.selectedTabPosition, this)
                 true
             }
 
