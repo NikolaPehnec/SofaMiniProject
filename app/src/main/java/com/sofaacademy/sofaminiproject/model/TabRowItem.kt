@@ -7,5 +7,5 @@ data class TabRowItem(
     val title: String,
     @DrawableRes
     val iconRes: Int,
-    val screen: @Composable () -> Unit,
+    val screen: @Composable () -> Unit
 )
