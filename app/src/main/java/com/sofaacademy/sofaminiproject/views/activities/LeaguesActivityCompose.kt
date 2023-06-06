@@ -1,5 +1,6 @@
 package com.sofaacademy.sofaminiproject.views.activities
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -15,7 +17,6 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -63,14 +64,12 @@ class LeaguesActivityCompose : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            SofaMiniProjectTheme(darkTheme = false) {
+            SofaMiniProjectTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     Scaffold(topBar = {
-                        Column {
-                            MyTopAppBar()
-                        }
+                        MyTopAppBar()
                     }) { it ->
                         Column(modifier = Modifier.padding(it)) {
                             TabLayout()
@@ -95,7 +94,11 @@ fun MyTopAppBar() {
             )
         },
         navigationIcon = {
-            IconButton(onClick = { }) {
+            val activity = LocalContext.current as? Activity
+
+            IconButton(onClick = {
+                activity?.finish()
+            }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = "Go back",
@@ -112,21 +115,22 @@ fun MyTopAppBar() {
 @OptIn(ExperimentalPagerApi::class)
 @Preview
 @Composable
-fun TabLayout() {
+fun TabLayout(tournamentsViewModel: TournamentsViewModel = viewModel()) {
     val tabRowItems = listOf(
         TabRowItem(
             title = stringResource(id = R.string.title_football),
-            screen = { LeagueScreen(slug = Constants.SLUG_FOOTBALL) },
+            slug = Constants.SLUG_FOOTBALL,
             iconRes = R.drawable.icon_football
         ),
         TabRowItem(
             title = stringResource(id = R.string.title_basketball),
-            screen = { LeagueScreen(slug = Constants.SLUG_BASKETBALL) },
+            slug = Constants.SLUG_BASKETBALL,
             iconRes = R.drawable.icon_basketball
+
         ),
         TabRowItem(
             title = stringResource(id = R.string.title_american_football),
-            screen = { LeagueScreen(slug = Constants.SLUG_AMERICAN_FOOTBALL) },
+            slug = Constants.SLUG_AMERICAN_FOOTBALL,
             iconRes = R.drawable.icon_american_football
         )
     )
@@ -174,64 +178,61 @@ fun TabLayout() {
                 })
         }
     }
+
     HorizontalPager(
         count = tabRowItems.size,
         state = pagerState
     ) {
-        tabRowItems[pagerState.currentPage].screen()
-    }
-}
-
-@Composable
-fun LeagueScreen(
-    slug: String,
-    tournamentsViewModel: TournamentsViewModel = viewModel()
-) {
-    val leagues = tournamentsViewModel.tournamentsList.observeAsState(emptyList())
-    tournamentsViewModel.getTournaments(slug)
-
-    if (leagues.value.isEmpty()) {
-        LeagueEmptyScreen()
-    } else {
-        LeagueItemsScreen(leagues.value)
+        val item = tabRowItems[it]
+        val tournamentsState by tournamentsViewModel.getTournamentsForSlug(item.slug)
+            .observeAsState(initial = emptyList())
+        if (tournamentsState.isEmpty()) {
+            LeagueEmptyScreen()
+        } else {
+            TournamentItemsScreen(tournamentsState)
+        }
     }
 }
 
 @Composable
 fun LeagueEmptyScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = "No items"
-        )
-    }
+    Box(modifier = Modifier.fillMaxSize())
 }
 
 @Composable
-fun LeagueItemsScreen(tournaments: List<Tournament>) {
+fun TournamentItemsScreen(
+    tournaments: List<Tournament>
+) {
     Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize()
     ) {
+        val context = LocalContext.current
         LazyColumn {
             items(tournaments) { tournament ->
-                TournamentItem(tournament)
+                TournamentItem(tournament) { clickedTournament ->
+                    TournamentDetailsActivity.start(clickedTournament, context)
+                }
             }
         }
     }
 }
 
 @Composable
-fun TournamentItem(tournament: Tournament) {
+fun TournamentItem(
+    tournament: Tournament,
+    onClick: (tournament: Tournament) -> Unit
+) {
     Row(
         modifier = Modifier
-            .padding(8.dp)
+            .clickable {
+                onClick(tournament)
+            }
             .fillMaxWidth()
+            .padding(8.dp)
     ) {
         Image(
             modifier = Modifier
+                .padding(start = 16.dp)
                 .height(40.dp)
                 .width(40.dp),
             painter = rememberAsyncImagePainter(
@@ -246,34 +247,12 @@ fun TournamentItem(tournament: Tournament) {
             modifier = Modifier
                 .align(CenterVertically)
                 .padding(horizontal = 16.dp),
+            style = MaterialTheme.typography.headlineMedium,
             text = tournament.name,
             color = Color.Black
         )
     }
 }
 
-@Preview
-@Composable
-fun TournamentItemPreview() {
-    Row(
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth()
-    ) {
-        Image(
-            modifier = Modifier
-                .height(40.dp)
-                .width(40.dp),
-            painter = painterResource(id = R.drawable.icon_football),
-            contentDescription = stringResource(id = R.string.tournaments)
-        )
-
-        Text(
-            modifier = Modifier
-                .align(CenterVertically)
-                .padding(horizontal = 16.dp),
-            text = "Tournament",
-            color = Color.Black
-        )
-    }
-}
+fun onTournamentClicked(tournament: Tournament, context: Context) =
+    TournamentDetailsActivity.start(tournament, context)

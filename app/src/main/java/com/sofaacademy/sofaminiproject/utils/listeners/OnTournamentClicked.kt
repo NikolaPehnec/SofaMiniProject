@@ -3,5 +3,5 @@ package com.sofaacademy.sofaminiproject.utils.listeners
 import com.sofaacademy.sofaminiproject.model.Tournament
 
 interface OnTournamentClicked {
-    fun onTournamentClicked(tournamet: Tournament)
+    fun onTournamentClicked(tournament: Tournament)
 }
