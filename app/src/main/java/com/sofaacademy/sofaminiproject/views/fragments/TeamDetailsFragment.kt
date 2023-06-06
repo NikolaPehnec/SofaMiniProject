@@ -1,5 +1,7 @@
 package com.sofaacademy.sofaminiproject.views.fragments
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,7 @@ import com.sofaacademy.sofaminiproject.model.Player
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.model.Tournament
+import com.sofaacademy.sofaminiproject.utils.Constants.ANIM_DURATION
 import com.sofaacademy.sofaminiproject.utils.Constants.TEAM_ID_ARG
 import com.sofaacademy.sofaminiproject.utils.UtilityFunctions.getForeignPlayersPercentIndicator
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.getTeam
@@ -37,12 +40,11 @@ class TeamDetailsFragment : Fragment(), OnTournamentClicked {
 
     companion object {
         @JvmStatic
-        fun newInstance(team: Team2) =
-            TeamDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(TEAM_ID_ARG, team)
-                }
+        fun newInstance(team: Team2) = TeamDetailsFragment().apply {
+            arguments = Bundle().apply {
+                putSerializable(TEAM_ID_ARG, team)
             }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,8 +60,7 @@ class TeamDetailsFragment : Fragment(), OnTournamentClicked {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTeamDetailBinding.inflate(inflater, container, false)
-        teamTournamentsArrayAdapter =
-            TeamTournamentsArrayAdapter(mutableListOf(), this)
+        teamTournamentsArrayAdapter = TeamTournamentsArrayAdapter(mutableListOf(), this)
         binding.tournamentsRv.adapter = teamTournamentsArrayAdapter
         binding.tournamentsRv.layoutManager = GridLayoutManager(requireContext(), 3)
 
@@ -115,10 +116,29 @@ class TeamDetailsFragment : Fragment(), OnTournamentClicked {
         val totalPlayersNum = players.size
         val foreignPlayersNum = players.filter { p -> p.country?.name == team!!.country.name }.size
 
-        binding.totalPlayers.playerNumber.text = totalPlayersNum.toString()
-        binding.foreignPlayers.foreignPlayersNumber.text = foreignPlayersNum.toString()
-        binding.foreignPlayers.teamForeignPercentIndicator.progress =
+        val progressAnimator = ObjectAnimator.ofInt(
+            binding.foreignPlayers.teamForeignPercentIndicator,
+            "progress",
             getForeignPlayersPercentIndicator(totalPlayersNum, foreignPlayersNum)
+        )
+        val foreignPlayersAnimator = ValueAnimator.ofInt(0, foreignPlayersNum)
+        val totalPlayersAnimator = ValueAnimator.ofInt(0, totalPlayersNum)
+        foreignPlayersAnimator.duration = ANIM_DURATION
+        totalPlayersAnimator.duration = ANIM_DURATION
+        progressAnimator.duration = ANIM_DURATION
+
+        foreignPlayersAnimator.addUpdateListener { animation ->
+            val value = animation.animatedValue as Int
+            binding.foreignPlayers.foreignPlayersNumber.text = value.toString()
+        }
+        totalPlayersAnimator.addUpdateListener { animation ->
+            val value = animation.animatedValue as Int
+            binding.totalPlayers.playerNumber.text = value.toString()
+        }
+
+        totalPlayersAnimator.start()
+        progressAnimator.start()
+        foreignPlayersAnimator.start()
     }
 
     private fun fillNextEventInfo(event: SportEvent) {
@@ -127,7 +147,7 @@ class TeamDetailsFragment : Fragment(), OnTournamentClicked {
         binding.nextMatchEvent.setMatchDateTime(event)
     }
 
-    override fun onTournamentClicked(tournamet: Tournament) {
-        TournamentDetailsActivity.start(tournamet, requireContext())
+    override fun onTournamentClicked(tournament: Tournament) {
+        TournamentDetailsActivity.start(tournament, requireContext())
     }
 }

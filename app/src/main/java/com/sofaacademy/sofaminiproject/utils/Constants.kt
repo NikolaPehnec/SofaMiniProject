@@ -37,4 +37,5 @@ object Constants {
     const val DATE_MM_DD = "MM.dd.yyyy."
 
     const val SEARCH_TRESHOLD = 2
+    const val ANIM_DURATION = 1000L
 }

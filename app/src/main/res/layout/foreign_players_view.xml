@@ -11,7 +11,7 @@
         android:id="@+id/team_foreign_percent_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:progress="35"
+        android:progress="0"
         android:src="@drawable/ic_team"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
