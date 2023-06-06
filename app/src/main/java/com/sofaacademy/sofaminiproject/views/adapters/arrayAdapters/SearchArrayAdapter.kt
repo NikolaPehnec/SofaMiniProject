@@ -11,7 +11,7 @@ import com.sofaacademy.sofaminiproject.model.Player
 import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.utils.Constants.TYPE_PLAYER
 import com.sofaacademy.sofaminiproject.utils.Constants.TYPE_TEAM
-import com.sofaacademy.sofaminiproject.utils.TeamPlayerDiffUtilCallback
+import com.sofaacademy.sofaminiproject.utils.diffUtilCallbacks.TeamPlayerDiffUtilCallback
 import com.sofaacademy.sofaminiproject.utils.listeners.OnPlayerClicked
 import com.sofaacademy.sofaminiproject.utils.listeners.OnSearchDelete
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTeamClicked

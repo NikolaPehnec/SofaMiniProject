@@ -10,7 +10,7 @@ import com.sofaacademy.sofaminiproject.databinding.TournamentRowBinding
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.utils.Constants
-import com.sofaacademy.sofaminiproject.utils.EventComparator
+import com.sofaacademy.sofaminiproject.utils.diffUtilCallbacks.EventComparator
 import com.sofaacademy.sofaminiproject.utils.listeners.OnEventClicked
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
 import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.TournamentRoundHeaderViewHolder

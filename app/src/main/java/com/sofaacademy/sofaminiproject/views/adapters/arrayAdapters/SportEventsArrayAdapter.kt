@@ -10,7 +10,7 @@ import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.utils.Constants.TYPE_SPORT_EVENT
 import com.sofaacademy.sofaminiproject.utils.Constants.TYPE_TOURNAMENT
-import com.sofaacademy.sofaminiproject.utils.EventDiffUtilCallback
+import com.sofaacademy.sofaminiproject.utils.diffUtilCallbacks.EventDiffUtilCallback
 import com.sofaacademy.sofaminiproject.utils.listeners.OnEventClicked
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTournamentClicked
 import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderEvent

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sofaacademy.sofaminiproject.databinding.TournamentStandingsRowBinding
 import com.sofaacademy.sofaminiproject.model.StandingsRow
-import com.sofaacademy.sofaminiproject.utils.StandingsDiffUtilCallback
+import com.sofaacademy.sofaminiproject.utils.diffUtilCallbacks.StandingsDiffUtilCallback
 import com.sofaacademy.sofaminiproject.utils.listeners.OnTeamClicked
 import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderStandings
 

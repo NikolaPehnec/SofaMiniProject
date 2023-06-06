@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sofaacademy.sofaminiproject.databinding.TournamentTeamPlayerRowBinding
 import com.sofaacademy.sofaminiproject.model.Player
-import com.sofaacademy.sofaminiproject.utils.PlayersDiffUtilCallback
+import com.sofaacademy.sofaminiproject.utils.diffUtilCallbacks.PlayersDiffUtilCallback
 import com.sofaacademy.sofaminiproject.utils.listeners.OnPlayerClicked
 import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderPlayers
 

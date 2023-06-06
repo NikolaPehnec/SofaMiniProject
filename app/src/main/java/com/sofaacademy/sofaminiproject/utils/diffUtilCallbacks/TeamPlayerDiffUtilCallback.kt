@@ -1,4 +1,4 @@
-package com.sofaacademy.sofaminiproject.utils
+package com.sofaacademy.sofaminiproject.utils.diffUtilCallbacks
 
 import androidx.recyclerview.widget.DiffUtil
 import com.sofaacademy.sofaminiproject.model.Player

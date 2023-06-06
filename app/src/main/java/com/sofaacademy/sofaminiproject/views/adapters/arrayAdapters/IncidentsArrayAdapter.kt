@@ -10,7 +10,7 @@ import com.sofaacademy.sofaminiproject.databinding.PeriodRowBinding
 import com.sofaacademy.sofaminiproject.model.Incident
 import com.sofaacademy.sofaminiproject.model.IncidentEnum
 import com.sofaacademy.sofaminiproject.model.SportEvent
-import com.sofaacademy.sofaminiproject.utils.EventDiffUtilCallback
+import com.sofaacademy.sofaminiproject.utils.diffUtilCallbacks.EventDiffUtilCallback
 import com.sofaacademy.sofaminiproject.utils.listeners.OnIncidentClicked
 import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderCardIncident
 import com.sofaacademy.sofaminiproject.views.adapters.viewHolders.ViewHolderGoalIncident
