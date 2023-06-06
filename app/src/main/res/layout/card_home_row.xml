@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/surface_surface_1"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/ic_card"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:textAlignment="center"
+        android:textColor="@color/on_surface_on_surface_lv_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_card_yellow" />
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="1dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:background="@color/on_surface_on_surface_lv_4"
+        app:layout_constraintStart_toEndOf="@+id/minute"
+        app:layout_constraintTop_toTopOf="@+id/ic_card" />
+
+    <TextView
+        android:id="@+id/minute"
+        style="@style/Micro"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:textColor="@color/on_surface_on_surface_lv_2"
+        app:layout_constraintEnd_toEndOf="@+id/ic_card"
+        app:layout_constraintStart_toStartOf="@+id/ic_card"
+        app:layout_constraintTop_toBottomOf="@+id/ic_card"
+        tools:text="8'" />
+
+    <TextView
+        android:id="@+id/player_name"
+        style="@style/Body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:textColor="@color/on_surface_on_surface_lv_1"
+        app:layout_constraintBottom_toTopOf="@+id/argument"
+        app:layout_constraintStart_toEndOf="@+id/separator"
+        app:layout_constraintTop_toTopOf="@id/separator"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Cristiano Ronaldo" />
+
+    <TextView
+        android:id="@+id/argument"
+        style="@style/Micro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Foul"
+        android:textAlignment="textEnd"
+        android:textColor="@color/on_surface_on_surface_lv_2"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/separator"
+        app:layout_constraintStart_toStartOf="@+id/player_name"
+        app:layout_constraintTop_toBottomOf="@+id/player_name"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

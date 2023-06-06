@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/surface_surface_0"
     tools:context=".views.fragments.SportFragment">
 
@@ -36,9 +37,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/events_rv"
+        android:background="@color/surface_surface_0"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/surface_surface_1"
+        android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"

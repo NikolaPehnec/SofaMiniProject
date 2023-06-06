@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="ic_launcher_background">#374DF5</color>
+
     <color name="color_primary_variant">#1327ba</color>
     <color name="color_secondary_variant">#dddbc9</color>
     <color name="color_primary_default">#374df5</color>
@@ -19,4 +21,5 @@
     <color name="status_alert">#d8b127</color>
     <color name="status_success">#1da86d</color>
     <color name="specific_live">#e93030</color>
+
 </resources>

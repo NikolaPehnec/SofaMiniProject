@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/surface_surface_1"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginVertical="8dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/oval_bg_white"
+        android:clipToOutline="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/croatia" />
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/Body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:gravity="center"
+        android:textColor="@color/on_surface_on_surface_lv_1"
+        app:layout_constraintStart_toEndOf="@+id/img"
+        app:layout_constraintTop_toTopOf="@+id/img"
+        tools:text="Luka Modric" />
+
+    <ImageView
+        android:id="@+id/small_img"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/img"
+        app:layout_constraintStart_toStartOf="@+id/name"
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        tools:src="@drawable/croatia" />
+
+    <TextView
+        android:id="@+id/small_name"
+        style="@style/Assistive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:gravity="center"
+        android:textColor="@color/on_surface_on_surface_lv_2"
+        app:layout_constraintBottom_toBottomOf="@+id/small_img"
+        app:layout_constraintStart_toEndOf="@+id/small_img"
+        app:layout_constraintTop_toTopOf="@+id/small_img"
+        tools:text="Croatia" />
+
+    <ImageView
+        android:id="@+id/small_img_sport"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/img"
+        app:layout_constraintStart_toEndOf="@id/small_name"
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        app:tint="@color/color_primary_default"
+        tools:src="@drawable/icon_football" />
+
+    <TextView
+        android:id="@+id/sport_name"
+        style="@style/Assistive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:gravity="center"
+        android:textColor="@color/on_surface_on_surface_lv_2"
+        app:layout_constraintBottom_toBottomOf="@+id/small_name"
+        app:layout_constraintStart_toEndOf="@+id/small_img_sport"
+        app:layout_constraintTop_toTopOf="@+id/small_name"
+        tools:text="Football" />
+
+    <TextView
+        android:id="@+id/type"
+        style="@style/Assistive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:gravity="center"
+        android:textColor="@color/color_primary_default"
+        app:layout_constraintBottom_toBottomOf="@+id/small_name"
+        app:layout_constraintStart_toEndOf="@+id/sport_name"
+        app:layout_constraintTop_toTopOf="@+id/small_name"
+        tools:text="Player" />
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/delete_item"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:padding="8dp"
+        android:scaleType="centerCrop"
+        android:clickable="true"
+        app:tint="@color/on_surface_on_surface_lv_2"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_marginEnd="12dp"
+        android:src="@drawable/ic_baseline_close_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

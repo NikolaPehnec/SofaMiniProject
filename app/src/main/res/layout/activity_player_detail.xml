@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".views.activities.MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbarlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface_surface_1">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleTextColor="@color/surface_surface_1"
+            android:fitsSystemWindows="true"
+            app:titleEnabled="false"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:background="@color/color_primary_default">
+
+                <ImageView
+                    android:id="@+id/player_logo"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/rounded_bg"
+                    android:backgroundTint="@color/surface_surface_1"
+                    android:clipToOutline="true"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/player_name"
+                    style="@style/Headline1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textColor="@color/surface_surface_1"
+                    app:layout_constraintBottom_toBottomOf="@+id/player_logo"
+                    app:layout_constraintStart_toEndOf="@id/player_logo"
+                    app:layout_constraintTop_toTopOf="@+id/player_logo"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:text="Zagreb" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/activity_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/color_primary_default"
+                android:elevation="0dp"
+                android:theme="@style/ToolbarTheme"
+                app:layout_collapseMode="pin"
+                app:titleTextColor="@color/surface_surface_1" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include
+        android:id="@+id/player_content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/activity_player_content"
+        android:background="@color/surface_surface_0"
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+    </include>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

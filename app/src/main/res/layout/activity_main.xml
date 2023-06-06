@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:logo="@drawable/sofascore_lockup"
-        app:titleTextColor="@color/on_color_on_color_primary" />
+        app:titleTextColor="@color/surface_surface_1" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"

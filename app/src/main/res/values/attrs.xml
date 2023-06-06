@@ -18,9 +18,35 @@
         <attr name="teamAway" format="string" />
         <attr name="resultHome" format="string" />
         <attr name="resultAway" format="string" />
-
         <attr name="teamHomeImgRes" format="reference|color" />
         <attr name="teamAwayImgRes" format="reference|color" />
+    </declare-styleable>
+
+    <declare-styleable name="EventDetail">
+        <attr name="eventTime" format="string" />
+        <attr name="eventDate" format="string" />
+        <attr name="teamHomeName" format="string" />
+        <attr name="teamAwayName" format="string" />
+        <attr name="teamHomeImg" format="reference|color" />
+        <attr name="teamAwayImg" format="reference|color" />
+    </declare-styleable>
+
+    <declare-styleable name="GoalView">
+        <attr name="minute" format="string" />
+        <attr name="player_name" format="string" />
+        <attr name="score_home" format="string" />
+        <attr name="score_away" format="string" />
+        <attr name="argument" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="TextLayoutAndDropdownMenu">
+        <attr name="hint" format="string" />
+        <attr name="inputType" format="integer">
+            <enum name="text" value="0x00000001" />
+            <enum name="textCapWords" value="0x00002001" />
+            <enum name="number" value="0x00000002" />
+            <enum name="numberDecimal" value="0x00002002" />
+        </attr>
     </declare-styleable>
 
 </resources>

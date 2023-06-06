@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_american_football">Am. Nogomet</string>
+    <string name="title_football">Nogomet</string>
+    <string name="title_basketball">Košarka</string>
+    <string name="no_data">Nema utakmica na taj dan</string>
+    <string name="events_num">%1$s Evenata</string>
+    <string name="event_details">%1$s, %2$s, %3$s, Runda %4$s</string>
+    <string name="today">DANAS</string>
+    <string name="leagues_title">Lige</string>
+    <string name="no_results_yet">Nema podataka.</string>
+    <string name="view_tournament_details">Prikaži detalje turnira</string>
+    <string name="team_info">Informacije o timu</string>
+    <string name="tournaments">Turniri</string>
+    <string name="venue">Mjesto odrzavanja</string>
+    <string name="next_match">Sljedeca utakmica</string>
+    <string name="stadium">Stadion</string>
+    <string name="coach">Trener:</string>
+    <string name="total_players">Svi igrači</string>
+    <string name="foreign_players">Strani igrači</string>
+    <string name="events">Evenata</string>
+    <string name="team">Tim</string>
+    <string name="coach_header">Trener</string>
+    <string name="players_header">Igrači</string>
+    <string name="matches_header">Utakmice</string>
+    <string name="nationality">Nacionalnost</string>
+    <string name="position">Pozicija</string>
+    <string name="midfield">Sredina</string>
+    <string name="defence">Obrana</string>
+    <string name="goalkeeper">Golman</string>
+    <string name="forward">Napad</string>
+    <string name="language">Jezik</string>
+    <string name="theme">Tema</string>
+    <string name="date_format">Format datuma</string>
+    <string name="light">Svijetla</string>
+    <string name="dark">Tamna</string>
+    <string name="about">Informacije</string>
+    <string name="academy">Sofascore Android akademija</string>
+    <string name="class_year">Klasa 2023</string>
+    <string name="app_name_title">Ime aplikacije</string>
+    <string name="api_credit_title">API zasluge</string>
+    <string name="settings_title">Postavke</string>
+
+    <string name="search_hint">Igrači ili timovi</string>
+    <string name="search">Pretraži</string>
+    <string name="favorites">Favoriti</string>
+    <string name="recent_searches">Nedavne pretrage</string>
+
+    <string name="player">Igrač</string>
+
+    <string-array name="tabs">
+        <item>Nogomet</item>
+        <item>Košarka</item>
+        <item>Am.Nogomet</item>
+    </string-array>
+
+    <string-array name="tabs_detail_page">
+        <item>Detalji</item>
+        <item>Utakmice</item>
+        <item>Tablica</item>
+        <item>Momčad</item>
+    </string-array>
+
+    <string-array name="tabs_tournament_detail_page">
+        <item>Utakmice</item>
+        <item>Tablica</item>
+    </string-array>
+
+    <string-array name="languages">
+        <item>Engleski</item>
+        <item>Hrvatski</item>
+    </string-array>
+</resources>

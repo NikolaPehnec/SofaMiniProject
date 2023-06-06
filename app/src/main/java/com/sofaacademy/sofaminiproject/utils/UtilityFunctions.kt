@@ -1,25 +1,57 @@
 package com.sofaacademy.sofaminiproject.utils
 
 import android.content.Context
+import android.widget.ImageView
 import androidx.appcompat.content.res.AppCompatResources
+import coil.load
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sofaacademy.sofaminiproject.R
-import com.sofaacademy.sofaminiproject.model.MatchStatus
 import com.sofaacademy.sofaminiproject.utils.Constants.MAX_DAYS
 import com.sofaacademy.sofaminiproject.utils.Constants.MIN_DAYS
+import com.sofaacademy.sofaminiproject.utils.helpers.FlagHelper
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*
+import kotlin.math.roundToInt
 
 object UtilityFunctions {
     private val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
     private val hourFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-    val tabDateFormat = DateTimeFormatter.ofPattern("EEE dd.MM.", Locale.US)
-    val yearFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-    val dateLongFormat = DateTimeFormatter.ofPattern("EEE, dd.MM.yyyy.", Locale.US)
+
+    fun getTabDateFormat(context: Context, locale: Locale): DateTimeFormatter {
+        return when (getDatePreference(context)) {
+            Constants.DATE_DD_MM -> DateTimeFormatter.ofPattern("EEE dd.MM.", locale)
+            else -> DateTimeFormatter.ofPattern("EEE MM.dd.", locale)
+        }
+    }
+
+    fun getYearFormatAPI(): DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US)
+
+    fun getDateLongFormat(context: Context): DateTimeFormatter {
+        return when (getDatePreference(context)) {
+            Constants.DATE_DD_MM -> DateTimeFormatter.ofPattern("EEE, dd.MM.yyyy.", Locale.US)
+            else -> DateTimeFormatter.ofPattern("EEE, MM.dd.yyyy.", Locale.US)
+        }
+    }
+
+    fun getDetailDateFormat(context: Context): DateTimeFormatter {
+        return when (getDatePreference(context)) {
+            Constants.DATE_DD_MM -> DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.US)
+            else -> DateTimeFormatter.ofPattern("MM.dd.yyyy.", Locale.US)
+        }
+    }
+
+    fun getFormattedDetailDate(date: String, context: Context): String {
+        return try {
+            val localDateTime = LocalDateTime.parse(date, dateTimeFormatter)
+            getDetailDateFormat(context).format(localDateTime)
+        } catch (e: java.lang.Exception) {
+            ""
+        }
+    }
 
     fun getHourFromDate(date: String): String {
         return try {
@@ -27,6 +59,15 @@ object UtilityFunctions {
             hourFormatter.format(localDateTime)
         } catch (e: java.lang.Exception) {
             ""
+        }
+    }
+
+    fun elapsedMinutesBetweenTwoDates(localDate: LocalDateTime, date2: String): Long {
+        return try {
+            val localDate2 = LocalDateTime.parse(date2, dateTimeFormatter)
+            ChronoUnit.MINUTES.between(localDate, localDate2)
+        } catch (e: java.lang.Exception) {
+            0L
         }
     }
 
@@ -39,7 +80,7 @@ object UtilityFunctions {
         }
     }
 
-    fun getTabLayoutConfigStrategy(context: Context): TabLayoutMediator.TabConfigurationStrategy =
+    fun getSportsTabLayoutConfigStrategy(context: Context): TabLayoutMediator.TabConfigurationStrategy =
         TabLayoutMediator.TabConfigurationStrategy { tab, position ->
             val icons = arrayOf(
                 R.drawable.icon_football,
@@ -50,8 +91,21 @@ object UtilityFunctions {
             tab.text = context.resources.getStringArray(R.array.tabs)[position]
         }
 
+    fun getTeamDetailsTabLayoutConfigStrategy(context: Context): TabLayoutMediator.TabConfigurationStrategy =
+        TabLayoutMediator.TabConfigurationStrategy { tab, position ->
+            tab.text = context.resources.getStringArray(R.array.tabs_detail_page)[position]
+        }
+
+    fun getTournamentDetailsTabLayoutConfigStrategy(context: Context): TabLayoutMediator.TabConfigurationStrategy =
+        TabLayoutMediator.TabConfigurationStrategy { tab, position ->
+            tab.text =
+                context.resources.getStringArray(R.array.tabs_tournament_detail_page)[position]
+        }
+
     fun getTabTitlesByDate(context: Context): MutableMap<LocalDate, String> {
         val dateTabs = mutableMapOf<LocalDate, String>()
+        val tabDateFormat =
+            getTabDateFormat(context, context.resources.configuration.locales.get(0))
 
         for (i in MIN_DAYS..MAX_DAYS) {
             val date = LocalDate.now().plusDays(i.toLong())
@@ -70,76 +124,59 @@ object UtilityFunctions {
         return dateTabs
     }
 
-    /**
-     * Za home i away score na docsima pise da su object tipa Score,
-     * ali kad nema podataka onda je prazna lista, primjer:
-     * "homeScore": [], ili
-     * "homeScore": {"total": 4,"period1": 2,"period2": 2}, ne moze biti ni score ni lista scorea
-     */
-    fun getCurrentMatchStatus(status: String, matchStartTime: String): String {
-        return when (status) {
-            MatchStatus.NOT_STARTED.status -> "-"
-            MatchStatus.FINISHED.status -> "FT"
-            MatchStatus.IN_PROGRESS.status -> {
-                elapsedMinutesFromDate(matchStartTime) + "'"
-            }
+    fun getForeignPlayersPercentIndicator(totalPlayers: Int, foreignPlayers: Int): Int =
+        ((foreignPlayers * 1f / totalPlayers) * 100).roundToInt()
 
-            else -> ""
-        }
+    fun ImageView.loadTournamentImg(tournamentId: String) {
+        this.load(
+            "${Constants.BASE_TOURNAMENT_URL}${tournamentId}${Constants.IMG_ENDPOINT}"
+        )
     }
 
-    fun getResultValue(score: Any?): String {
-        return when (score) {
-            is Map<*, *> -> {
-                (score["total"] as? Double)?.toInt().toString()
-            }
-
-            else -> ""
-        }
+    fun ImageView.loadTeamImg(teamId: String) {
+        this.load(
+            "${Constants.BASE_TEAM_URL}${teamId}${Constants.IMG_ENDPOINT}"
+        )
     }
 
-    fun getTeamColorBasedOnTimeAndResult(
-        matchStatus: String,
-        teamResult: String,
-        otherTeamResult: String,
-        context: Context
-    ): Int {
-        return when (matchStatus) {
-            MatchStatus.FINISHED.status -> {
-                if (teamResult.toInt() > otherTeamResult.toInt()) {
-                    context.getColor(R.color.on_surface_on_surface_lv_1)
-                } else {
-                    context.getColor(R.color.on_surface_on_surface_lv_2)
-                }
-            }
-
-            else -> context.getColor(R.color.on_surface_on_surface_lv_1)
-        }
+    fun ImageView.loadPlayerImg(playerId: String) {
+        this.load(
+            "${Constants.BASE_PLAYER_URL}${playerId}${Constants.IMG_ENDPOINT}"
+        )
     }
 
-    fun getCurrentStatusColor(
-        matchStatus: String,
-        context: Context
-    ): Int {
-        return when (matchStatus) {
-            MatchStatus.IN_PROGRESS.status -> context.getColor(R.color.specific_live)
-            else -> context.getColor(R.color.on_surface_on_surface_lv_2)
-        }
+    fun ImageView.loadCountryFlag(countryName: String, context: Context) {
+        this.load(
+            FlagHelper.getFlagBitmap(context, countryName)
+        )
     }
 
-    fun getTeamScoreColorBasedOnTimeAndResult(
-        matchStatus: String,
-        teamResult: String,
-        otherTeamResult: String,
-        context: Context
-    ): Int {
-        return when (matchStatus) {
-            MatchStatus.FINISHED.status -> {
-                getTeamColorBasedOnTimeAndResult(matchStatus, teamResult, otherTeamResult, context)
-            }
+    fun saveThemePreference(theme: String, context: Context) {
+        val sharedPreferences =
+            context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString(Constants.PREF_THEME_KEY, theme)
+        editor.apply()
+    }
 
-            MatchStatus.IN_PROGRESS.status -> context.getColor(R.color.specific_live)
-            else -> context.getColor(R.color.on_surface_on_surface_lv_1)
-        }
+    fun getThemePreferences(context: Context) =
+        context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE).getString(
+            Constants.PREF_THEME_KEY,
+            Constants.LIGHT_THEME
+        )!!
+
+    fun saveDatePreference(date: String, context: Context) {
+        val sharedPreferences =
+            context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString(Constants.PREF_DATE_KEY, date)
+        editor.apply()
+    }
+
+    fun getDatePreference(context: Context): String {
+        return context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE).getString(
+            Constants.PREF_DATE_KEY,
+            Constants.DATE_DD_MM
+        )!!
     }
 }

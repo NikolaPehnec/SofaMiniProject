@@ -3,9 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="@string/leagues"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/leagues"
         android:icon="@drawable/tournament_icon"
         android:title="@string/leagues"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/favorite"
+        android:icon="@drawable/ic_baseline_star_24"
+        android:title="@string/favorite"
         app:showAsAction="always" />
 
     <item

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/surface_surface_1"
     android:paddingVertical="8dp">
 
     <ImageView
@@ -13,7 +14,7 @@
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_pointer_right" />
+        tools:src="@drawable/croatia" />
 
     <TextView
         android:id="@+id/country"

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/surface_surface_1"
+    android:padding="8dp">
+
+    <View
+        android:id="@+id/no_res_container"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@drawable/rounded_bg"
+        android:backgroundTint="@color/surface_surface_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        style="@style/BodyParagraph"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_results_yet"
+        android:textColor="@color/on_surface_on_surface_lv_2"
+        app:layout_constraintBottom_toBottomOf="@+id/no_res_container"
+        app:layout_constraintEnd_toEndOf="@+id/no_res_container"
+        app:layout_constraintStart_toStartOf="@+id/no_res_container"
+        app:layout_constraintTop_toTopOf="@+id/no_res_container" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/viewTournamentDetailsBtn"
+        style="@style/ButtonStyle1"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
+        android:layout_height="52dp"
+        android:text="@string/view_tournament_details"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/no_res_container" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
