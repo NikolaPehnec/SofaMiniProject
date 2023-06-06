@@ -10,6 +10,7 @@
         <item name="colorSecondaryVariant">@color/color_secondary_variant</item>
         <item name="colorOnSecondary">@color/on_color_on_color_secondary</item>
         <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/color_primary_default</item>
     </style>
 
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">

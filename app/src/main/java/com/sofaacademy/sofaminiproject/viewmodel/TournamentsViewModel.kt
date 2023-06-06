@@ -14,7 +14,8 @@ import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.model.TournamentStandings
 import com.sofaacademy.sofaminiproject.networking.SofaMiniRepository
-import com.sofaacademy.sofaminiproject.views.adapters.TournamentEventsPagingSource
+import com.sofaacademy.sofaminiproject.utils.Constants
+import com.sofaacademy.sofaminiproject.views.adapters.SportEventsPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -39,8 +40,7 @@ class TournamentsViewModel @Inject constructor(private val sofaMiniRepository: S
     fun getTournamentsForSlug(slug: String): MutableLiveData<List<Tournament>> {
         val tournamentsLiveData = MutableLiveData<List<Tournament>>()
         viewModelScope.launch {
-            val tournaments = sofaMiniRepository.getTournaments(slug)
-            tournamentsLiveData.value = tournaments
+            tournamentsLiveData.value = sofaMiniRepository.getTournaments(slug)
         }
         return tournamentsLiveData
     }
@@ -63,7 +63,22 @@ class TournamentsViewModel @Inject constructor(private val sofaMiniRepository: S
                 initialLoadSize = 1
             ),
             pagingSourceFactory = {
-                TournamentEventsPagingSource(sofaMiniRepository, tournamentId)
+                SportEventsPagingSource(
+                    fetchNextEvents = { page ->
+                        sofaMiniRepository.getTournamentEvents(
+                            tournamentId,
+                            Constants.NEXT,
+                            page
+                        )
+                    },
+                    fetchLastEvents = { page ->
+                        sofaMiniRepository.getTournamentEvents(
+                            tournamentId,
+                            Constants.LAST,
+                            page
+                        )
+                    }
+                )
             },
             initialKey = 1
         ).flow.map { pagingData: PagingData<Any> ->

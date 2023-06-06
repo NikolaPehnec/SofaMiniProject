@@ -6,6 +6,9 @@ import com.sofaacademy.sofaminiproject.networking.SofaMiniRepository
 import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.helpers.EventHelpers.sortedByDateDesc
 
+/**
+ * Paging source with different next and previous logic so it is not generalized
+ */
 class PlayerEventsPagingSource(
     private val sofaMiniRepository: SofaMiniRepository,
     private val playerId: String

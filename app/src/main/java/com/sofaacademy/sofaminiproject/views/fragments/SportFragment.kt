@@ -77,6 +77,7 @@ class SportFragment : Fragment(), OnTournamentClicked, OnEventClicked {
     fun reloadSportData(date: LocalDate) {
         currentDate = date
         sportEventsHeaderAdapter.setHeaderInfo(currentDate, null)
+        sportEventsArrayAdapter.setItems(emptyList())
         sportEventViewModel.getSportEvents(slug!!, getYearFormatAPI().format(date))
     }
 
@@ -109,7 +110,7 @@ class SportFragment : Fragment(), OnTournamentClicked, OnEventClicked {
         EventDetailsActivity.start(sportEvent, requireContext())
     }
 
-    override fun onTournamentClicked(tournamet: Tournament) {
-        TournamentDetailsActivity.start(tournamet, requireContext())
+    override fun onTournamentClicked(tournament: Tournament) {
+        TournamentDetailsActivity.start(tournament, requireContext())
     }
 }

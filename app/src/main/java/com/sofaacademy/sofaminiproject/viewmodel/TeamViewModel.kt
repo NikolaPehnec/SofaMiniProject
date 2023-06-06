@@ -1,15 +1,24 @@
 package com.sofaacademy.sofaminiproject.viewmodel
 
-import androidx.lifecycle.*
-import androidx.paging.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.insertSeparators
 import com.sofaacademy.sofaminiproject.db.SofaDao
 import com.sofaacademy.sofaminiproject.model.Player
 import com.sofaacademy.sofaminiproject.model.SportEvent
 import com.sofaacademy.sofaminiproject.model.Team2
 import com.sofaacademy.sofaminiproject.model.Tournament
 import com.sofaacademy.sofaminiproject.networking.SofaMiniRepository
+import com.sofaacademy.sofaminiproject.utils.Constants
 import com.sofaacademy.sofaminiproject.utils.Constants.NEXT
-import com.sofaacademy.sofaminiproject.views.adapters.TeamEventsPagingSource
+import com.sofaacademy.sofaminiproject.views.adapters.SportEventsPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.map
@@ -20,8 +29,7 @@ import javax.inject.Inject
 class TeamViewModel @Inject constructor(
     private val sofaMiniRepository: SofaMiniRepository,
     private val sofaDao: SofaDao
-) :
-    ViewModel() {
+) : ViewModel() {
 
     private val _teamDetails = MutableLiveData<Team2>()
     val teamDetails = _teamDetails
@@ -67,7 +75,22 @@ class TeamViewModel @Inject constructor(
                 initialLoadSize = 1
             ),
             pagingSourceFactory = {
-                TeamEventsPagingSource(sofaMiniRepository, teamId)
+                SportEventsPagingSource(
+                    fetchNextEvents = { page ->
+                        sofaMiniRepository.getTeamEvents(
+                            teamId,
+                            NEXT,
+                            page
+                        )
+                    },
+                    fetchLastEvents = { page ->
+                        sofaMiniRepository.getTeamEvents(
+                            teamId,
+                            Constants.LAST,
+                            page
+                        )
+                    }
+                )
             },
             initialKey = 1
         ).flow.map { pagingData: PagingData<Any> ->
