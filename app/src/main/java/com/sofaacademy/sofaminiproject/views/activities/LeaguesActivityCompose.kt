@@ -4,8 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,7 +21,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -48,7 +49,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LeaguesActivityCompose : ComponentActivity() {
+class LeaguesActivityCompose : AppCompatActivity() {
 
     companion object {
         fun start(slugIndex: Int, context: Context) {
@@ -62,15 +63,16 @@ class LeaguesActivityCompose : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val mode = AppCompatDelegate.getDefaultNightMode()
 
         setContent {
-            SofaMiniProjectTheme {
+            SofaMiniProjectTheme(mode == MODE_NIGHT_YES) {
                 Surface(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     Scaffold(topBar = {
                         MyTopAppBar()
-                    }) { it ->
+                    }) {
                         Column(modifier = Modifier.padding(it)) {
                             TabLayout()
                         }
@@ -89,7 +91,7 @@ fun MyTopAppBar() {
         title = {
             Text(
                 text = stringResource(id = R.string.leagues_title),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.surface,
                 fontWeight = FontWeight.Bold
             )
         },
@@ -102,12 +104,12 @@ fun MyTopAppBar() {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = "Go back",
-                    tint = Color.White
+                    tint = MaterialTheme.colorScheme.surface
                 )
             }
         },
         colors = TopAppBarDefaults.smallTopAppBarColors(
-            containerColor = Blue
+            containerColor = MaterialTheme.colorScheme.primary
         )
     )
 }
@@ -153,29 +155,35 @@ fun TabLayout(tournamentsViewModel: TournamentsViewModel = viewModel()) {
                     )
                     .padding(horizontal = 8.dp)
                     .height(4.dp),
-                color = Color.White
+                color = MaterialTheme.colorScheme.surface
             )
         }
     ) {
         tabRowItems.forEachIndexed { index, item ->
-            Tab(selected = currentPage == index, modifier = Modifier.background(Blue), onClick = {
-                coroutineScope.launch { pagerState.animateScrollToPage(index) }
-            }, icon = {
+            Tab(
+                selected = currentPage == index,
+                modifier = Modifier.background(MaterialTheme.colorScheme.primary),
+                onClick = {
+                    coroutineScope.launch { pagerState.animateScrollToPage(index) }
+                },
+                icon = {
                     Icon(
                         painter = painterResource(id = item.iconRes),
-                        tint = Color.White,
+                        tint = MaterialTheme.colorScheme.surface,
                         contentDescription = ""
                     )
-                }, text = {
+                },
+                text = {
                     Text(
                         text = item.title,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.surface,
                         fontWeight = FontWeight.Normal,
                         fontSize = 14.sp
                     )
-                })
+                }
+            )
         }
     }
 
@@ -249,7 +257,7 @@ fun TournamentItem(
                 .padding(horizontal = 16.dp),
             style = MaterialTheme.typography.headlineMedium,
             text = tournament.name,
-            color = Color.Black
+            color = MaterialTheme.colorScheme.onSurface
         )
     }
 }

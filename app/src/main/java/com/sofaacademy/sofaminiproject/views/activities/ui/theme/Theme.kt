@@ -1,7 +1,6 @@
 package com.sofaacademy.sofaminiproject.views.activities.ui.theme
 
 import android.app.Activity
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -15,19 +14,21 @@ private val DarkColorScheme = darkColorScheme(
     primary = BlueNight,
     secondary = onBlueNight,
     tertiary = BlueNightVariant,
-    onSurface = Surface
+    surface = SurfaceNight,
+    onSurface = SurfaceLV1Night
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Blue,
     secondary = WhiteOnBlue,
     tertiary = BlueVariant,
-    surface = SurfaceNight
+    surface = Surface,
+    onSurface = SurfaceLV1
 )
 
 @Composable
 fun SofaMiniProjectTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean,
     // Dynamic color is available on Android 12+
     content: @Composable () -> Unit
 ) {
